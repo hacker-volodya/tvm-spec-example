@@ -1,0 +1,19 @@
+{
+  "name": "tvm-disassembler",
+  "version": "1.0.0",
+  "description": "Example TVM Disassembler using tvm-spec repo",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "@types/node": "^20.9.0"
+  },
+  "dependencies": {
+    "ton3-core": "^1.0.1"
+  }
+}

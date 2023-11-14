@@ -1,0 +1,3 @@
+[submodule "src/tvm-spec"]
+	path = src/tvm-spec
+	url = https://github.com/hacker-volodya/tvm-spec
