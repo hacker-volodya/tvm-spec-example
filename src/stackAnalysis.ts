@@ -17,12 +17,11 @@ export type StackOperation = BasicStackOperation |
     { op: 'xchg2', i: number, j: number };
 
 export class Stack {
-    private _varCounter: number;
+    private static _varCounter = 0;
     private _stack: StackVariable[];
 
     public constructor(initialStack: StackVariable[]) {
         this._stack = initialStack;
-        this._varCounter = 0;
     }
 
     public copy(): Stack {
@@ -42,7 +41,7 @@ export class Stack {
     }
 
     public push(): StackVariable {
-        let v = { name: `var${this._varCounter++}` };
+        let v = { name: `var${Stack._varCounter++}` };
         this._stack.push(v);
         return v;
     }
