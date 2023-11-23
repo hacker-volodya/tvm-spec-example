@@ -60,7 +60,8 @@ let analyzeContStack = (instructions: any, stack: Stack) => {
             opcode: instruction.instruction.mnemonic,
             operands: newOperands,
             inputs: newInputs,
-            outputs: newOutputs
+            outputs: newOutputs,
+            stack: stack.copy()
         });
     }
     return valueFlow;
@@ -90,6 +91,7 @@ let vizualize = (valueFlow: any) => {
         let inputStr = conts.concat(...operands).concat(...inputVars).join(', ');
         code += (outputVars ? `const ${outputVars} = ` : '') + `${instruction.opcode}(${inputStr});\n`;
     }
+    code += "// result stack: " + valueFlow[valueFlow.length - 1].stack.dump();
     return code;
 };
 

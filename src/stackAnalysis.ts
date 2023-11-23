@@ -29,6 +29,10 @@ export class Stack {
         return new Stack(Array.from(this._stack));
     }
 
+    public dump(): string {
+        return this._stack.map(se => se.name).join(', ');
+    }
+
     public pop(): StackVariable {
         let result = this._stack.pop();
         if (result == undefined) {
