@@ -1,7 +1,8 @@
-import { Instruction, cp0 } from "./tvm-spec";
+import { cp0 } from "./tvm-spec";
+import { Instruction } from "./gen/tvm-spec";
 import { Bit, Builder, Slice } from "ton3-core";
 
-type VarMap = { [key: string]: any };
+export type VarMap = { [key: string]: any };
 type Loader = (s: Slice, operands: VarMap, loader_args: VarMap) => any;
 
 let intToBin = (n: number, size: number) => [...Array(size)].map((x, i) => (n >> i & 1) as Bit).reverse();

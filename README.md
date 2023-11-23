@@ -13,6 +13,11 @@ npm run build
 node dist/index.js test_contracts/simple-walet.boc
 ```
 
+To regenerate tvm-spec interfaces from schema:
+```bash
+node gen-spec.js
+```
+
 Example output:
 ```
 [
