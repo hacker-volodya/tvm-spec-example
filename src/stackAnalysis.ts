@@ -1,6 +1,17 @@
 import { VarMap } from "./disasm";
 import { Instruction } from "./gen/tvm-spec";
 
+export class StackUnderflowError extends Error {
+    public underflowDepth: number;
+
+    public constructor(underflowDepth: number) {
+      super(`Stack underflow occured (depth = ${underflowDepth})`);
+      this.name = "StackUnderflowError";
+      this.underflowDepth = underflowDepth;
+    }
+  }
+  
+
 export type StackVariable = { name: string };
 
 export type BasicStackOperation = 
@@ -28,6 +39,10 @@ export class Stack {
         return new Stack(Array.from(this._stack));
     }
 
+    public copyEntries(): StackVariable[] {
+        return Array.from(this._stack);
+    }
+
     public dump(): string {
         return this._stack.map(se => se.name).join(', ');
     }
@@ -35,7 +50,7 @@ export class Stack {
     public pop(): StackVariable {
         let result = this._stack.pop();
         if (result == undefined) {
-            throw new Error("Stack underflow");
+            throw new StackUnderflowError(1);
         }
         return result;
     }
@@ -46,11 +61,17 @@ export class Stack {
         return v;
     }
 
+    public insertArgs(start: number, length: number): StackVariable[] {
+        let result = [...new Array(length).keys()].map(i => ({ name: `arg${start + i}` }));
+        this._stack.unshift(...result);
+        return result;
+    }
+
     private xchg(i: number, j: number) {
         i = this._stack.length - 1 - i;
         j = this._stack.length - 1 - j;
         if (i < 0 || j < 0) {
-            throw new Error("Stack underflow");
+            throw new StackUnderflowError(Math.max(-i, -j));
         }
         [this._stack[i], this._stack[j]] = [this._stack[j], this._stack[i]];
     }
@@ -125,7 +146,7 @@ export class Stack {
                 for (let i = 0; i < op.i; i++) {
                     let index = this._stack.length - 1 - op.j;
                     if (index < 0) {
-                        throw new Error("Stack underflow");
+                        throw new StackUnderflowError(-index);
                     }
                     this._stack.push(this._stack[index]);
                 }
@@ -143,7 +164,7 @@ export class Stack {
                 let endIndex = this._stack.length - 1 - op.j;
                 let startIndex = endIndex + 1 - length;
                 if (startIndex < 0 || endIndex < 0) {
-                    throw new Error("Stack underflow");
+                    throw new StackUnderflowError(Math.max(-startIndex, -endIndex));
                 }
                 let reversedPart = this._stack.slice(startIndex, endIndex + 1).reverse();
                 this._stack.splice(startIndex, length, ...reversedPart);

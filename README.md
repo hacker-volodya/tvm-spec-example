@@ -1,24 +1,29 @@
 # tvm-spec demo disassembler
+
 PoC disassembler in just 150 lines of TypeScript using data from [tvm-spec](https://github.com/hacker-volodya/tvm-spec).
 
 ## Caveats
+
 1. tvm-spec currently has no information about continuations in instruction operands, so it's tricky to decide whether we need to disassemble inner slices.
 
 ## Usage
+
 ```bash
 git clone --recursive https://github.com/hacker-volodya/tvm-spec-example
 cd tvm-spec-example
 npm i
 npm run build
-node dist/index.js test_contracts/simple-walet.boc
+node dist/index.js test_contracts/simple-wallet.boc
 ```
 
 To regenerate tvm-spec interfaces from schema:
+
 ```bash
 node gen-spec.js
 ```
 
 Example output:
+
 ```
 [
   { opcode: 'SETCP', operands: { n: 0 } },

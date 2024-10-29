@@ -1,5 +1,5 @@
 import { cp0 } from "./tvm-spec";
-import { Instruction } from "./gen/tvm-spec";
+import { Instruction, Operand } from "./gen/tvm-spec";
 import { Bit, Builder, Slice } from "ton3-core";
 
 export type VarMap = { [key: string]: any };
@@ -48,12 +48,30 @@ let getLoaders: () => { [key: string]: Loader } = () => ({
 });
 
 export class OpcodeParser {
-    private static _loaders: { [key: string]: Loader }
     private static _map: Map<string, Instruction>
 
-    private static execLoader(loader: string, slice: Slice, operands: VarMap, args: VarMap) {
-        this._loaders || (this._loaders = getLoaders());
-        return this._loaders[loader](slice, operands, args);
+    private static loadOperand(operand: Operand, slice: Slice) {
+        if (operand.type == "uint") {
+            return slice.loadUint(operand.size);
+        } else if (operand.type == "int") {
+            return slice.loadInt(operand.size);
+        } else if (operand.type == "ref") {
+            return slice.loadRef().slice();
+        } else if (operand.type == "pushint_long") {
+            return slice.loadInt(8 * slice.loadUint(5) + 19);
+        } else if (operand.type == "subslice") {
+            let refLength = (operand.refs_add ?? 0) + (operand.refs_length_var_size ? slice.loadUint(operand.refs_length_var_size) : 0);
+            let bitLength = (operand.bits_padding ?? 0) + (operand.bits_length_var_size ? slice.loadUint(operand.bits_length_var_size) : 0);
+            let bits = slice.loadBits(bitLength);
+            if (operand.completion_tag) {
+                bits = removeCompletionTag(bits);
+            }
+            let refs = slice.refs.slice(0, refLength);
+            slice.skipRefs(refLength);
+            return new Builder().storeBits(bits).storeRefs(refs).cell().slice();
+        } else {
+            throw new Error('unimplemented');
+        }
     }
 
     private static getMap() {
@@ -92,9 +110,9 @@ export class OpcodeParser {
         let operands: VarMap = {}
         for (let operand of instruction.bytecode.operands ?? []) {
             try {
-                operands[operand.name] = this.execLoader(operand.loader, slice, operands, operand.loader_args ?? {})
+                operands[operand.name] = this.loadOperand(operand, slice)
             } catch (e) {
-                throw new Error(`OpcodeParser: bad operand ${operand.name} for instruction ${instruction.mnemonic}`, { cause: e })
+                throw new Error(`OpcodeParser: bad operand ${operand.name} for instruction ${instruction.mnemonic} (${e})`, { cause: e })
             }
         }
         return [instruction, operands]
