@@ -20,6 +20,25 @@ const CONTINUATIONS: { [key: string]: string[] } = {
     PUSHCONT: ["s"],
     PUSHCONT_SHORT: ["s"],
 }
+interface ConditionalCase {
+    value: number | string; // The value representing the case (e.g., 0, -1, etc.)
+    stack: string[];        // The stack variables associated with the case
+}
+
+class ConditionalType {
+    public type: string;    // A fixed string to indicate "conditional"
+    public cases: ConditionalCase[]; // An array of ConditionalCase objects
+
+    constructor(cases: ConditionalCase[]) {
+        this.type = "conditional";
+        this.cases = cases; // Assign the cases array
+    }
+
+    // Method to get a description of the cases
+    getDescription(): string {
+        return this.cases.map(({ value }) => value).join(" or ");
+    }
+}
 
 export class Continuation {
     private args: StackVariable[];
@@ -126,8 +145,13 @@ export class Continuation {
             throw new Error(`Unconstrained stack input while parsing ${instruction.spec.mnemonic}`);
         }
         for (let input of instruction.spec.value_flow.inputs.stack.reverse()) {
+            if (instruction.spec.mnemonic == 'NULLSWAPIFNOT'){
+                console.log(stack.pop_guard()); // add logic to work in case aligning stack
+            }
             if (input.type == 'simple') {
                 stackInputs[input.name] = { var: stack.pop(), types: input.value_types };
+            } else if(input.type == 'conditional'){
+                console.log(stack.pop_guard());
             } else {
                 throw new Error(`not supported stack input '${input.type}' while parsing ${instruction.spec.mnemonic}`);
             }
@@ -143,6 +167,14 @@ export class Continuation {
                 stackOutputs[output.name] = { var: stack.push(), types: output.value_types };
             } else if (output.type == 'const') {
                 stackOutputs[`const${constCounter++}`] = { var: stack.push(), types: [output.value_type] };
+            } else if (output.type == 'conditional') {
+                let metadata = {};
+                if (stack.check_guard()) {
+                    // guard found => edit it
+                    metadata = stack.pop_guard().metadata;
+                }
+                metadata = {...metadata, output};
+                stackOutputs[`conditional${constCounter++}`] = { var: stack.push_guard(metadata), types: metadata };
             } else {
                 throw new Error(`not supported stack output '${output.type}' while parsing ${instruction.spec.mnemonic}`);
             }

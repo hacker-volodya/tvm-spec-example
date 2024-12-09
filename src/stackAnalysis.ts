@@ -12,7 +12,7 @@ export class StackUnderflowError extends Error {
   }
   
 
-export type StackVariable = { name: string };
+export type StackVariable = { name: string , type: string, metadata?: any};
 
 export type BasicStackOperation = 
     { op: 'xchg', i: number, j: number } |
@@ -29,6 +29,7 @@ export type StackOperation = BasicStackOperation |
 
 export class Stack {
     private static _varCounter = 0;
+    private static _guardCounter = 0;
     private _stack: StackVariable[];
 
     public constructor(initialStack: StackVariable[]) {
@@ -44,25 +45,63 @@ export class Stack {
     }
 
     public dump(): string {
-        return this._stack.map(se => se.name).join(', ');
+        return this._stack
+            .map(item => 
+                item.type === "guard" 
+                    ? `GUARD(${item.name})` // Customize guard display
+                    : item.name // Display regular variable names
+            )
+            .join(", ");
     }
-
+    
     public pop(): StackVariable {
         let result = this._stack.pop();
         if (result == undefined) {
             throw new StackUnderflowError(1);
+        } else if (result.type === "guard") {
+            throw new Error("Stack pop attempted on a guard. Use pop_guard instead.");
         }
+
         return result;
     }
 
     public push(): StackVariable {
-        let v = { name: `var${Stack._varCounter++}` };
+        let v = { name: `var${Stack._varCounter++}`, type: "variable"};
         this._stack.push(v);
         return v;
     }
 
+    public push_guard(metadata: any = {}): StackVariable {
+        let guard = {
+            name: `guard${Stack._guardCounter++}`,
+            type: "guard",
+            metadata,
+        };
+        this._stack.push(guard);
+        return guard;
+    }
+
+    public pop_guard(): StackVariable {
+        let result = this._stack.pop();
+        if (!result) {
+            throw new StackUnderflowError(1);
+        }
+        if (result.type !== "guard") {
+            throw new Error("pop_guard called on non-guard item in the stack.");
+        }
+        return result;
+    }
+
+    public check_guard(): boolean {
+        if (this._stack.length === 0) {
+            return false;
+        }
+        let top = this._stack[this._stack.length - 1];
+        return top.type === "guard";
+    }
+
     public insertArgs(start: number, length: number): StackVariable[] {
-        let result = [...new Array(length).keys()].map(i => ({ name: `arg${start + i}` }));
+        let result = [...new Array(length).keys()].map(i => ({ name: `arg${start + i}`, type: "argument" }));
         this._stack.unshift(...result);
         return result;
     }
