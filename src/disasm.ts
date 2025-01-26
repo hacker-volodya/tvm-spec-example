@@ -3,7 +3,6 @@ import { Instruction, Operand } from "./gen/tvm-spec";
 import { Bit, Builder, Slice } from "ton3-core";
 
 export type VarMap = { [key: string]: any };
-type Loader = (s: Slice, operands: VarMap, loader_args: VarMap) => any;
 
 let intToBin = (n: number, size: number) => [...Array(size)].map((x, i) => (n >> i & 1) as Bit).reverse();
 
@@ -28,24 +27,6 @@ let removeCompletionTag = (bits: Bit[]) => {
     }
     return bits.slice(0, newLength);
 };
-
-let getLoaders: () => { [key: string]: Loader } = () => ({
-    int: (s, ops, args) => s.loadInt(args.size),
-    uint: (s, ops, args) => s.loadUint(args.size),
-    ref: (s, ops, args) => s.loadRef().slice(),
-    pushint_long: (s, ops, args) => s.loadInt(8 * s.loadUint(5) + 19),
-    subslice: (s, ops, args) => {
-        let bitLength = (args.bits_padding ?? 0) + (args.bits_length_var ? 8 * ops[args.bits_length_var] : 0);
-        let refLength = (args.refs_add ?? 0) + (args.refs_length_var ? ops[args.refs_length_var] : 0);
-        let bits = s.loadBits(bitLength);
-        if (args.completion_tag) {
-            bits = removeCompletionTag(bits);
-        }
-        let refs = s.refs.slice(0, refLength);
-        s.skipRefs(refLength);
-        return new Builder().storeBits(bits).storeRefs(refs).cell().slice();
-    },
-});
 
 export class OpcodeParser {
     private static _map: Map<string, Instruction>
