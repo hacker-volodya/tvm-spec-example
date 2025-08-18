@@ -63,18 +63,65 @@ export class Continuation {
             indent = indent.repeat(count);
             return str.replace(/^/gm, indent);
         };
-        let code = "";
+        const isStackOp = (ins: DecompiledInstruction) => ["stack_basic", "stack_complex"].includes(ins.spec.doc.category);
+
+        // count variable usages
+        let useCount: { [name: string]: number } = {};
         for (let instruction of this.code) {
+            for (let input of Object.values(instruction.inputs)) {
+                let name = (input as any).var.name;
+                useCount[name] = (useCount[name] ?? 0) + 1;
+            }
+        }
+
+        // determine instructions to inline
+        let inlineMap: { [name: string]: string } = {};
+        let skip = new Set<number>();
+
+        const formatInstruction = (ins: DecompiledInstruction): string => {
+            let operandsCopy = { ...ins.operands };
+            let conts = Continuation.dumpOperandConts(operandsCopy);
+            let operands = Object.values(operandsCopy).map(x => `${x}`);
+            let inputVars = Object.values(ins.inputs).map((input: any) => inlineMap[input.var.name] ?? input.var.name);
+            let inputStr = operands.concat(...inputVars).concat(...conts).join(', ');
+            return `${ins.spec.mnemonic}(${inputStr})`;
+        };
+
+        for (let i = 0; i < this.code.length; i++) {
+            let instruction = this.code[i];
+            if (isStackOp(instruction)) continue;
+            let outputs = Object.values(instruction.outputs).map((o: any) => o.var.name);
+            if (outputs.length !== 1) continue;
+            let outVar = outputs[0];
+            if (useCount[outVar] !== 1) continue;
+            let j = -1;
+            for (let k = i + 1; k < this.code.length; k++) {
+                let inputs = Object.values(this.code[k].inputs);
+                if (inputs.some((inp: any) => inp.var.name === outVar)) {
+                    j = k;
+                    break;
+                }
+            }
+            if (j === i + 1 && !isStackOp(this.code[j])) {
+                inlineMap[outVar] = formatInstruction(instruction);
+                skip.add(i);
+            }
+        }
+
+        let code = "";
+        for (let [index, instruction] of this.code.entries()) {
+            if (skip.has(index)) continue;
             // hide stack operations
-            if (["stack_basic", "stack_complex"].includes(instruction.spec.doc.category)) {
+            if (isStackOp(instruction)) {
                 //code += `// ${instruction.spec.mnemonic} ${Object.values(instruction.operands).map(x => `${x}`)}\n`;
                 continue;
             }
             let outputVars = Object.values(instruction.outputs).map((output: any) => output.var.name).join(', ');
-            let inputVars = Object.values(instruction.inputs).map((input: any) => input.var.name);
-            
-            let conts = Continuation.dumpOperandConts(instruction.operands);
-            let operands = Object.values(instruction.operands).map(x => `${x}`);
+            let inputVars = Object.values(instruction.inputs).map((input: any) => inlineMap[input.var.name] ?? input.var.name);
+
+            let operandsCopy = { ...instruction.operands };
+            let conts = Continuation.dumpOperandConts(operandsCopy);
+            let operands = Object.values(operandsCopy).map(x => `${x}`);
             let inputStr = operands.concat(...inputVars).concat(...conts).join(', ');
             code += (outputVars ? `${outputVars} = ` : '') + `${instruction.spec.mnemonic}(${inputStr});\n`;
         }
