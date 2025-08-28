@@ -2,6 +2,7 @@ import { Cell, Hashmap, Slice } from "ton3-core";
 import { OpcodeParser, VarMap } from "./disasm";
 import { Instruction } from "./gen/tvm-spec";
 import { GuardUnresolvedError, Stack, StackUnderflowError, StackVariable } from "./stackAnalysis";
+import { IRFunction, IROperands, IRInputs, IROpPrim, IROperandValue, IROutputs, IRValueDef, IRValueRef, formatIR } from "./ir";
 import { bitsToIntUint } from "ton3-core/dist/utils/numbers";
 
 const CONTINUATIONS: { [key: string]: string[] } = {
@@ -143,6 +144,75 @@ export class Continuation {
         return `function (${this.args.map(a => a.name).join(', ')}) {\n${indentString(code.trimEnd(), 4)}\n}`;
     }
 
+    public toIR(): IRFunction {
+        const isStackOp = (ins: DecompiledInstruction) => ["stack_basic", "stack_complex"].includes(ins.spec.doc.category);
+
+        const convertOperands = (ops: VarMap): IROperands => {
+            const res: IROperands = {};
+            for (const [k, v] of Object.entries(ops)) {
+                res[k] = this.convertOperandValue(v);
+            }
+            return res;
+        };
+
+        const args: IRValueDef[] = this.args.map((a) => ({ id: a.name }));
+        const body: IROpPrim[] = [];
+
+        for (const ins of this.code) {
+            if (isStackOp(ins)) continue; // exclude raw stack ops from IR
+            const inputs: IRInputs = {};
+            for (const [name, val] of Object.entries(ins.inputs)) {
+                const v = val as any as { var: StackVariable; types?: string[] };
+                inputs[name] = { id: v.var.name, types: v.types as any } as IRValueRef;
+            }
+            const outputs: IROutputs = {};
+            for (const [name, val] of Object.entries(ins.outputs)) {
+                const v = val as any as { var: StackVariable; types?: string[] };
+                outputs[name] = { id: v.var.name, types: v.types as any } as IRValueDef;
+            }
+            const operands: IROperands = convertOperands({ ...ins.operands });
+            body.push({ kind: 'prim', spec: ins.spec, mnemonic: ins.spec.mnemonic, inputs, operands, outputs });
+        }
+
+        const result: IRValueRef[] = this.resultStack.map((s) => ({ id: s.name }));
+
+        const asmTail = this.asmTail?.map((i) => ({ spec: i.spec, operands: this.convertOperandsForTail(i.operands) })) ?? [];
+        const tailSliceInfo = (this.sliceTail.bits.length > 0 || this.sliceTail.refs.length > 0) ? String(this.sliceTail) : undefined;
+
+        return {
+            kind: 'function',
+            args,
+            body,
+            result,
+            asmTail: asmTail.length ? asmTail : undefined,
+            tailSliceInfo,
+            decompileError: this.decompileError ? String(this.decompileError) : null,
+            disassembleError: this.disassembleError ? String(this.disassembleError) : null,
+        };
+    }
+
+    private convertOperandValue(v: any): IROperandValue {
+        if (v instanceof Continuation) {
+            return v.toIR();
+        }
+        if (v instanceof Hashmap) {
+            const m = new Map<number, IRFunction>();
+            (v as Hashmap<number, Continuation>).forEach((k: number, cont: Continuation) => {
+                m.set(k, cont.toIR());
+            });
+            return m;
+        }
+        return v as IROperandValue;
+    }
+
+    private convertOperandsForTail(ops: VarMap): IROperands {
+        const res: IROperands = {};
+        for (const [k, v] of Object.entries(ops)) {
+            res[k] = this.convertOperandValue(v);
+        }
+        return res;
+    }
+
     private static loadOpcode(slice: Slice): DecodedInstruction {
         let [instruction, operands] = OpcodeParser.nextInstruction(slice);
         return {
@@ -246,14 +316,6 @@ export class Continuation {
             let decodedInsn;
             try {
                 decodedInsn = Continuation.loadOpcode(slice);
-                if (decodedInsn.spec.mnemonic == "DICTPUSHCONST" && decodedInsn.operands["n"] == 19) {
-                    decodedInsn.operands["d"] = Hashmap.parse<Number, Continuation>(19, decodedInsn.operands["d"], {
-                        deserializers: {
-                            key: k => bitsToIntUint(k, { type: "int" }),
-                            value: v => Continuation.decompile(v.slice())
-                        }
-                    });
-                }
                 if (CONTINUATIONS[decodedInsn.spec.mnemonic] != undefined) {
                     for (let operand of CONTINUATIONS[decodedInsn.spec.mnemonic]) {
                         decodedInsn.operands[operand] = Continuation.decompile(decodedInsn.operands[operand]);
@@ -265,12 +327,10 @@ export class Continuation {
             if (decompileError == null) {
                 for (let t = 0;; t++) {
                     try {
-                        console.log("in", stack.dump());
-                        console.log(decodedInsn.spec.mnemonic);
+                        // debug logs removed to keep output clean
                         let stack2 = stack.copy();
                         code.push(Continuation.decompileInstruction(decodedInsn, stack2));
                         stack = stack2;
-                        console.log("out", stack.dump());
                         break;
                     } catch (e) {
                         // Check for stack underflow
