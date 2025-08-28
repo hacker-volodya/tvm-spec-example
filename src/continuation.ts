@@ -1,7 +1,7 @@
 import { Cell, Hashmap, Slice } from "ton3-core";
 import { OpcodeParser, VarMap } from "./disasm";
 import { Instruction } from "./gen/tvm-spec";
-import { Stack, StackUnderflowError, StackVariable } from "./stackAnalysis";
+import { GuardUnresolvedError, Stack, StackUnderflowError, StackVariable } from "./stackAnalysis";
 import { bitsToIntUint } from "ton3-core/dist/utils/numbers";
 
 const CONTINUATIONS: { [key: string]: string[] } = {
@@ -185,15 +185,48 @@ export class Continuation {
         if (instruction.spec.value_flow.outputs.stack == undefined) {
             throw new Error(`Unconstrained stack output while parsing ${instruction.spec.mnemonic}`);
         }
+        // To support conditional outputs we need to create a guard that blocks
+        // access to the unaligned portion of the stack until it is equalized.
+        // We iterate outputs in reverse order (as initially) but keep track of
+        // how many values we have pushed in this instruction so far to place
+        // the guard below them.
+        let pushedThisInsn = 0;
         for (let output of instruction.spec.value_flow.outputs.stack.reverse()) {
             if (output.type == 'simple') {
-                stackOutputs[output.name] = { var: stack.push(), types: output.value_types };
+                const v = stack.push();
+                pushedThisInsn += 1;
+                stackOutputs[output.name] = { var: v, types: output.value_types };
             } else if (output.type == 'const') {
-                stackOutputs[`const${constCounter++}`] = { var: stack.push(), types: [output.value_type] };
+                const v = stack.push();
+                pushedThisInsn += 1;
+                stackOutputs[`const${constCounter++}`] = { var: v, types: [output.value_type] };
+            } else if (output.type == 'conditional') {
+                // Create / update guard at boundary below values pushed so far
+                const arms = [...(output.match ?? []).map(x => x.stack ?? []), ...(output.else ? [output.else] : [])];
+                const armsCount = arms.length;
+                stack.ensureGuard(pushedThisInsn, armsCount);
+                // For each arm, append branch-specific variables (without pushing them to stack now)
+                arms.forEach((arm, idx) => {
+                    const newVars: StackVariable[] = [];
+                    for (const ent of arm) {
+                        if (ent.type === 'simple') {
+                            newVars.push(Stack.allocVar());
+                        } else if (ent.type === 'const') {
+                            newVars.push(Stack.allocVar());
+                        } else {
+                            throw new Error(`unsupported conditional branch entry '${ent.type}' in ${instruction.spec.mnemonic}`);
+                        }
+                    }
+                    stack.appendToGuardArm(idx, newVars);
+                });
+                // Try to finalize if all arms produce the same additional stack layout
+                stack.tryFinalizeGuard();
             } else {
-                throw new Error(`not supported stack output '${output.type}' while parsing ${instruction.spec.mnemonic}`);
+                throw new Error(`not supported stack output '${(output as any).type}' while parsing ${instruction.spec.mnemonic}`);
             }
         }
+        // Attempt to finalize guard if it got aligned by this instruction
+        stack.tryFinalizeGuard();
         return {
             spec: instruction.spec,
             operands: instruction.operands,
@@ -245,6 +278,11 @@ export class Continuation {
                             let newArgs = stack.insertArgs(args.length, e.underflowDepth);
                             args.unshift(...newArgs);
                             continue;
+                        }
+                        // If we tried to pop while guard is unresolved - stop decompilation
+                        if (e instanceof GuardUnresolvedError) {
+                            decompileError = e;
+                            break;
                         }
                         // Stop decompiling, try disassemble tail
                         decompileError = e;
