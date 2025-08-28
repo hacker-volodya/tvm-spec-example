@@ -166,10 +166,33 @@ export class Continuation {
                 inputs[name] = { id: v.var.name, types: v.types as any } as IRValueRef;
             }
             const outputs: IROutputs = {};
-            for (const [name, val] of Object.entries(ins.outputs)) {
-                const v = val as any as { var: StackVariable; types?: string[] };
-                outputs[name] = { id: v.var.name, types: v.types as any } as IRValueDef;
+            const outputsSpec = (ins.spec as any)?.value_flow?.outputs?.stack as any[] | undefined;
+            const outMap = ins.outputs as any as { [k: string]: { var: StackVariable; types?: string[] } };
+            if (outputsSpec && Array.isArray(outputsSpec)) {
+                // write in spec order first (for stable pretty-printing)
+                for (const o of outputsSpec) {
+                    if (o.type === 'simple') {
+                        const name = o.name as string;
+                        const v = outMap[name];
+                        if (v) outputs[name] = { id: v.var.name, types: v.types as any } as IRValueDef;
+                    } else if (o.type === 'const') {
+                        // keep any const* in insertion order afterwards
+                    }
+                }
+                // append remaining outputs in their original insertion order
+                for (const [name, v] of Object.entries(outMap)) {
+                    if (!(name in outputs)) {
+                        outputs[name] = { id: v.var.name, types: v.types as any } as IRValueDef;
+                    }
+                }
+            } else {
+                // fallback: preserve insertion order
+                for (const [name, val] of Object.entries(ins.outputs)) {
+                    const v = val as any as { var: StackVariable; types?: string[] };
+                    outputs[name] = { id: v.var.name, types: v.types as any } as IRValueDef;
+                }
             }
+
             const operands: IROperands = convertOperands({ ...ins.operands });
             body.push({ kind: 'prim', spec: ins.spec, mnemonic: ins.spec.mnemonic, inputs, operands, outputs });
         }

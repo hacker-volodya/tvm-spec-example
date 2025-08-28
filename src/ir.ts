@@ -23,7 +23,16 @@ export type IROperandValue = number | bigint | boolean | Slice | Cell | IRFuncti
 
 export type IROperands = { [name: string]: IROperandValue };
 
-export type IRInputs = { [name: string]: IRValueRef };
+// Input argument can be a reference to a previously defined value
+// or an inline expression (used by optimizations such as inlining).
+export type IRInlineExpr = {
+  kind: 'inline';
+  op: IROpPrim; // inlined op; must be side-effect-free to stay correct
+};
+
+export type IRInputArg = IRValueRef | IRInlineExpr;
+
+export type IRInputs = { [name: string]: IRInputArg };
 
 export type IROutputs = { [name: string]: IRValueDef };
 
@@ -85,11 +94,75 @@ export function formatIR(fn: IRFunction): string {
     return JSON.stringify(v);
   };
 
+  const formatInlineOpAsExpr = (st: IROpPrim): string => {
+    const insOrder = Object.entries(st.inputs).map(([k, v]) => `${k}=${formatInputArg(v)}`).join(', ');
+    const opPairs = Object.entries(st.operands).map(([k, v]) => [k, formatInlineOperand(v)] as [string, string]);
+    const hasMultiline = opPairs.some(([, v]) => v.includes('\n'));
+
+    if (!hasMultiline) {
+      const ops = opPairs.map(([k, v]) => `${k}=${v}`).join(', ');
+      const parts = [insOrder, ops].filter(Boolean).join(' | ');
+      return `${st.mnemonic}(${parts})`;
+    } else {
+      let out = `${st.mnemonic}(` + '\n';
+      const indent8 = '        ';
+      if (insOrder) {
+        out += indent8 + insOrder + (opPairs.length ? ' |' : '') + '\n';
+      }
+      for (let i = 0; i < opPairs.length; i++) {
+        const [k, v] = opPairs[i];
+        const lines = v.split('\n');
+        out += indent8 + k + '=' + lines[0] + (i < opPairs.length - 1 ? ',' : '') + '\n';
+        for (let j = 1; j < lines.length; j++) {
+          out += indent8 + ' '.repeat(k.length + 1) + lines[j] + (i < opPairs.length - 1 && j === lines.length - 1 ? ',' : '') + '\n';
+        }
+      }
+      out += `    )`;
+      return out;
+    }
+  };
+
+  const formatInputArg = (a: IRInputArg): string => {
+    if ((a as any).kind === 'inline') {
+      return formatInlineOpAsExpr((a as IRInlineExpr).op);
+    }
+    return fmtValRef(a as IRValueRef);
+  };
+
   const args = fn.args.map(a => fmtValDef(a)).join(', ');
   let out = `function (${args}) {\n`;
   for (const st of fn.body) {
-    const outs = Object.values(st.outputs).map(fmtValDef).join(', ');
-    const insOrder = Object.entries(st.inputs).map(([k, v]) => `${k}=${fmtValRef(v)}`).join(', ');
+    // Order outputs according to spec value_flow if available
+    const getOutputsInOrder = (): IRValueDef[] => {
+      const vf: any = (st as any).spec?.value_flow;
+      const specStack = vf?.outputs?.stack as any[] | undefined;
+      if (!specStack) return Object.values(st.outputs);
+      const entries = Object.entries(st.outputs) as [string, IRValueDef][];
+      const byName = new Map(entries);
+      const constKeys: string[] = entries.filter(([k]) => k.startsWith('const')).map(([k]) => k);
+      const used = new Set<string>();
+      const ordered: IRValueDef[] = [];
+      for (const out of specStack) {
+        if (out.type === 'simple') {
+          const k = out.name as string;
+          const v = byName.get(k);
+          if (v) { ordered.push(v as IRValueDef); used.add(k); }
+        } else if (out.type === 'const') {
+          // consume next const* entry in insertion order
+          const k = constKeys.find((x) => !used.has(x));
+          if (k) { ordered.push(byName.get(k)!); used.add(k); }
+        }
+        // conditional outputs are not represented in st.outputs
+      }
+      // Append any remaining outputs in original insertion order
+      for (const [k, v] of entries) {
+        if (!used.has(k)) ordered.push(v);
+      }
+      return ordered;
+    };
+
+    const outs = getOutputsInOrder().map(fmtValDef).join(', ');
+    const insOrder = Object.entries(st.inputs).map(([k, v]) => `${k}=${formatInputArg(v)}`).join(', ');
     const opPairs = Object.entries(st.operands).map(([k, v]) => [k, formatInlineOperand(v)] as [string, string]);
     const hasMultiline = opPairs.some(([, v]) => v.includes('\n'));
 

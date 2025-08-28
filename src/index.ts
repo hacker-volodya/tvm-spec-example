@@ -2,6 +2,7 @@ import { BOC, Hashmap, Builder, Slice } from "ton3-core"
 import * as fs from 'fs'
 import { Continuation } from "./continuation";
 import { formatIR } from "./ir";
+import { inlinePrevSingleUse } from "./opt/inline";
 import { OpcodeParser } from "./disasm";
 import { bitsToIntUint } from "ton3-core/dist/utils/numbers";
 
@@ -56,10 +57,10 @@ if (dictIR) {
     const pairs = Array.from(dictIR.entries()).sort((a, b) => a[0] - b[0]);
     for (const [id, fn] of pairs) {
         console.log(`/* methodId: ${id} */`);
-        console.log(formatIR(fn));
+        console.log(formatIR(inlinePrevSingleUse(fn)));
         console.log();
     }
 } else {
     const cont = Continuation.decompile(slice);
-    console.log(formatIR(cont.toIR()))
+    console.log(formatIR(inlinePrevSingleUse(cont.toIR())))
 }
