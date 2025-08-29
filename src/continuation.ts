@@ -265,7 +265,8 @@ export class Continuation {
         if (instruction.spec.value_flow.inputs.stack == undefined) {
             throw new Error(`Unconstrained stack input while parsing ${instruction.spec.mnemonic}`);
         }
-        for (let input of instruction.spec.value_flow.inputs.stack.reverse()) {
+        // Spec lists stack entries from deepest to top; pop from top
+        for (let input of instruction.spec.value_flow.inputs.stack.slice().reverse()) {
             if (input.type == 'simple') {
                 stackInputs[input.name] = { var: stack.pop(), types: input.value_types };
             } else {
@@ -284,7 +285,8 @@ export class Continuation {
         // how many values we have pushed in this instruction so far to place
         // the guard below them.
         let pushedThisInsn = 0;
-        for (let output of instruction.spec.value_flow.outputs.stack.reverse()) {
+        // Spec lists outputs from deepest to top; push in this order
+        for (let output of instruction.spec.value_flow.outputs.stack) {
             if (output.type == 'simple') {
                 const v = stack.push();
                 pushedThisInsn += 1;
