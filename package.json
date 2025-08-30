@@ -6,12 +6,15 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^29.5.14",
     "@types/node": "^20.9.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.4.1",
     "typescript": "^5.2.2"
   },
   "dependencies": {

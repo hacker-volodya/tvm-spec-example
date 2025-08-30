@@ -1,0 +1,319 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`defaultPipeline snapshot does not inline producer if its value is part of result 1`] = `
+{
+  "args": [],
+  "body": [
+    {
+      "inputs": {},
+      "kind": "prim",
+      "mnemonic": "PUSHCONST",
+      "operands": {},
+      "outputs": {
+        "v": {
+          "id": "vres",
+        },
+      },
+      "spec": {
+        "bytecode": {
+          "operands": [],
+          "prefix": "00",
+          "tlb": "",
+        },
+        "control_flow": {
+          "branches": [],
+          "nobranch": true,
+        },
+        "doc": {
+          "category": "const_int",
+          "description": "",
+          "fift": "",
+          "fift_examples": [],
+          "gas": "",
+          "opcode": "",
+          "stack": "",
+        },
+        "mnemonic": "FAKE",
+        "since_version": 9999,
+        "value_flow": {
+          "inputs": {
+            "registers": [],
+          },
+          "outputs": {
+            "registers": [],
+          },
+        },
+      },
+    },
+    {
+      "inputs": {
+        "a": {
+          "id": "vres",
+        },
+      },
+      "kind": "prim",
+      "mnemonic": "USE",
+      "operands": {},
+      "outputs": {
+        "y": {
+          "id": "y",
+        },
+      },
+      "spec": {
+        "bytecode": {
+          "operands": [],
+          "prefix": "00",
+          "tlb": "",
+        },
+        "control_flow": {
+          "branches": [],
+          "nobranch": true,
+        },
+        "doc": {
+          "category": "misc",
+          "description": "",
+          "fift": "",
+          "fift_examples": [],
+          "gas": "",
+          "opcode": "",
+          "stack": "",
+        },
+        "mnemonic": "FAKE",
+        "since_version": 9999,
+        "value_flow": {
+          "inputs": {
+            "registers": [],
+          },
+          "outputs": {
+            "registers": [],
+          },
+        },
+      },
+    },
+  ],
+  "kind": "function",
+  "result": [
+    {
+      "id": "vres",
+    },
+    {
+      "id": "y",
+    },
+  ],
+}
+`;
+
+exports[`defaultPipeline snapshot inlines previous single-use non-const op 1`] = `
+{
+  "args": [
+    {
+      "id": "arg0",
+    },
+  ],
+  "body": [
+    {
+      "inputs": {
+        "x": {
+          "kind": "inline",
+          "op": {
+            "inputs": {
+              "a": {
+                "id": "arg0",
+              },
+            },
+            "kind": "prim",
+            "mnemonic": "SHL",
+            "operands": {},
+            "outputs": {
+              "t": {
+                "id": "t",
+              },
+            },
+            "spec": {
+              "bytecode": {
+                "operands": [],
+                "prefix": "00",
+                "tlb": "",
+              },
+              "control_flow": {
+                "branches": [],
+                "nobranch": true,
+              },
+              "doc": {
+                "category": "misc",
+                "description": "",
+                "fift": "",
+                "fift_examples": [],
+                "gas": "",
+                "opcode": "",
+                "stack": "",
+              },
+              "mnemonic": "FAKE",
+              "since_version": 9999,
+              "value_flow": {
+                "inputs": {
+                  "registers": [],
+                },
+                "outputs": {
+                  "registers": [],
+                },
+              },
+            },
+          },
+        },
+      },
+      "kind": "prim",
+      "mnemonic": "NEGATE",
+      "operands": {},
+      "outputs": {
+        "y": {
+          "id": "y",
+        },
+      },
+      "spec": {
+        "bytecode": {
+          "operands": [],
+          "prefix": "00",
+          "tlb": "",
+        },
+        "control_flow": {
+          "branches": [],
+          "nobranch": true,
+        },
+        "doc": {
+          "category": "misc",
+          "description": "",
+          "fift": "",
+          "fift_examples": [],
+          "gas": "",
+          "opcode": "",
+          "stack": "",
+        },
+        "mnemonic": "FAKE",
+        "since_version": 9999,
+        "value_flow": {
+          "inputs": {
+            "registers": [],
+          },
+          "outputs": {
+            "registers": [],
+          },
+        },
+      },
+    },
+  ],
+  "kind": "function",
+  "result": [
+    {
+      "id": "y",
+    },
+  ],
+}
+`;
+
+exports[`defaultPipeline snapshot inlines single-use const producer into consumer 1`] = `
+{
+  "args": [
+    {
+      "id": "arg0",
+    },
+  ],
+  "body": [
+    {
+      "inputs": {
+        "a": {
+          "kind": "inline",
+          "op": {
+            "inputs": {},
+            "kind": "prim",
+            "mnemonic": "PUSHCONST",
+            "operands": {},
+            "outputs": {
+              "v": {
+                "id": "v1",
+              },
+            },
+            "spec": {
+              "bytecode": {
+                "operands": [],
+                "prefix": "00",
+                "tlb": "",
+              },
+              "control_flow": {
+                "branches": [],
+                "nobranch": true,
+              },
+              "doc": {
+                "category": "const_int",
+                "description": "",
+                "fift": "",
+                "fift_examples": [],
+                "gas": "",
+                "opcode": "",
+                "stack": "",
+              },
+              "mnemonic": "FAKE",
+              "since_version": 9999,
+              "value_flow": {
+                "inputs": {
+                  "registers": [],
+                },
+                "outputs": {
+                  "registers": [],
+                },
+              },
+            },
+          },
+        },
+        "b": {
+          "id": "arg0",
+        },
+      },
+      "kind": "prim",
+      "mnemonic": "ADD",
+      "operands": {},
+      "outputs": {
+        "y": {
+          "id": "y1",
+        },
+      },
+      "spec": {
+        "bytecode": {
+          "operands": [],
+          "prefix": "00",
+          "tlb": "",
+        },
+        "control_flow": {
+          "branches": [],
+          "nobranch": true,
+        },
+        "doc": {
+          "category": "misc",
+          "description": "",
+          "fift": "",
+          "fift_examples": [],
+          "gas": "",
+          "opcode": "",
+          "stack": "",
+        },
+        "mnemonic": "FAKE",
+        "since_version": 9999,
+        "value_flow": {
+          "inputs": {
+            "registers": [],
+          },
+          "outputs": {
+            "registers": [],
+          },
+        },
+      },
+    },
+  ],
+  "kind": "function",
+  "result": [
+    {
+      "id": "y1",
+    },
+  ],
+}
+`;
