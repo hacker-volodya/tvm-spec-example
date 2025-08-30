@@ -269,8 +269,41 @@ export class Continuation {
         for (let input of instruction.spec.value_flow.inputs.stack.slice().reverse()) {
             if (input.type == 'simple') {
                 stackInputs[input.name] = { var: stack.pop(), types: input.value_types };
+            } else if (input.type == 'array') {
+                // Support fixed-length arrays (length taken from operands). Dynamic (from stack) not supported yet.
+                const lenVar = input.length_var as string;
+                let count: number | null = null;
+                if (Object.prototype.hasOwnProperty.call(instruction.operands, lenVar)) {
+                    const v = instruction.operands[lenVar];
+                    if (typeof v === 'number') count = v as number;
+                }
+                if (count == null) {
+                    // If length is taken from stack (e.g., TUPLEVAR), we can't resolve it statically yet.
+                    throw new Error(`not supported dynamic array length '${lenVar}' while parsing ${instruction.spec.mnemonic}`);
+                }
+                // Pop entries for array elements (from top). For each element, pop its entry spec in reverse order.
+                // Name inputs uniquely to preserve all values.
+                let idx = 0;
+                for (let i = 0; i < count; i++) {
+                    for (let ent of input.array_entry.slice().reverse()) {
+                        if (ent.type === 'simple') {
+                            const v = stack.pop();
+                            const key = `${ent.name}${idx}`;
+                            (stackInputs as any)[key] = { var: v, types: ent.value_types };
+                            idx++;
+                        } else if (ent.type === 'const') {
+                            // Unlikely for inputs; still pop to keep stack shape.
+                            const v = stack.pop();
+                            const key = `const_in_${idx}`;
+                            (stackInputs as any)[key] = { var: v, types: [ent.value_type] as any };
+                            idx++;
+                        } else if (ent.type === 'conditional' || ent.type === 'array') {
+                            throw new Error(`not supported nested '${ent.type}' inside array input while parsing ${instruction.spec.mnemonic}`);
+                        }
+                    }
+                }
             } else {
-                throw new Error(`not supported stack input '${input.type}' while parsing ${instruction.spec.mnemonic}`);
+                throw new Error(`not supported stack input '${(input as any).type}' while parsing ${instruction.spec.mnemonic}`);
             }
         }
         // Pop outputs
@@ -295,6 +328,37 @@ export class Continuation {
                 const v = stack.push();
                 pushedThisInsn += 1;
                 stackOutputs[`const${constCounter++}`] = { var: v, types: [output.value_type] };
+            } else if (output.type == 'array') {
+                // Support fixed-length arrays (length taken from operands). Dynamic (from stack) not supported yet.
+                const lenVar = output.length_var as string;
+                let count: number | null = null;
+                if (Object.prototype.hasOwnProperty.call(instruction.operands, lenVar)) {
+                    const v = instruction.operands[lenVar];
+                    if (typeof v === 'number') count = v as number;
+                }
+                if (count == null) {
+                    throw new Error(`not supported dynamic array length '${lenVar}' while parsing ${instruction.spec.mnemonic}`);
+                }
+                let idx = 0;
+                // Push entries for array elements in spec order (deepest to top)
+                for (let i = 0; i < count; i++) {
+                    for (let ent of output.array_entry) {
+                        if (ent.type === 'simple') {
+                            const v = stack.push();
+                            pushedThisInsn += 1;
+                            const key = `${ent.name}${idx}`;
+                            (stackOutputs as any)[key] = { var: v, types: ent.value_types };
+                            idx++;
+                        } else if (ent.type === 'const') {
+                            const v = stack.push();
+                            pushedThisInsn += 1;
+                            const key = `const${constCounter++}`;
+                            (stackOutputs as any)[key] = { var: v, types: [ent.value_type] };
+                        } else if (ent.type === 'conditional' || ent.type === 'array') {
+                            throw new Error(`not supported nested '${ent.type}' inside array output while parsing ${instruction.spec.mnemonic}`);
+                        }
+                    }
+                }
             } else if (output.type == 'conditional') {
                 // Create / update guard at boundary below values pushed so far
                 const arms = [...(output.match ?? []).map(x => x.stack ?? []), ...(output.else ? [output.else] : [])];
