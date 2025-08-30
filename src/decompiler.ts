@@ -1,5 +1,4 @@
 import type { Program } from "./core/program";
-import { isSingle, isMulti } from "./core/program";
 import { defaultPipeline } from "./middle/pipeline";
 import { printProgram } from "./backend/printer";
 import { liftSliceToIR } from "./frontend/lifter";
@@ -31,4 +30,3 @@ export class Decompiler {
     return printProgram(p);
   }
 }
-

@@ -1,5 +1,5 @@
 import type { Instruction, PossibleValueTypes } from "./gen/tvm-spec";
-import type { Slice, Cell, Hashmap } from "ton3-core";
+import type { Slice, Cell } from "ton3-core";
 
 // Intermediate Representation (IR) to describe decompiled code in a
 // transformation-friendly way. Optimizers can operate on this IR and
@@ -70,7 +70,6 @@ export function isIRFunction(x: unknown): x is IRFunction {
 
 // Minimal IR pretty-printer for debugging and evaluation.
 export function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
-  const indent = (s: string, n: number) => s.replace(/^/gm, ' '.repeat(n));
   const fmtTypes = (t?: IRType[]) => t && t.length ? `: ${t.join('|')}` : '';
   const fmtValRef = (v: IRValueRef) => `${v.id}${fmtTypes(v.types)}`;
   const fmtValDef = (v: IRValueDef) => `${v.id}${fmtTypes(v.types)}`;

@@ -4,7 +4,13 @@ import { Bit, Builder, Slice } from "ton3-core";
 
 export type VarMap = { [key: string]: any };
 
-let intToBin = (n: number, size: number) => [...Array(size)].map((x, i) => (n >> i & 1) as Bit).reverse();
+let intToBin = (n: number, size: number) => {
+    const out: Bit[] = [];
+    for (let i = 0; i < size; i++) {
+        out.push(((n >> i) & 1) as Bit);
+    }
+    return out.reverse();
+};
 
 let bitsToStr = (bits: Bit[]) => bits.map(x => x.toString()).join('');
 

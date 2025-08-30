@@ -68,16 +68,7 @@ export class Stack {
         return Array.from(this._stack);
     }
 
-    public dump(): string {
-        if (!this._guard) {
-            return this._stack.map(se => se.name).join(', ');
-        }
-        // Visualize guard position: bottom ... |GUARD| ... top
-        const splitIndex = Math.max(0, this._stack.length - this._guard.depth);
-        const bottom = this._stack.slice(0, splitIndex).map(se => se.name).join(', ');
-        const top = this._stack.slice(splitIndex).map(se => se.name).join(', ');
-        return `${bottom}${bottom ? ", " : ""}|GUARD|${top ? ", " : ""}${top}`;
-    }
+    // Debug dump removed
 
     public pop(): StackVariable {
         if (this._guard) {

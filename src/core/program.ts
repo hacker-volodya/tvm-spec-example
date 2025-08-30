@@ -14,12 +14,4 @@ export type MultiFunctionProgram = {
 };
 
 export type Program = SingleFunctionProgram | MultiFunctionProgram;
-
-export function isMulti(p: Program): p is MultiFunctionProgram {
-  return p.kind === 'multi';
-}
-
-export function isSingle(p: Program): p is SingleFunctionProgram {
-  return p.kind === 'single';
-}
-
+// Type guards removed as unused; use `p.kind` directly if needed

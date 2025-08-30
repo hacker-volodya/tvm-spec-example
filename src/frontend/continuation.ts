@@ -1,9 +1,8 @@
-import { Cell, Hashmap, Slice } from "ton3-core";
-import { OpcodeParser, VarMap } from "./disasm";
-import { Instruction } from "./gen/tvm-spec";
-import { GuardUnresolvedError, Stack, StackUnderflowError, StackVariable } from "./stackAnalysis";
-import { IRFunction, IROperands, IRInputs, IROpPrim, IROperandValue, IROutputs, IRValueDef, IRValueRef, formatIR } from "./ir";
-import { bitsToIntUint } from "ton3-core/dist/utils/numbers";
+import { Hashmap, Slice } from "ton3-core";
+import { OpcodeParser, VarMap } from "../disasm";
+import { Instruction } from "../gen/tvm-spec";
+import { GuardUnresolvedError, Stack, StackUnderflowError, StackVariable } from "../stackAnalysis";
+import { IRFunction, IROperands, IRInputs, IROpPrim, IROperandValue, IROutputs, IRValueDef, IRValueRef } from "../ir";
 
 const CONTINUATIONS: { [key: string]: string[] } = {
     CALLREF: ["c"],
@@ -41,125 +40,19 @@ export class Continuation {
         this.disassembleError = disassembleError;
     }
 
-    private static dumpOperandConts(operands: VarMap): string[] { 
-        let conts = [];
-        for (const operand in operands) {
-            let v = operands[operand];
-            if (v instanceof Continuation) {
-                conts.push(v.dump());
-                delete operands[operand];
-            }
-            if (v instanceof Hashmap) {
-                v.forEach((methodId: number, cont: Continuation) => {
-                    conts.push(`/* methodId: ${methodId} */ ${cont.dump()}`);
-                });
-                delete operands[operand];
-            }
-        }
-        return conts;
+    // Helper to identify raw stack operations that should be hidden/skipped in dumps and IR
+    private static isStackOp(ins: { spec: Instruction }): boolean {
+        return ["stack_basic", "stack_complex"].includes(ins.spec.doc.category);
     }
 
-    public dump(): string {
-        const indentString = (str: string, count: number, indent = " ") => {
-            indent = indent.repeat(count);
-            return str.replace(/^/gm, indent);
-        };
-        const isStackOp = (ins: DecompiledInstruction) => ["stack_basic", "stack_complex"].includes(ins.spec.doc.category);
-
-        // count variable usages
-        let useCount: { [name: string]: number } = {};
-        for (let instruction of this.code) {
-            for (let input of Object.values(instruction.inputs)) {
-                let name = (input as any).var.name;
-                useCount[name] = (useCount[name] ?? 0) + 1;
-            }
-        }
-
-        // determine instructions to inline
-        let inlineMap: { [name: string]: string } = {};
-        let skip = new Set<number>();
-
-        const formatInstruction = (ins: DecompiledInstruction): string => {
-            let operandsCopy = { ...ins.operands };
-            let conts = Continuation.dumpOperandConts(operandsCopy);
-            let operands = Object.values(operandsCopy).map(x => `${x}`);
-            let inputVars = Object.values(ins.inputs).map((input: any) => inlineMap[input.var.name] ?? input.var.name);
-            let inputStr = operands.concat(...inputVars).concat(...conts).join(', ');
-            return `${ins.spec.mnemonic}(${inputStr})`;
-        };
-
-        for (let i = 0; i < this.code.length; i++) {
-            let instruction = this.code[i];
-            if (isStackOp(instruction)) continue;
-            let outputs = Object.values(instruction.outputs).map((o: any) => o.var.name);
-            if (outputs.length !== 1) continue;
-            let outVar = outputs[0];
-            if (useCount[outVar] !== 1) continue;
-            let j = -1;
-            for (let k = i + 1; k < this.code.length; k++) {
-                let inputs = Object.values(this.code[k].inputs);
-                if (inputs.some((inp: any) => inp.var.name === outVar)) {
-                    j = k;
-                    break;
-                }
-            }
-            if (j === i + 1 && !isStackOp(this.code[j])) {
-                inlineMap[outVar] = formatInstruction(instruction);
-                skip.add(i);
-            }
-        }
-
-        let code = "";
-        for (let [index, instruction] of this.code.entries()) {
-            if (skip.has(index)) continue;
-            // hide stack operations
-            if (isStackOp(instruction)) {
-                //code += `// ${instruction.spec.mnemonic} ${Object.values(instruction.operands).map(x => `${x}`)}\n`;
-                continue;
-            }
-            let outputVars = Object.values(instruction.outputs).map((output: any) => output.var.name).join(', ');
-            let inputVars = Object.values(instruction.inputs).map((input: any) => inlineMap[input.var.name] ?? input.var.name);
-
-            let operandsCopy = { ...instruction.operands };
-            let conts = Continuation.dumpOperandConts(operandsCopy);
-            let operands = Object.values(operandsCopy).map(x => `${x}`);
-            let inputStr = operands.concat(...inputVars).concat(...conts).join(', ');
-            code += (outputVars ? `${outputVars} = ` : '') + `${instruction.spec.mnemonic}(${inputStr});\n`;
-        }
-        code += "// result stack: " + this.resultStack.map(s => s.name).join(', ') + "\n";
-        if (this.decompileError) {
-            code += "// decompilation error: " + this.decompileError + "\n";
-        }
-        for (let instruction of this.asmTail) {
-            let conts = Continuation.dumpOperandConts(instruction.operands);
-            let operands = Object.values(instruction.operands).map(x => `${x}`);
-            code += `${instruction.spec.mnemonic} ${operands.concat(...conts).join(', ')}\n`;
-        }
-        if (this.disassembleError) {
-            code += `// Disassemble error: ${this.disassembleError}\n`;
-        }
-        if (this.sliceTail.bits.length > 0 || this.sliceTail.refs.length > 0) {
-            code += `// Tail slice:\n${this.sliceTail}\n`;
-        }
-        return `function (${this.args.map(a => a.name).join(', ')}) {\n${indentString(code.trimEnd(), 4)}\n}`;
-    }
+    // Debug dump removed
 
     public toIR(): IRFunction {
-        const isStackOp = (ins: DecompiledInstruction) => ["stack_basic", "stack_complex"].includes(ins.spec.doc.category);
-
-        const convertOperands = (ops: VarMap): IROperands => {
-            const res: IROperands = {};
-            for (const [k, v] of Object.entries(ops)) {
-                res[k] = this.convertOperandValue(v);
-            }
-            return res;
-        };
-
         const args: IRValueDef[] = this.args.map((a) => ({ id: a.name }));
         const body: IROpPrim[] = [];
 
         for (const ins of this.code) {
-            if (isStackOp(ins)) continue; // exclude raw stack ops from IR
+            if (Continuation.isStackOp(ins)) continue; // exclude raw stack ops from IR
             const inputs: IRInputs = {};
             for (const [name, val] of Object.entries(ins.inputs)) {
                 const v = val as any as { var: StackVariable; types?: string[] };
@@ -193,13 +86,13 @@ export class Continuation {
                 }
             }
 
-            const operands: IROperands = convertOperands({ ...ins.operands });
+            const operands: IROperands = this.convertOperands({ ...ins.operands });
             body.push({ kind: 'prim', spec: ins.spec, mnemonic: ins.spec.mnemonic, inputs, operands, outputs });
         }
 
         const result: IRValueRef[] = this.resultStack.map((s) => ({ id: s.name }));
 
-        const asmTail = this.asmTail?.map((i) => ({ spec: i.spec, operands: this.convertOperandsForTail(i.operands) })) ?? [];
+        const asmTail = this.asmTail?.map((i) => ({ spec: i.spec, operands: this.convertOperands(i.operands) })) ?? [];
         const tailSliceInfo = (this.sliceTail.bits.length > 0 || this.sliceTail.refs.length > 0) ? String(this.sliceTail) : undefined;
 
         return {
@@ -228,7 +121,7 @@ export class Continuation {
         return v as IROperandValue;
     }
 
-    private convertOperandsForTail(ops: VarMap): IROperands {
+    private convertOperands(ops: VarMap): IROperands {
         const res: IROperands = {};
         for (const [k, v] of Object.entries(ops)) {
             res[k] = this.convertOperandValue(v);

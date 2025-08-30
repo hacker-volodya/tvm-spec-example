@@ -1,5 +1,5 @@
 import { defaultPipeline } from '../src/middle/pipeline';
-import { formatIR, IRFunction, IROpPrim, IRValueDef, IRValueRef } from '../src/ir';
+import { IRFunction, IROpPrim, IRValueDef, IRValueRef } from '../src/ir';
 import type { Instruction } from '../src/gen/tvm-spec';
 
 function fakeSpec(category: string): Instruction {
@@ -95,4 +95,3 @@ describe('defaultPipeline snapshot', () => {
     expect(out).toMatchSnapshot();
   });
 });
-
