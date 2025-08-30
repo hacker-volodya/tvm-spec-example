@@ -56,11 +56,11 @@ if (dictIR) {
     // Print dictionary of functions, sorted by methodId
     const pairs = Array.from(dictIR.entries()).sort((a, b) => a[0] - b[0]);
     for (const [id, fn] of pairs) {
-        console.log(`/* methodId: ${id} */`);
-        console.log(formatIR(inlinePrevSingleUse(fn)));
+        console.log(formatIR(inlinePrevSingleUse(fn), { methodId: id }));
         console.log();
     }
 } else {
     const cont = Continuation.decompile(slice);
-    console.log(formatIR(inlinePrevSingleUse(cont.toIR())))
+    const ir = cont.toIR();
+    console.log(formatIR(inlinePrevSingleUse(ir)))
 }

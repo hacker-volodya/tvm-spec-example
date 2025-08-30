@@ -49,6 +49,8 @@ export type IRStmt = IROpPrim;
 
 export type IRFunction = {
   kind: 'function';
+  // Optional human-friendly name for pretty-printer
+  name?: string;
   // Formal parameters (top-of-stack last as in decompiler args order)
   args: IRValueDef[];
   // Linear body (we can attach CFG later if needed)
@@ -67,7 +69,7 @@ export function isIRFunction(x: unknown): x is IRFunction {
 }
 
 // Minimal IR pretty-printer for debugging and evaluation.
-export function formatIR(fn: IRFunction): string {
+export function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
   const indent = (s: string, n: number) => s.replace(/^/gm, ' '.repeat(n));
   const fmtTypes = (t?: IRType[]) => t && t.length ? `: ${t.join('|')}` : '';
   const fmtValRef = (v: IRValueRef) => `${v.id}${fmtTypes(v.types)}`;
@@ -91,7 +93,25 @@ export function formatIR(fn: IRFunction): string {
       // Slice/Cell or other object: fall back to toString()
       try { return String(v); } catch { return '[object]'; }
     }
+    if (typeof v === 'number') return formatNumber(v);
+    if (typeof v === 'bigint') return formatBigInt(v);
     return JSON.stringify(v);
+  };
+
+  const formatNumber = (n: number): string => {
+    // Keep small structural constants as decimals to avoid clutter
+    if (Number.isInteger(n) && Math.abs(n) <= 512) return String(n);
+    // Otherwise include hex for readability
+    const hex = '0x' + (n >>> 0).toString(16);
+    return `${n} (${hex})`;
+  };
+
+  const formatBigInt = (n: bigint): string => {
+    // Show bigint in decimal; append hex if small enough
+    const abs = n < 0n ? -n : n;
+    if (abs <= 512n) return n.toString();
+    const hex = '0x' + abs.toString(16);
+    return n.toString() + ' (' + hex + ')';
   };
 
   const formatInlineOpAsExpr = (st: IROpPrim): string => {
@@ -128,9 +148,15 @@ export function formatIR(fn: IRFunction): string {
     }
     return fmtValRef(a as IRValueRef);
   };
-
-  const args = fn.args.map(a => fmtValDef(a)).join(', ');
-  let out = `function (${args}) {\n`;
+  const argsStr = fn.args.map(a => fmtValDef(a)).join(', ');
+  const nameFromMethodId = (id?: number) => {
+    if (id === -1) return 'recv_external';
+    if (id === 0) return 'recv_internal';
+    return undefined;
+  };
+  const nameStr = fn.name ? ` ${fn.name}` : (opts?.methodId !== undefined ? (nameFromMethodId(opts.methodId) ? ` ${nameFromMethodId(opts.methodId)}` : '') : '');
+  const header = opts?.methodId !== undefined ? `/* methodId: ${opts.methodId} */\n` : '';
+  let out = header + `function${nameStr} (${argsStr}) {\n`;
   for (const st of fn.body) {
     // Order outputs according to spec value_flow if available
     const getOutputsInOrder = (): IRValueDef[] => {
