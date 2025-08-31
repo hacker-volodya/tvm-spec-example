@@ -13,7 +13,7 @@ export function inlineConsts(fn: IRFunction): IRFunction {
   const producedBy: Map<string, { stmtIndex: number; stmt: IROpPrim }> = new Map();
   for (let i = 0; i < body.length; i++) {
     const st = body[i];
-    const outs = Object.values(st.outputs);
+    const outs = st.outputs.map(o => o.value);
     if (outs.length !== 1) continue;
     const cat = st.spec?.doc?.category as string | undefined;
     if (!isConstCategory(cat)) continue;
@@ -26,7 +26,7 @@ export function inlineConsts(fn: IRFunction): IRFunction {
   const uses: Map<string, UseSite[]> = new Map();
   for (let i = 0; i < body.length; i++) {
     const st = body[i];
-    for (const [name, arg] of Object.entries(st.inputs)) {
+    for (const { name, value: arg } of st.inputs) {
       const ref = arg as IRInputArg;
       if ((ref as any).kind === 'inline') continue;
       const id = (ref as IRValueRef).id;
@@ -49,7 +49,8 @@ export function inlineConsts(fn: IRFunction): IRFunction {
     for (const site of sites) {
       const consumer = body[site.stmtIndex];
       const inline: IRInlineExpr = { kind: 'inline', op: stmt };
-      consumer.inputs[site.inputName] = inline;
+      const inp = consumer.inputs.find(i => i.name === site.inputName);
+      if (inp) inp.value = inline;
     }
     // Remove producer if it doesn't contribute to result
     if (!resultIds.has(id)) {
@@ -78,7 +79,7 @@ export function inlinePrevSingleUse(fn: IRFunction): IRFunction {
     const cnt: Map<string, number> = new Map();
     for (let i = 0; i < b.length; i++) {
       const st = b[i];
-      for (const [, a] of Object.entries(st.inputs)) {
+      for (const { value: a } of st.inputs) {
         if ((a as any).kind === 'inline') continue;
         const id = (a as IRValueRef).id;
         cnt.set(id, (cnt.get(id) ?? 0) + 1);
@@ -94,7 +95,7 @@ export function inlinePrevSingleUse(fn: IRFunction): IRFunction {
     for (let i = 1; i < body.length; i++) {
       const prev = body[i - 1];
       const curr = body[i];
-      const outs = Object.values(prev.outputs);
+      const outs = prev.outputs.map(o => o.value);
       if (outs.length !== 1) continue;
       const id = outs[0].id;
       if (resultIds.has(id)) continue; // don't remove a producer contributing to result
@@ -102,14 +103,15 @@ export function inlinePrevSingleUse(fn: IRFunction): IRFunction {
       if (totalUses !== 1) continue;
       // Check curr uses this id in one of its inputs
       let foundInputName: string | null = null;
-      for (const [name, a] of Object.entries(curr.inputs)) {
+      for (const { name, value: a } of curr.inputs) {
         if ((a as any).kind === 'inline') continue;
         if ((a as IRValueRef).id === id) { foundInputName = name; break; }
       }
       if (!foundInputName) continue;
       // Inline
       const inline: IRInlineExpr = { kind: 'inline', op: prev };
-      curr.inputs[foundInputName] = inline;
+      const inp = curr.inputs.find(i => i.name === foundInputName);
+      if (inp) inp.value = inline;
       // Remove prev from body
       body.splice(i - 1, 1);
       // Move index back to re-check new adjacency around position i-1

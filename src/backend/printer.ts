@@ -40,15 +40,24 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
   };
 
   const formatInlineOperand = (v: IROperandValue): string => {
-    if ((v as any)?.kind === 'function') return formatInlineFn(v as unknown as IRFunction);
-    if (v instanceof Map) return formatInlineMap(v as Map<number, IRFunction>);
-    if (typeof v === 'object' && v !== null) {
-      try { return String(v); } catch { return '[object]'; }
+    switch (v.kind) {
+      case 'cont': return formatInlineFn(v.value);
+      case 'cont_map': return formatInlineMap(v.value);
+      case 'int': return formatNumber(v.value);
+      case 'bigint': return formatBigInt(v.value);
+      case 'bool': return String(v.value);
+      case 'slice': {
+        try { return String(v.value); } catch { return '[slice]'; }
+      }
+      case 'cell': {
+        try { return String(v.value); } catch { return '[cell]'; }
+      }
+      case 'other': {
+        try { return JSON.stringify(v.value); } catch { return String(v.value); }
+      }
     }
-    if (typeof v === 'number') return formatNumber(v);
-    if (typeof v === 'bigint') return formatBigInt(v);
-    return JSON.stringify(v);
   };
+
 
   const formatNumber = (n: number): string => {
     if (Number.isInteger(n) && Math.abs(n) <= 512) return String(n);
@@ -77,8 +86,8 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
       }
     }
 
-    const insOrder = Object.entries(st.inputs).map(([k, v]) => `${k}=${formatInputArg(v)}`).join(', ');
-    const opPairs = Object.entries(st.operands).map(([k, v]) => [k, formatInlineOperand(v)] as [string, string]);
+    const insOrder = st.inputs.map(({ name, value }) => `${name}=${formatInputArg(value)}`).join(', ');
+    const opPairs = st.operands.map(({ name, value }) => [name, formatInlineOperand(value as IROperandValue)] as [string, string]);
     const hasMultiline = opPairs.some(([, v]) => v.includes('\n'));
 
     if (!hasMultiline) {
@@ -121,32 +130,7 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
   const header = opts?.methodId !== undefined ? `/* methodId: ${opts.methodId} */\n` : '';
   let out = header + `function${nameStr} (${argsStr}) {\n`;
   for (const st of fn.body) {
-    const getOutputsInOrder = (): IRValueDef[] => {
-      const vf: any = (st as any).spec?.value_flow;
-      const specStack = vf?.outputs?.stack as any[] | undefined;
-      if (!specStack) return Object.values(st.outputs);
-      const entries = Object.entries(st.outputs) as [string, IRValueDef][];
-      const byName = new Map(entries);
-      const constKeys: string[] = entries.filter(([k]) => k.startsWith('const')).map(([k]) => k);
-      const used = new Set<string>();
-      const ordered: IRValueDef[] = [];
-      for (const out of specStack) {
-        if ((out as any).type === 'simple') {
-          const k = (out as any).name as string;
-          const v = byName.get(k);
-          if (v) { ordered.push(v as IRValueDef); used.add(k); }
-        } else if ((out as any).type === 'const') {
-          const k = constKeys.find((x) => !used.has(x));
-          if (k) { ordered.push(byName.get(k)!); used.add(k); }
-        }
-      }
-      for (const [k, v] of entries) {
-        if (!used.has(k)) ordered.push(v);
-      }
-      return ordered;
-    };
-
-    const outs = getOutputsInOrder().map(fmtValDef).join(', ');
+    const outs = st.outputs.map(o => fmtValDef(o.value)).join(', ');
     const expr = formatInlineOpAsExpr(st);
     // If multi-line, expr ends with a closing ')' at correct indent
     out += `    ${outs ? outs + ' = ' : ''}${expr};\n`;
@@ -157,7 +141,7 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
   if (fn.decompileError) out += `    // decompilation error: ${fn.decompileError}\n`;
   if (fn.asmTail && fn.asmTail.length) {
     for (const ins of fn.asmTail) {
-      const ops = Object.entries(ins.operands).map(([k, v]) => `${k}=${formatInlineOperand(v)}`).join(', ');
+      const ops = ins.operands.map(({ name, value }) => `${name}=${formatInlineOperand(value as IROperandValue)}`).join(', ');
       out += `    ${ins.spec.mnemonic} ${ops}\n`;
     }
   }
@@ -185,7 +169,9 @@ export function printProgram(p: Program): string {
 // Default custom printers
 // Collapse PUSHINT_* wrappers used as inline operands into bare literals
 registerInlinePrinterPrefix('PUSHINT_', (st, ctx) => {
-  const v = (st.operands as any)?.x ?? (st.operands as any)?.i;
+  const vx = st.operands.find(o => o.name === 'x')?.value;
+  const vi = st.operands.find(o => o.name === 'i')?.value;
+  const v = vx ?? vi;
   if (v == null) return null;
   return ctx.formatInlineOperand(v);
 });

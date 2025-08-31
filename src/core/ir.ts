@@ -17,9 +17,18 @@ export type IRValueDef = {
   types?: IRType[];
 };
 
-export type IROperandValue = number | bigint | boolean | Slice | Cell | IRFunction | Map<number, IRFunction> | unknown;
+// Algebraic data type for instruction operands
+export type IROperandValue =
+  | { kind: 'int'; value: number }
+  | { kind: 'bigint'; value: bigint }
+  | { kind: 'bool'; value: boolean }
+  | { kind: 'slice'; value: Slice }
+  | { kind: 'cell'; value: Cell }
+  | { kind: 'cont'; value: IRFunction }
+  | { kind: 'cont_map'; value: Map<number, IRFunction> }
+  | { kind: 'other'; value: unknown };
 
-export type IROperands = { [name: string]: IROperandValue };
+export type IROperands = Array<{ name: string; value: IROperandValue }>;
 
 export type IRInlineExpr = {
   kind: 'inline';
@@ -28,9 +37,9 @@ export type IRInlineExpr = {
 
 export type IRInputArg = IRValueRef | IRInlineExpr;
 
-export type IRInputs = { [name: string]: IRInputArg };
+export type IRInputs = Array<{ name: string; value: IRInputArg }>;
 
-export type IROutputs = { [name: string]: IRValueDef };
+export type IROutputs = Array<{ name: string; value: IRValueDef }>;
 
 export type IROpPrim = {
   kind: 'prim';
@@ -58,4 +67,3 @@ export type IRFunction = {
 export function isIRFunction(x: unknown): x is IRFunction {
   return !!x && typeof x === 'object' && (x as any).kind === 'function';
 }
-

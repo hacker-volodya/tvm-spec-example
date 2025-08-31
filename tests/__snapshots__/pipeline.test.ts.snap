@@ -5,15 +5,18 @@ exports[`defaultPipeline snapshot does not inline producer if its value is part 
   "args": [],
   "body": [
     {
-      "inputs": {},
+      "inputs": [],
       "kind": "prim",
       "mnemonic": "PUSHCONST",
-      "operands": {},
-      "outputs": {
-        "v": {
-          "id": "vres",
+      "operands": [],
+      "outputs": [
+        {
+          "name": "v",
+          "value": {
+            "id": "vres",
+          },
         },
-      },
+      ],
       "spec": {
         "bytecode": {
           "operands": [],
@@ -46,60 +49,69 @@ exports[`defaultPipeline snapshot does not inline producer if its value is part 
       },
     },
     {
-      "inputs": {
-        "a": {
-          "kind": "inline",
-          "op": {
-            "inputs": {},
-            "kind": "prim",
-            "mnemonic": "PUSHCONST",
-            "operands": {},
-            "outputs": {
-              "v": {
-                "id": "vres",
-              },
-            },
-            "spec": {
-              "bytecode": {
-                "operands": [],
-                "prefix": "00",
-                "tlb": "",
-              },
-              "control_flow": {
-                "branches": [],
-                "nobranch": true,
-              },
-              "doc": {
-                "category": "const_int",
-                "description": "",
-                "fift": "",
-                "fift_examples": [],
-                "gas": "",
-                "opcode": "",
-                "stack": "",
-              },
-              "mnemonic": "FAKE",
-              "since_version": 9999,
-              "value_flow": {
-                "inputs": {
-                  "registers": [],
+      "inputs": [
+        {
+          "name": "a",
+          "value": {
+            "kind": "inline",
+            "op": {
+              "inputs": [],
+              "kind": "prim",
+              "mnemonic": "PUSHCONST",
+              "operands": [],
+              "outputs": [
+                {
+                  "name": "v",
+                  "value": {
+                    "id": "vres",
+                  },
                 },
-                "outputs": {
-                  "registers": [],
+              ],
+              "spec": {
+                "bytecode": {
+                  "operands": [],
+                  "prefix": "00",
+                  "tlb": "",
+                },
+                "control_flow": {
+                  "branches": [],
+                  "nobranch": true,
+                },
+                "doc": {
+                  "category": "const_int",
+                  "description": "",
+                  "fift": "",
+                  "fift_examples": [],
+                  "gas": "",
+                  "opcode": "",
+                  "stack": "",
+                },
+                "mnemonic": "FAKE",
+                "since_version": 9999,
+                "value_flow": {
+                  "inputs": {
+                    "registers": [],
+                  },
+                  "outputs": {
+                    "registers": [],
+                  },
                 },
               },
             },
           },
         },
-      },
+      ],
       "kind": "prim",
       "mnemonic": "USE",
-      "operands": {},
-      "outputs": {
-        "y": {
-          "id": "y",
+      "operands": [],
+      "outputs": [
+        {
+          "name": "y",
+          "value": {
+            "id": "y",
+          },
         },
-      },
+      ],
       "spec": {
         "bytecode": {
           "operands": [],
@@ -153,64 +165,76 @@ exports[`defaultPipeline snapshot inlines previous single-use non-const op 1`] =
   ],
   "body": [
     {
-      "inputs": {
-        "x": {
-          "kind": "inline",
-          "op": {
-            "inputs": {
-              "a": {
-                "id": "arg0",
-              },
-            },
-            "kind": "prim",
-            "mnemonic": "SHL",
-            "operands": {},
-            "outputs": {
-              "t": {
-                "id": "t",
-              },
-            },
-            "spec": {
-              "bytecode": {
-                "operands": [],
-                "prefix": "00",
-                "tlb": "",
-              },
-              "control_flow": {
-                "branches": [],
-                "nobranch": true,
-              },
-              "doc": {
-                "category": "misc",
-                "description": "",
-                "fift": "",
-                "fift_examples": [],
-                "gas": "",
-                "opcode": "",
-                "stack": "",
-              },
-              "mnemonic": "FAKE",
-              "since_version": 9999,
-              "value_flow": {
-                "inputs": {
-                  "registers": [],
+      "inputs": [
+        {
+          "name": "x",
+          "value": {
+            "kind": "inline",
+            "op": {
+              "inputs": [
+                {
+                  "name": "a",
+                  "value": {
+                    "id": "arg0",
+                  },
                 },
-                "outputs": {
-                  "registers": [],
+              ],
+              "kind": "prim",
+              "mnemonic": "SHL",
+              "operands": [],
+              "outputs": [
+                {
+                  "name": "t",
+                  "value": {
+                    "id": "t",
+                  },
+                },
+              ],
+              "spec": {
+                "bytecode": {
+                  "operands": [],
+                  "prefix": "00",
+                  "tlb": "",
+                },
+                "control_flow": {
+                  "branches": [],
+                  "nobranch": true,
+                },
+                "doc": {
+                  "category": "misc",
+                  "description": "",
+                  "fift": "",
+                  "fift_examples": [],
+                  "gas": "",
+                  "opcode": "",
+                  "stack": "",
+                },
+                "mnemonic": "FAKE",
+                "since_version": 9999,
+                "value_flow": {
+                  "inputs": {
+                    "registers": [],
+                  },
+                  "outputs": {
+                    "registers": [],
+                  },
                 },
               },
             },
           },
         },
-      },
+      ],
       "kind": "prim",
       "mnemonic": "NEGATE",
-      "operands": {},
-      "outputs": {
-        "y": {
-          "id": "y",
+      "operands": [],
+      "outputs": [
+        {
+          "name": "y",
+          "value": {
+            "id": "y",
+          },
         },
-      },
+      ],
       "spec": {
         "bytecode": {
           "operands": [],
@@ -261,56 +285,62 @@ exports[`defaultPipeline snapshot inlines single-use const producer into consume
   ],
   "body": [
     {
-      "inputs": {
-        "v": {
-          "kind": "inline",
-          "op": {
-            "inputs": {},
-            "kind": "prim",
-            "mnemonic": "PUSHCONST",
-            "operands": {},
-            "outputs": {
-              "v": {
-                "id": "v1",
-              },
-            },
-            "spec": {
-              "bytecode": {
-                "operands": [],
-                "prefix": "00",
-                "tlb": "",
-              },
-              "control_flow": {
-                "branches": [],
-                "nobranch": true,
-              },
-              "doc": {
-                "category": "const_int",
-                "description": "",
-                "fift": "",
-                "fift_examples": [],
-                "gas": "",
-                "opcode": "",
-                "stack": "",
-              },
-              "mnemonic": "FAKE",
-              "since_version": 9999,
-              "value_flow": {
-                "inputs": {
-                  "registers": [],
+      "inputs": [
+        {
+          "name": "v",
+          "value": {
+            "kind": "inline",
+            "op": {
+              "inputs": [],
+              "kind": "prim",
+              "mnemonic": "PUSHCONST",
+              "operands": [],
+              "outputs": [
+                {
+                  "name": "v",
+                  "value": {
+                    "id": "v1",
+                  },
                 },
-                "outputs": {
-                  "registers": [],
+              ],
+              "spec": {
+                "bytecode": {
+                  "operands": [],
+                  "prefix": "00",
+                  "tlb": "",
+                },
+                "control_flow": {
+                  "branches": [],
+                  "nobranch": true,
+                },
+                "doc": {
+                  "category": "const_int",
+                  "description": "",
+                  "fift": "",
+                  "fift_examples": [],
+                  "gas": "",
+                  "opcode": "",
+                  "stack": "",
+                },
+                "mnemonic": "FAKE",
+                "since_version": 9999,
+                "value_flow": {
+                  "inputs": {
+                    "registers": [],
+                  },
+                  "outputs": {
+                    "registers": [],
+                  },
                 },
               },
             },
           },
         },
-      },
+      ],
       "kind": "prim",
       "mnemonic": "SIDEEFFECTS",
-      "operands": {},
-      "outputs": {},
+      "operands": [],
+      "outputs": [],
       "spec": {
         "bytecode": {
           "operands": [],
@@ -343,63 +373,75 @@ exports[`defaultPipeline snapshot inlines single-use const producer into consume
       },
     },
     {
-      "inputs": {
-        "a": {
-          "kind": "inline",
-          "op": {
-            "inputs": {},
-            "kind": "prim",
-            "mnemonic": "PUSHCONST",
-            "operands": {},
-            "outputs": {
-              "v": {
-                "id": "v1",
-              },
-            },
-            "spec": {
-              "bytecode": {
-                "operands": [],
-                "prefix": "00",
-                "tlb": "",
-              },
-              "control_flow": {
-                "branches": [],
-                "nobranch": true,
-              },
-              "doc": {
-                "category": "const_int",
-                "description": "",
-                "fift": "",
-                "fift_examples": [],
-                "gas": "",
-                "opcode": "",
-                "stack": "",
-              },
-              "mnemonic": "FAKE",
-              "since_version": 9999,
-              "value_flow": {
-                "inputs": {
-                  "registers": [],
+      "inputs": [
+        {
+          "name": "a",
+          "value": {
+            "kind": "inline",
+            "op": {
+              "inputs": [],
+              "kind": "prim",
+              "mnemonic": "PUSHCONST",
+              "operands": [],
+              "outputs": [
+                {
+                  "name": "v",
+                  "value": {
+                    "id": "v1",
+                  },
                 },
-                "outputs": {
-                  "registers": [],
+              ],
+              "spec": {
+                "bytecode": {
+                  "operands": [],
+                  "prefix": "00",
+                  "tlb": "",
+                },
+                "control_flow": {
+                  "branches": [],
+                  "nobranch": true,
+                },
+                "doc": {
+                  "category": "const_int",
+                  "description": "",
+                  "fift": "",
+                  "fift_examples": [],
+                  "gas": "",
+                  "opcode": "",
+                  "stack": "",
+                },
+                "mnemonic": "FAKE",
+                "since_version": 9999,
+                "value_flow": {
+                  "inputs": {
+                    "registers": [],
+                  },
+                  "outputs": {
+                    "registers": [],
+                  },
                 },
               },
             },
           },
         },
-        "b": {
-          "id": "arg0",
+        {
+          "name": "b",
+          "value": {
+            "id": "arg0",
+          },
         },
-      },
+      ],
       "kind": "prim",
       "mnemonic": "ADD",
-      "operands": {},
-      "outputs": {
-        "y": {
-          "id": "y1",
+      "operands": [],
+      "outputs": [
+        {
+          "name": "y",
+          "value": {
+            "id": "y1",
+          },
         },
-      },
+      ],
       "spec": {
         "bytecode": {
           "operands": [],

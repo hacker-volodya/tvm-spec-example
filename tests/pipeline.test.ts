@@ -29,13 +29,15 @@ function op(
   inputs: Record<string, IRValueRef | { kind: 'inline'; op: IROpPrim }> = {},
   category = 'misc'
 ): IROpPrim {
+  const inputsArr = Object.entries(inputs).map(([name, value]) => ({ name, value }));
+  const outputsArr = Object.entries(outputs).map(([name, value]) => ({ name, value }));
   return {
     kind: 'prim',
     spec: fakeSpec(category),
     mnemonic,
-    inputs,
-    operands: {},
-    outputs,
+    inputs: inputsArr,
+    operands: [],
+    outputs: outputsArr,
   };
 }
 

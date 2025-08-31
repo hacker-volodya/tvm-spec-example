@@ -125,12 +125,12 @@ function mapIRPorts(
   stackOutputs: { [k: string]: { var: StackVariable; types?: string[] } },
   spec: Instruction,
 ): { inputs: IRInputs; outputs: IROutputs } {
-  const inputs: IRInputs = {};
+  const inputs: IRInputs = [];
   for (const [name, val] of Object.entries(stackInputs)) {
-    inputs[name] = { id: val.var.name, types: val.types as any } as IRValueRef;
+    inputs.push({ name, value: { id: val.var.name, types: val.types as any } as IRValueRef });
   }
 
-  const outputs: IROutputs = {};
+  const outputs: IROutputs = [];
   const outputsSpec = (spec as any)?.value_flow?.outputs?.stack as any[] | undefined;
   const outMap = stackOutputs as any as { [k: string]: { var: StackVariable; types?: string[] } };
   if (outputsSpec && Array.isArray(outputsSpec)) {
@@ -138,17 +138,19 @@ function mapIRPorts(
       if (o.type === 'simple') {
         const name = o.name as string;
         const v = outMap[name];
-        if (v) outputs[name] = { id: v.var.name, types: v.types as any } as IRValueDef;
+        if (v) outputs.push({ name, value: { id: v.var.name, types: v.types as any } as IRValueDef });
       } else if (o.type === 'const') {
-        // keep any const* in insertion order afterwards
+        // We'll append const* in insertion order afterwards
       }
     }
     for (const [name, v] of Object.entries(outMap)) {
-      if (!(name in outputs)) outputs[name] = { id: (v as any).var.name, types: (v as any).types as any } as IRValueDef;
+      if (!outputs.find((x) => x.name === name)) {
+        outputs.push({ name, value: { id: (v as any).var.name, types: (v as any).types as any } as IRValueDef });
+      }
     }
   } else {
     for (const [name, val] of Object.entries(stackOutputs)) {
-      outputs[name] = { id: val.var.name, types: val.types as any } as IRValueDef;
+      outputs.push({ name, value: { id: val.var.name, types: val.types as any } as IRValueDef });
     }
   }
   return { inputs, outputs };
