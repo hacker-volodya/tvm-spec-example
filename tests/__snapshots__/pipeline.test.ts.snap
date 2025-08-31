@@ -220,50 +220,91 @@ exports[`defaultPipeline snapshot inlines single-use const producer into consume
   ],
   "body": [
     {
+      "inputs": {},
+      "kind": "prim",
+      "mnemonic": "PUSHCONST",
+      "operands": {},
+      "outputs": {
+        "v": {
+          "id": "v1",
+        },
+      },
+      "spec": {
+        "bytecode": {
+          "operands": [],
+          "prefix": "00",
+          "tlb": "",
+        },
+        "control_flow": {
+          "branches": [],
+          "nobranch": true,
+        },
+        "doc": {
+          "category": "const_int",
+          "description": "",
+          "fift": "",
+          "fift_examples": [],
+          "gas": "",
+          "opcode": "",
+          "stack": "",
+        },
+        "mnemonic": "FAKE",
+        "since_version": 9999,
+        "value_flow": {
+          "inputs": {
+            "registers": [],
+          },
+          "outputs": {
+            "registers": [],
+          },
+        },
+      },
+    },
+    {
+      "inputs": {
+        "v": {
+          "id": "v1",
+        },
+      },
+      "kind": "prim",
+      "mnemonic": "SIDEEFFECTS",
+      "operands": {},
+      "outputs": {},
+      "spec": {
+        "bytecode": {
+          "operands": [],
+          "prefix": "00",
+          "tlb": "",
+        },
+        "control_flow": {
+          "branches": [],
+          "nobranch": true,
+        },
+        "doc": {
+          "category": "misc",
+          "description": "",
+          "fift": "",
+          "fift_examples": [],
+          "gas": "",
+          "opcode": "",
+          "stack": "",
+        },
+        "mnemonic": "FAKE",
+        "since_version": 9999,
+        "value_flow": {
+          "inputs": {
+            "registers": [],
+          },
+          "outputs": {
+            "registers": [],
+          },
+        },
+      },
+    },
+    {
       "inputs": {
         "a": {
-          "kind": "inline",
-          "op": {
-            "inputs": {},
-            "kind": "prim",
-            "mnemonic": "PUSHCONST",
-            "operands": {},
-            "outputs": {
-              "v": {
-                "id": "v1",
-              },
-            },
-            "spec": {
-              "bytecode": {
-                "operands": [],
-                "prefix": "00",
-                "tlb": "",
-              },
-              "control_flow": {
-                "branches": [],
-                "nobranch": true,
-              },
-              "doc": {
-                "category": "const_int",
-                "description": "",
-                "fift": "",
-                "fift_examples": [],
-                "gas": "",
-                "opcode": "",
-                "stack": "",
-              },
-              "mnemonic": "FAKE",
-              "since_version": 9999,
-              "value_flow": {
-                "inputs": {
-                  "registers": [],
-                },
-                "outputs": {
-                  "registers": [],
-                },
-              },
-            },
-          },
+          "id": "v1",
         },
         "b": {
           "id": "arg0",

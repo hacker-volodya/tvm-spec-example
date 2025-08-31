@@ -45,12 +45,13 @@ describe('defaultPipeline snapshot', () => {
     const y1: IRValueDef = { id: 'y1' };
 
     const constOp = op('PUSHCONST', { v: v1 }, {}, 'const_int');
+    const anotherOp = op('SIDEEFFECTS', {}, { v: v1 });
     const consumer = op('ADD', { y: y1 }, { a: { id: 'v1' }, b: { id: 'arg0' } });
 
     const fn: IRFunction = {
       kind: 'function',
       args: [{ id: 'arg0' }],
-      body: [constOp, consumer],
+      body: [constOp, anotherOp, consumer],
       result: [{ id: 'y1' }],
     };
 
