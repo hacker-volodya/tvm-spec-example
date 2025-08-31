@@ -48,7 +48,48 @@ exports[`defaultPipeline snapshot does not inline producer if its value is part 
     {
       "inputs": {
         "a": {
-          "id": "vres",
+          "kind": "inline",
+          "op": {
+            "inputs": {},
+            "kind": "prim",
+            "mnemonic": "PUSHCONST",
+            "operands": {},
+            "outputs": {
+              "v": {
+                "id": "vres",
+              },
+            },
+            "spec": {
+              "bytecode": {
+                "operands": [],
+                "prefix": "00",
+                "tlb": "",
+              },
+              "control_flow": {
+                "branches": [],
+                "nobranch": true,
+              },
+              "doc": {
+                "category": "const_int",
+                "description": "",
+                "fift": "",
+                "fift_examples": [],
+                "gas": "",
+                "opcode": "",
+                "stack": "",
+              },
+              "mnemonic": "FAKE",
+              "since_version": 9999,
+              "value_flow": {
+                "inputs": {
+                  "registers": [],
+                },
+                "outputs": {
+                  "registers": [],
+                },
+              },
+            },
+          },
         },
       },
       "kind": "prim",
@@ -220,50 +261,50 @@ exports[`defaultPipeline snapshot inlines single-use const producer into consume
   ],
   "body": [
     {
-      "inputs": {},
-      "kind": "prim",
-      "mnemonic": "PUSHCONST",
-      "operands": {},
-      "outputs": {
-        "v": {
-          "id": "v1",
-        },
-      },
-      "spec": {
-        "bytecode": {
-          "operands": [],
-          "prefix": "00",
-          "tlb": "",
-        },
-        "control_flow": {
-          "branches": [],
-          "nobranch": true,
-        },
-        "doc": {
-          "category": "const_int",
-          "description": "",
-          "fift": "",
-          "fift_examples": [],
-          "gas": "",
-          "opcode": "",
-          "stack": "",
-        },
-        "mnemonic": "FAKE",
-        "since_version": 9999,
-        "value_flow": {
-          "inputs": {
-            "registers": [],
-          },
-          "outputs": {
-            "registers": [],
-          },
-        },
-      },
-    },
-    {
       "inputs": {
         "v": {
-          "id": "v1",
+          "kind": "inline",
+          "op": {
+            "inputs": {},
+            "kind": "prim",
+            "mnemonic": "PUSHCONST",
+            "operands": {},
+            "outputs": {
+              "v": {
+                "id": "v1",
+              },
+            },
+            "spec": {
+              "bytecode": {
+                "operands": [],
+                "prefix": "00",
+                "tlb": "",
+              },
+              "control_flow": {
+                "branches": [],
+                "nobranch": true,
+              },
+              "doc": {
+                "category": "const_int",
+                "description": "",
+                "fift": "",
+                "fift_examples": [],
+                "gas": "",
+                "opcode": "",
+                "stack": "",
+              },
+              "mnemonic": "FAKE",
+              "since_version": 9999,
+              "value_flow": {
+                "inputs": {
+                  "registers": [],
+                },
+                "outputs": {
+                  "registers": [],
+                },
+              },
+            },
+          },
         },
       },
       "kind": "prim",
@@ -304,7 +345,48 @@ exports[`defaultPipeline snapshot inlines single-use const producer into consume
     {
       "inputs": {
         "a": {
-          "id": "v1",
+          "kind": "inline",
+          "op": {
+            "inputs": {},
+            "kind": "prim",
+            "mnemonic": "PUSHCONST",
+            "operands": {},
+            "outputs": {
+              "v": {
+                "id": "v1",
+              },
+            },
+            "spec": {
+              "bytecode": {
+                "operands": [],
+                "prefix": "00",
+                "tlb": "",
+              },
+              "control_flow": {
+                "branches": [],
+                "nobranch": true,
+              },
+              "doc": {
+                "category": "const_int",
+                "description": "",
+                "fift": "",
+                "fift_examples": [],
+                "gas": "",
+                "opcode": "",
+                "stack": "",
+              },
+              "mnemonic": "FAKE",
+              "since_version": 9999,
+              "value_flow": {
+                "inputs": {
+                  "registers": [],
+                },
+                "outputs": {
+                  "registers": [],
+                },
+              },
+            },
+          },
         },
         "b": {
           "id": "arg0",

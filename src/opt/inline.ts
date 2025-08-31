@@ -6,7 +6,7 @@ function isConstCategory(cat: string | undefined): boolean {
 
 type UseSite = { stmtIndex: number; inputName: string };
 
-export function inlineSingleUseConsts(fn: IRFunction): IRFunction {
+export function inlineConsts(fn: IRFunction): IRFunction {
   const body = fn.body.slice();
 
   // Build producer map for single-output const instructions
@@ -41,20 +41,20 @@ export function inlineSingleUseConsts(fn: IRFunction): IRFunction {
 
   const toRemove = new Set<number>();
 
-  // For each produced id, check single use and inline
+  // For each produced id, inline into all use sites
   producedBy.forEach(({ stmtIndex, stmt }, id) => {
-    if (resultIds.has(id)) return; // keep producer if contributes to result
-    const count = useCount.get(id) ?? 0;
-    if (count !== 1) return;
-    const sites = uses.get(id)!;
-    if (!sites || sites.length !== 1) return;
-    const site = sites[0];
-    const consumer = body[site.stmtIndex];
-    // Replace consumer input with inline expression
-    const inline: IRInlineExpr = { kind: 'inline', op: stmt };
-    consumer.inputs[site.inputName] = inline;
-    // Mark producer for removal
-    toRemove.add(stmtIndex);
+    const sites = uses.get(id) ?? [];
+    if (sites.length === 0) return; // nothing to inline
+    // Replace consumer inputs with inline expression in all sites
+    for (const site of sites) {
+      const consumer = body[site.stmtIndex];
+      const inline: IRInlineExpr = { kind: 'inline', op: stmt };
+      consumer.inputs[site.inputName] = inline;
+    }
+    // Remove producer if it doesn't contribute to result
+    if (!resultIds.has(id)) {
+      toRemove.add(stmtIndex);
+    }
   });
 
   const newBody: IRStmt[] = [];
