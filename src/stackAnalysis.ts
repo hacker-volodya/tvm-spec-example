@@ -190,9 +190,85 @@ export class Stack {
                 this.execStackOperation({ op: 'xc2pu', i: operands.i, j: operands.j, k: operands.k });
                 break;
             }
-            case 'XCHG_0I': {
+            case 'XCHG_0I': 
+            case 'XCHG_0I_LONG': {
                 this.execStackOperation({ op: 'xchg', i: 0, j: operands.i });
                 break;
+            }
+            case 'XCHG_IJ': {
+                this.execStackOperation({ op: 'xchg', i: operands.i, j: operands.j });
+                break;
+            }
+            case 'XCHG_1I': {
+                this.execStackOperation({ op: 'xchg', i: 1, j: operands.i });
+                break;
+            }
+            case 'XCHG3':
+            case 'XCHG3_ALT': {
+                this.execStackOperation({ op: 'xchg', i: 2, j: operands.i });
+                this.execStackOperation({ op: 'xchg', i: 1, j: operands.j });
+                this.execStackOperation({ op: 'xchg', i: 0, j: operands.k });
+                break;
+            }
+            case 'XCHG2': {
+                this.execStackOperation({ op: 'xchg', i: 1, j: operands.i });
+                this.execStackOperation({ op: 'xchg', i: 0, j: operands.j });
+                break;
+            }
+            case 'PUXC': {
+                this.execStackOperation({ op: 'push', i: operands.i });
+                this.execStackOperation({ op: 'xchg', i: 0, j: 1 });
+                this.execStackOperation({ op: 'xchg', i: 0, j: operands.j });
+                break;
+            }
+            case 'PUSH2': {
+                this.execStackOperation({ op: 'push', i: operands.i });
+                this.execStackOperation({ op: 'push', i: operands.j + 1 });
+                break;
+            }
+            case 'XCPUXC': {
+                this.execStackOperation({ op: 'xchg', i: 1, j: operands.i });
+                this.execStackOperation({ op: 'push', i: operands.j });
+                this.execStackOperation({ op: 'xchg', i: 0, j: 1 });
+                this.execStackOperation({ op: 'xchg', i: 0, j: operands.k - 1 });
+                break;
+            }
+            case 'XCPU2': {
+                this.execStackOperation({ op: 'xchg', i: 0, j: operands.i });
+                this.execStackOperation({ op: 'push', i: operands.j });
+                this.execStackOperation({ op: 'push', i: operands.k + 1 });
+                break;
+            }
+            case 'PUXC2': {
+                this.execStackOperation({ op: 'push', i: operands.i });
+                this.execStackOperation({ op: 'xchg', i: 0, j: 2 });
+                this.execStackOperation({ op: 'xchg', i: 1, j: operands.j });
+                this.execStackOperation({ op: 'xchg', i: 0, j: operands.k });
+                break;
+            }
+            case 'PUXCPU': {
+                this.execStackOperation({ op: 'push', i: operands.i });
+                this.execStackOperation({ op: 'xchg', i: 0, j: 1 });
+                this.execStackOperation({ op: 'xchg', i: 0, j: operands.j - 1 });
+                this.execStackOperation({ op: 'push', i: operands.k });
+                break;
+            }
+            case 'PU2XC': {
+                this.execStackOperation({ op: 'push', i: operands.i });
+                this.execStackOperation({ op: 'xchg', i: 0, j: 1 });
+                this.execStackOperation({ op: 'push', i: operands.j });
+                this.execStackOperation({ op: 'xchg', i: 0, j: 1 });
+                this.execStackOperation({ op: 'xchg', i: 0, j: operands.k - 1 });
+                break;
+            }
+            case 'PUSH3': {
+                this.execStackOperation({ op: 'push', i: operands.i });
+                this.execStackOperation({ op: 'push', i: operands.j + 1 });
+                this.execStackOperation({ op: 'push', i: operands.k + 2 });
+                break;
+            }
+            default: {
+                throw new Error(`Unknown stack insn ${insn.mnemonic}`);
             }
         }
     }
