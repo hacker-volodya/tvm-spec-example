@@ -27,6 +27,43 @@ function registerSliceLoadStmt(
 }
 
 export function registerPrinters() {
+  // Arithmetic (FunC built-ins style)
+  registerInlinePrinter('ADD', (_st, ctx) => `${ctx.inP('x', 'left')} + ${ctx.inP('y', 'right')}`);
+  registerInlinePrinter('SUB', (_st, ctx) => `${ctx.inP('x', 'left')} - ${ctx.inP('y', 'right')}`);
+  registerInlinePrinter('MUL', (_st, ctx) => `${ctx.inP('x', 'left')} * ${ctx.inP('y', 'right')}`);
+  registerInlinePrinter('DIV', (_st, ctx) => `${ctx.inP('x', 'left')} / ${ctx.inP('y', 'right')}`);
+  registerInlinePrinter('MOD', (_st, ctx) => `${ctx.inP('x', 'left')} % ${ctx.inP('y', 'right')}`);
+  registerInlinePrinter('NEGATE', (_st, ctx) => `-${ctx.inP('x', 'right')}`);
+
+  // Bitwise operations
+  registerInlinePrinter('AND', (_st, ctx) => `${ctx.inP('x', 'left')} & ${ctx.inP('y', 'right')}`);
+  registerInlinePrinter('OR', (_st, ctx) => `${ctx.inP('x', 'left')} | ${ctx.inP('y', 'right')}`);
+  registerInlinePrinter('XOR', (_st, ctx) => `${ctx.inP('x', 'left')} ^ ${ctx.inP('y', 'right')}`);
+  registerInlinePrinter('NOT', (_st, ctx) => `~${ctx.inP('x', 'right')}`);
+
+  // Shifts: immediate and variable
+  registerInlinePrinter('LSHIFT', (_st, ctx) => `${ctx.inP('x', 'left')} << ${ctx.op('c')}`);
+  registerInlinePrinter('RSHIFT', (_st, ctx) => `${ctx.inP('x', 'left')} >> ${ctx.op('c')}`);
+  registerInlinePrinter('RSHIFTR', (_st, ctx) => `${ctx.inP('x', 'left')} ~>> ${ctx.op('c')}`);
+  registerInlinePrinter('RSHIFTC', (_st, ctx) => `${ctx.inP('x', 'left')} ^>> ${ctx.op('c')}`);
+  registerInlinePrinter('LSHIFT_VAR', (_st, ctx) => `${ctx.inP('x', 'left')} << ${ctx.inP('y', 'right')}`);
+  registerInlinePrinter('RSHIFT_VAR', (_st, ctx) => `${ctx.inP('x', 'left')} >> ${ctx.inP('y', 'right')}`);
+  registerInlinePrinter('RSHIFTR_VAR', (_st, ctx) => `${ctx.inP('x', 'left')} ~>> ${ctx.inP('y', 'right')}`);
+  registerInlinePrinter('RSHIFTC_VAR', (_st, ctx) => `${ctx.inP('x', 'left')} ^>> ${ctx.inP('y', 'right')}`);
+
+  // Div/mod combos
+  registerInlinePrinter('DIVMOD', (_st, ctx) => `divmod(${ctx.in('x')}, ${ctx.in('y')})`);
+  registerInlinePrinter('MULDIV', (_st, ctx) => `muldiv(${ctx.in('x')}, ${ctx.in('y')}, ${ctx.in('z')})`);
+  registerInlinePrinter('MULDIVR', (_st, ctx) => `muldivr(${ctx.in('x')}, ${ctx.in('y')}, ${ctx.in('z')})`);
+  registerInlinePrinter('MULDIVC', (_st, ctx) => `muldivc(${ctx.in('x')}, ${ctx.in('y')}, ${ctx.in('z')})`);
+  registerInlinePrinter('MULDIVMOD', (_st, ctx) => `muldivmod(${ctx.in('x')}, ${ctx.in('y')}, ${ctx.in('z')})`);
+
+  // Comparisons
+  registerInlinePrinter('LESS', (_st, ctx) => `${ctx.inP('x', 'left')} < ${ctx.inP('y', 'right')}`);
+  registerInlinePrinter('GREATER', (_st, ctx) => `${ctx.inP('x', 'left')} > ${ctx.inP('y', 'right')}`);
+  registerInlinePrinter('LEQ', (_st, ctx) => `${ctx.inP('x', 'left')} <= ${ctx.inP('y', 'right')}`);
+  registerInlinePrinter('GEQ', (_st, ctx) => `${ctx.inP('x', 'left')} >= ${ctx.inP('y', 'right')}`);
+  registerInlinePrinter('NEQ', (_st, ctx) => `${ctx.inP('x', 'left')} != ${ctx.inP('y', 'right')}`);
   // Generic: collapse PUSHINT_* wrappers used as inline operands into bare literals
   registerInlinePrinterPrefix('PUSHINT_', (_st, ctx) => {
     const v = ctx.opRaw('x') ?? ctx.opRaw('i');
@@ -96,8 +133,9 @@ export function registerPrinters() {
   registerInlinePrinter('SHA256U', (_st, ctx) => `${ctx.in('s')}.string_hash()`);
 
   // Comparisons and math
-  registerInlinePrinter('EQUAL', (_st, ctx) => `${ctx.in('x')} == ${ctx.in('y')}`);
-  registerInlinePrinter('INC', (_st, ctx) => `${ctx.in('x')} + 1`);
+  registerInlinePrinter('EQUAL', (_st, ctx) => `${ctx.inP('x', 'left')} == ${ctx.inP('y', 'right')}`);
+  registerInlinePrinter('INC', (_st, ctx) => `${ctx.inP('x', 'left')} + 1`);
+  registerInlinePrinter('DEC', (_st, ctx) => `${ctx.inP('x', 'left')} - 1`);
   registerInlinePrinter('ABS', (_st, ctx) => `abs(${ctx.in('x')})`);
   registerInlinePrinter('MINMAX', (_st, ctx) => `minmax(${ctx.in('x')}, ${ctx.in('y')})`);
 
@@ -207,4 +245,7 @@ export function registerPrinters() {
     if (k === 3) return `fourth(${ctx.in('t')})`;
     return `index(${ctx.in('t')}, ${ctx.op('k')})`;
   });
+
+  // Powers of two
+  registerInlinePrinter('POW2', (_st, ctx) => `1 << ${ctx.inP('y', 'right')}`);
 }

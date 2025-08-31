@@ -15,6 +15,7 @@ export type InlinePrinter = (st: IROpPrim, ctx: {
   formatInputArg: (a: IRInputArg) => string;
   // Convenience helpers (new)
   in: (name: string) => string;              // formatted input by name
+  inP: (name: string, side?: 'left' | 'right') => string; // formatted input with precedence-aware parens
   inRaw: (name: string) => IRInputArg | undefined; // raw input by name
   op: (name: string) => string;              // formatted operand by name
   opRaw: (name: string) => IROperandValue | undefined; // raw operand by name
@@ -31,6 +32,7 @@ export type StmtPrinter = (st: IROpPrim, ctx: {
   formatInlineOperand: (v: IROperandValue) => string;
   formatInputArg: (a: IRInputArg) => string;
   in: (name: string) => string;
+  inP: (name: string, side?: 'left' | 'right') => string;
   inRaw: (name: string) => IRInputArg | undefined;
   outRaw: (name: string) => IRValueDef | undefined;
   op: (name: string) => string;
@@ -62,6 +64,28 @@ export function registerInlinePrinterPrefix(prefix: string, fn: InlinePrinter) {
 }
 
 function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
+  // Operator precedence for selected mnemonics to drive parentheses in inline printing
+  // Higher numbers bind tighter.
+  const precedenceOf = (m: string): number => {
+    // Bitwise OR/XOR/AND
+    if (m === 'OR') return 1;
+    if (m === 'XOR') return 2;
+    if (m === 'AND') return 3;
+    // Equality
+    if (m === 'EQUAL' || m === 'NEQ') return 4;
+    // Relational
+    if (m === 'LESS' || m === 'LEQ' || m === 'GREATER' || m === 'GEQ') return 5;
+    // Shifts
+    if (m === 'LSHIFT' || m === 'RSHIFT' || m === 'RSHIFTR' || m === 'RSHIFTC' ||
+        m === 'LSHIFT_VAR' || m === 'RSHIFT_VAR' || m === 'RSHIFTR_VAR' || m === 'RSHIFTC_VAR') return 6;
+    // Additive
+    if (m === 'ADD' || m === 'SUB' || m === 'INC' || m === 'DEC') return 7;
+    // Multiplicative
+    if (m === 'MUL' || m === 'DIV' || m === 'MOD') return 8;
+    // Unary
+    if (m === 'NEGATE' || m === 'NOT') return 9;
+    return 100; // default: very high, i.e., usually no extra parens
+  };
   // Alias map to present some IR vars under a stable pretty-printed name
   // Used to keep a single mutable slice var across consecutive loads
   const varAlias = new Map<string, string>();
@@ -206,12 +230,26 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
     preloadOperandDisplayHints(st);
 
     // Custom printer hook first
+    const thisPrec = precedenceOf(st.mnemonic);
     const ctx = {
       formatInlineOperand,
       formatInputArg,
       in: (name: string) => {
         const val = st.inputs.find((i) => i.name === name)?.value;
         return val != null ? formatInputArg(val) : '';
+      },
+      inP: (name: string, _side?: 'left' | 'right') => {
+        const val = st.inputs.find((i) => i.name === name)?.value;
+        if (!val) return '';
+        if ((val as any).kind === 'inline') {
+          const child = (val as IRInlineExpr).op;
+          const childStr = formatInlineOpAsExpr(child);
+          const childPrec = precedenceOf(child.mnemonic);
+          const needParens = childPrec <= thisPrec;
+          return needParens ? `(${childStr})` : childStr;
+        } else {
+          return formatInputArg(val);
+        }
       },
       inRaw: (name: string) => st.inputs.find((i) => i.name === name)?.value,
       op: (name: string) => {
@@ -306,6 +344,20 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
       in: (name: string) => {
         const val = st.inputs.find((i) => i.name === name)?.value;
         return val != null ? formatInputArg(val) : '';
+      },
+      inP: (name: string, _side?: 'left' | 'right') => {
+        const thisPrec = precedenceOf(st.mnemonic);
+        const val = st.inputs.find((i) => i.name === name)?.value;
+        if (!val) return '';
+        if ((val as any).kind === 'inline') {
+          const child = (val as IRInlineExpr).op;
+          const childStr = formatInlineOpAsExpr(child);
+          const childPrec = precedenceOf(child.mnemonic);
+          const needParens = childPrec <= thisPrec;
+          return needParens ? `(${childStr})` : childStr;
+        } else {
+          return formatInputArg(val);
+        }
       },
       inRaw: (name: string) => st.inputs.find((i) => i.name === name)?.value,
       outRaw: (name: string) => st.outputs.find((i) => i.name === name)?.value,
