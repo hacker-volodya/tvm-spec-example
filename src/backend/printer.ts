@@ -24,6 +24,34 @@ export type InlinePrinter = (st: IROpPrim, ctx: {
 const inlinePrinters = new Map<string, InlinePrinter>();
 const inlinePrintersByPrefix: Array<{ prefix: string; printer: InlinePrinter }> = [];
 
+// Statement printers (extensible, like inline printers but allowed to emit multiple lines)
+export type StmtPrinter = (st: IROpPrim, ctx: {
+  // Existing helpers
+  formatInlineOperand: (v: IROperandValue) => string;
+  formatInputArg: (a: IRInputArg) => string;
+  in: (name: string) => string;
+  inRaw: (name: string) => IRInputArg | undefined;
+  outRaw: (name: string) => IRValueDef | undefined;
+  op: (name: string) => string;
+  opRaw: (name: string) => IROperandValue | undefined;
+  opInt: (name: string) => number | bigint | undefined;
+  opNum: (name: string) => number | undefined;
+  // Aliasing + anchors
+  alias: (fromId: string, toId: string) => void;
+  ensureSliceAnchor: (sliceIn: IRInputArg | undefined, sliceOut: IRValueDef | undefined) => { anchorId: string; preAssign?: string } | null;
+}) => string[] | null | undefined;
+
+const stmtPrinters = new Map<string, StmtPrinter>();
+const stmtPrintersByPrefix: Array<{ prefix: string; printer: StmtPrinter }> = [];
+
+export function registerStmtPrinter(mnemonic: string, fn: StmtPrinter) {
+  stmtPrinters.set(mnemonic, fn);
+}
+
+export function registerStmtPrinterPrefix(prefix: string, fn: StmtPrinter) {
+  stmtPrintersByPrefix.push({ prefix, printer: fn });
+}
+
 export function registerInlinePrinter(mnemonic: string, fn: InlinePrinter) {
   inlinePrinters.set(mnemonic, fn);
 }
@@ -33,8 +61,20 @@ export function registerInlinePrinterPrefix(prefix: string, fn: InlinePrinter) {
 }
 
 function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
+  // Alias map to present some IR vars under a stable pretty-printed name
+  // Used to keep a single mutable slice var across consecutive loads
+  const varAlias = new Map<string, string>();
+  const resolveAlias = (id: string): string => {
+    let cur = id;
+    const seen = new Set<string>();
+    while (varAlias.has(cur) && !seen.has(cur)) {
+      seen.add(cur);
+      cur = varAlias.get(cur)!;
+    }
+    return cur;
+  };
   const fmtTypes = (t?: IRValueRef['types']) => t && t.length ? `: ${t.join('|')}` : '';
-  const fmtValRef = (v: IRValueRef) => `${v.id}`;
+  const fmtValRef = (v: IRValueRef) => `${resolveAlias(v.id)}`;
   const fmtValDef = (v: IRValueDef) => `${v.id}${fmtTypes(v.types)}`;
 
   const formatInlineFn = (f: IRFunction): string => {
@@ -49,6 +89,19 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
 
   // Per-statement operand → spec-hints mapping for display adjustments
   const operandDisplayHints = new WeakMap<IROperandValue, { hints?: any[]; opType?: string }>();
+  const preloadOperandDisplayHints = (st: IROpPrim) => {
+    try {
+      const opsSpec: any[] | undefined = (st as any)?.spec?.bytecode?.operands;
+      if (Array.isArray(opsSpec)) {
+        for (const { name, value } of st.operands) {
+          const specEnt = opsSpec.find((o) => o && o.name === name);
+          if (specEnt) {
+            operandDisplayHints.set(value as IROperandValue, { hints: specEnt.display_hints, opType: specEnt.type });
+          }
+        }
+      }
+    } catch {}
+  };
 
   const applyDisplayHintsNumber = (n: number, hints?: any[]): { text?: string; value: number } => {
     if (!hints || hints.length === 0) return { value: n };
@@ -149,17 +202,7 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
 
   const formatInlineOpAsExpr = (st: IROpPrim): string => {
     // Preload operand → display_hints map for this instruction
-    try {
-      const opsSpec: any[] | undefined = (st as any)?.spec?.bytecode?.operands;
-      if (Array.isArray(opsSpec)) {
-        for (const { name, value } of st.operands) {
-          const specEnt = opsSpec.find((o) => o && o.name === name);
-          if (specEnt) {
-            operandDisplayHints.set(value as IROperandValue, { hints: specEnt.display_hints, opType: specEnt.type });
-          }
-        }
-      }
-    } catch {}
+    preloadOperandDisplayHints(st);
 
     // Custom printer hook first
     const ctx = {
@@ -240,6 +283,8 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
     return fmtValRef(a as IRValueRef);
   };
 
+  // (stmt printers registry is module-scoped; see top of file)
+
   const argsStr = fn.args.map(a => fmtValDef(a)).join(', ');
   const nameFromMethodId = (id?: number) => {
     if (id === -1) return 'recv_external';
@@ -250,13 +295,74 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
   const header = opts?.methodId !== undefined ? `/* methodId: ${opts.methodId} */\n` : '';
   let out = header + `function${nameStr} (${argsStr}) {\n`;
   for (const st of fn.body) {
+    // Preload operand display hints for statement-level printers
+    preloadOperandDisplayHints(st);
+
+    // Prepare context for statement printers
+    const stmtCtx = {
+      formatInlineOperand,
+      formatInputArg,
+      in: (name: string) => {
+        const val = st.inputs.find((i) => i.name === name)?.value;
+        return val != null ? formatInputArg(val) : '';
+      },
+      inRaw: (name: string) => st.inputs.find((i) => i.name === name)?.value,
+      outRaw: (name: string) => st.outputs.find((i) => i.name === name)?.value,
+      op: (name: string) => {
+        const val = st.operands.find((o) => o.name === name)?.value as IROperandValue | undefined;
+        return val != null ? formatInlineOperand(val) : '';
+      },
+      opRaw: (name: string) => st.operands.find((o) => o.name === name)?.value as IROperandValue | undefined,
+      opInt: (name: string) => {
+        const v = st.operands.find((o) => o.name === name)?.value as IROperandValue | undefined;
+        if (!v) return undefined;
+        if (v.kind === 'int') return v.value;
+        if (v.kind === 'bigint') return v.value;
+        return undefined;
+      },
+      opNum: (name: string) => {
+        const v = st.operands.find((o) => o.name === name)?.value as IROperandValue | undefined;
+        if (!v) return undefined;
+        if (v.kind === 'int') return v.value;
+        if (v.kind === 'bigint') {
+          const asNum = Number(v.value);
+          return Number.isFinite(asNum) ? asNum : undefined;
+        }
+        return undefined;
+      },
+      alias: (fromId: string, toId: string) => { varAlias.set(fromId, toId); },
+      ensureSliceAnchor: (sliceIn: IRInputArg | undefined, sliceOut: IRValueDef | undefined) => {
+        if (!sliceIn || !sliceOut) return null;
+        let anchorId: string;
+        let preAssign: string | undefined;
+        if ((sliceIn as any).kind === 'inline') {
+          anchorId = sliceOut.id;
+          preAssign = `${anchorId} = ${formatInputArg(sliceIn)}`;
+        } else {
+          anchorId = fmtValRef(sliceIn as IRValueRef);
+        }
+        varAlias.set(sliceOut.id, anchorId);
+        return { anchorId, preAssign };
+      },
+    } as const;
+
+    // Try statement printers by exact mnemonic and by prefix
+    const stmtHook = stmtPrinters.get(st.mnemonic) ?? stmtPrintersByPrefix.find(x => st.mnemonic.startsWith(x.prefix))?.printer;
+    if (stmtHook) {
+      const lines = stmtHook(st, stmtCtx);
+      if (lines && lines.length) {
+        for (const l of lines) out += `    ${l};\n`;
+        continue;
+      }
+    }
+
+    // Default formatting
     const outs = st.outputs.map(o => fmtValDef(o.value)).join(', ');
     const expr = formatInlineOpAsExpr(st);
-    // If multi-line, expr ends with a closing ')' at correct indent
     out += `    ${outs ? outs + ' = ' : ''}${expr};\n`;
   }
   if (fn.result.length) {
-    out += `    // result: ${fn.result.map(v => `${v.id}${fmtTypes(v.types)}`).join(', ')}\n`;
+    out += `    // result: ${fn.result.map(v => `${fmtValRef(v)}${fmtTypes(v.types)}`).join(', ')}\n`;
   }
   if (fn.decompileError) out += `    // decompilation error: ${fn.decompileError}\n`;
   if (fn.asmTail && fn.asmTail.length) {
@@ -299,6 +405,16 @@ export function printProgram(p: Program): string {
 }
 
 // Default custom printers
+// Statement printer: LDU → mutable slice + load_uint
+registerStmtPrinter('LDU', (_st, ctx) => {
+  const anc = ctx.ensureSliceAnchor(ctx.inRaw('s'), ctx.outRaw('s2'));
+  if (!anc) return null;
+  const lines: string[] = [];
+  if (anc.preAssign) lines.push(anc.preAssign);
+  lines.push(`${ctx.outRaw('x')!.id} = ${anc.anchorId}~load_uint(${ctx.op('c')})`);
+  return lines;
+});
+
 // Collapse PUSHINT_* wrappers used as inline operands into bare literals
 registerInlinePrinterPrefix('PUSHINT_', (_st, ctx) => {
   const v = ctx.opRaw('x') ?? ctx.opRaw('i');
