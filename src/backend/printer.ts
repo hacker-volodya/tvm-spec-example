@@ -39,12 +39,79 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
     return `{ ${parts.join(', ')} }`;
   };
 
+  // Per-statement operand → spec-hints mapping for display adjustments
+  const operandDisplayHints = new WeakMap<IROperandValue, { hints?: any[]; opType?: string }>();
+
+  const applyDisplayHintsNumber = (n: number, hints?: any[]): { text?: string; value: number } => {
+    if (!hints || hints.length === 0) return { value: n };
+    let v = n;
+    let mode: 'stack' | 'register' | null = null;
+    for (const h of hints) {
+      if (!h || typeof h !== 'object') continue;
+      const t = (h as any).type;
+      if (t === 'add') {
+        const delta = Number((h as any).value ?? 0);
+        if (Number.isFinite(delta)) v = v + delta;
+      } else if (t === 'pushint4') {
+        if (v > 10) v = v - 16;
+      } else if (t === 'optional_nargs') {
+        if (v === 15) v = -1;
+      } else if (t === 'plduz') {
+        v = 32 * (v + 1);
+      } else if (t === 'stack') {
+        mode = 'stack';
+      } else if (t === 'register') {
+        mode = 'register';
+      }
+    }
+    if (mode === 'stack') return { text: `s${v}`, value: v };
+    if (mode === 'register') return { text: `c${v}`, value: v };
+    return { value: v };
+  };
+
+  const applyDisplayHintsBigInt = (n: bigint, hints?: any[]): { text?: string; value: bigint } => {
+    if (!hints || hints.length === 0) return { value: n };
+    let v = n;
+    let mode: 'stack' | 'register' | null = null;
+    for (const h of hints) {
+      if (!h || typeof h !== 'object') continue;
+      const t = (h as any).type;
+      if (t === 'add') {
+        const delta = BigInt(Number((h as any).value ?? 0));
+        v = v + delta;
+      } else if (t === 'pushint4') {
+        if (v > 10n) v = v - 16n;
+      } else if (t === 'optional_nargs') {
+        if (v === 15n) v = -1n;
+      } else if (t === 'plduz') {
+        v = 32n * (v + 1n);
+      } else if (t === 'stack') {
+        mode = 'stack';
+      } else if (t === 'register') {
+        mode = 'register';
+      }
+    }
+    if (mode === 'stack') return { text: `s${v.toString()}`, value: v };
+    if (mode === 'register') return { text: `c${v.toString()}`, value: v };
+    return { value: v };
+  };
+
   const formatInlineOperand = (v: IROperandValue): string => {
+    const hintsInfo = operandDisplayHints.get(v);
+    const hints = hintsInfo?.hints;
     switch (v.kind) {
       case 'cont': return formatInlineFn(v.value);
       case 'cont_map': return formatInlineMap(v.value);
-      case 'int': return formatNumber(v.value);
-      case 'bigint': return formatBigInt(v.value);
+      case 'int': {
+        const adj = applyDisplayHintsNumber(v.value, hints);
+        if (adj.text) return adj.text;
+        return formatNumber(adj.value);
+      }
+      case 'bigint': {
+        const adj = applyDisplayHintsBigInt(v.value, hints);
+        if (adj.text) return adj.text;
+        return formatBigInt(adj.value);
+      }
       case 'bool': return String(v.value);
       case 'slice': {
         try { return String(v.value); } catch { return '[slice]'; }
@@ -73,6 +140,19 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
   };
 
   const formatInlineOpAsExpr = (st: IROpPrim): string => {
+    // Preload operand → display_hints map for this instruction
+    try {
+      const opsSpec: any[] | undefined = (st as any)?.spec?.bytecode?.operands;
+      if (Array.isArray(opsSpec)) {
+        for (const { name, value } of st.operands) {
+          const specEnt = opsSpec.find((o) => o && o.name === name);
+          if (specEnt) {
+            operandDisplayHints.set(value as IROperandValue, { hints: specEnt.display_hints, opType: specEnt.type });
+          }
+        }
+      }
+    } catch {}
+
     // Custom printer hook first
     const hook = inlinePrinters.get(st.mnemonic);
     if (hook) {
@@ -141,6 +221,18 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
   if (fn.decompileError) out += `    // decompilation error: ${fn.decompileError}\n`;
   if (fn.asmTail && fn.asmTail.length) {
     for (const ins of fn.asmTail) {
+      // Preload display_hints mapping for tail instructions as well
+      try {
+        const opsSpec: any[] | undefined = (ins as any)?.spec?.bytecode?.operands;
+        if (Array.isArray(opsSpec)) {
+          for (const { name, value } of ins.operands) {
+            const specEnt = opsSpec.find((o) => o && o.name === name);
+            if (specEnt) {
+              operandDisplayHints.set(value as IROperandValue, { hints: specEnt.display_hints, opType: specEnt.type });
+            }
+          }
+        }
+      } catch {}
       const ops = ins.operands.map(({ name, value }) => `${name}=${formatInlineOperand(value as IROperandValue)}`).join(', ');
       out += `    ${ins.spec.mnemonic} ${ops}\n`;
     }
