@@ -19,7 +19,8 @@ function registerSliceLoadStmt(
     const lines: string[] = [];
     if (anc.preAssign) lines.push(anc.preAssign);
     const args = extraArgs ? extraArgs(ctx) : [];
-    const outId = ctx.outRaw('x')?.id || ctx.outRaw('c')?.id || ctx.outRaw('D')?.id || ctx.outRaw('s2')?.id || ctx.outRaw('s3')?.id;
+    // Prefer the extracted value over the remainder (s3 before s2)
+    const outId = ctx.outRaw('x')?.id || ctx.outRaw('c')?.id || ctx.outRaw('D')?.id || ctx.outRaw('s3')?.id || ctx.outRaw('s2')?.id;
     if (!outId) return null;
     lines.push(`${outId} = ${anc.anchorId}~${methodName}(${comma(args)})`);
     return lines;
@@ -71,6 +72,10 @@ export function registerPrinters() {
     return ctx.formatInlineOperand(v);
   });
 
+  registerInlinePrinterPrefix('PUSHCONT', (_st, ctx) => {
+    return ctx.formatInlineOperand(ctx.opRaw('s')!);
+  });
+
   // Cells/slices/builders construction and conversion
   registerInlinePrinter('NEWC', () => "begin_cell()");
   registerInlinePrinter('ENDC', (_st, ctx) => `${ctx.in('b')}.end_cell()`);
@@ -79,9 +84,12 @@ export function registerPrinters() {
 
   // Slice preloaders
   registerInlinePrinter('PLDU', (_st, ctx) => `${ctx.in('s')}.preload_uint(${ctx.op('c')})`);
-  registerInlinePrinter('PLDI', (_st, ctx) => `${ctx.in('s')}.preload_uint(${ctx.op('c')})`);
+  registerInlinePrinter('PLDI', (_st, ctx) => `${ctx.in('s')}.preload_int(${ctx.op('c')})`);
   registerInlinePrinter('PLDREF', (_st, ctx) => `${ctx.in('s')}.preload_ref()`);
   registerInlinePrinter('PLDDICT', (_st, ctx) => `${ctx.in('s')}.preload_dict()`);
+  // Slice preloads for sub-slices
+  registerInlinePrinter('PLDSLICE', (_st, ctx) => `${ctx.in('s')}.preload_bits(${ctx.op('c')})`);
+  registerInlinePrinter('PLDSLICEX', (_st, ctx) => `${ctx.in('s')}.preload_bits(${ctx.in('l')})`);
 
   // Builder stores (method-style for readability)
   registerInlinePrinter('STU', (_st, ctx) => {
@@ -217,6 +225,9 @@ export function registerPrinters() {
   registerSliceLoadStmt('LDDICT', 'load_dict');
   registerSliceLoadStmt('LDREF', 'load_ref');
   registerSliceLoadStmt('LDMSGADDR', 'load_msg_addr', undefined, 's3');
+  registerSliceLoadStmt('LDSLICE', 'load_bits', (ctx) => [ctx.op('c')]);
+  registerSliceLoadStmt('LDSLICE_ALT', 'load_bits', (ctx) => [ctx.op('c')]);
+  registerSliceLoadStmt('LDSLICEX', 'load_bits', (ctx) => [ctx.in('l')]);
 
   // Tuple and list helpers
   registerInlinePrinter('TUPLE', (st: any, ctx) => {
@@ -245,7 +256,32 @@ export function registerPrinters() {
     if (k === 3) return `fourth(${ctx.in('t')})`;
     return `index(${ctx.in('t')}, ${ctx.op('k')})`;
   });
+  registerInlinePrinter('INDEXVAR', (_st, ctx) => `index(${ctx.in('t')}, ${ctx.in('k')})`);
 
   // Powers of two
   registerInlinePrinter('POW2', (_st, ctx) => `1 << ${ctx.inP('y', 'right')}`);
+
+  // Exceptions (throw/throw_if/etc.)
+  registerInlinePrinter('THROW', (_st, ctx) => `throw(${ctx.op('n')})`);
+  registerInlinePrinter('THROW_SHORT', (_st, ctx) => `throw(${ctx.op('n')})`);
+  registerInlinePrinter('THROWANY', (_st, ctx) => `throw(${ctx.in('n')})`);
+  registerInlinePrinter('THROWIF', (_st, ctx) => `throw_if(${ctx.op('n')}, ${ctx.in('f')})`);
+  registerInlinePrinter('THROWIF_SHORT', (_st, ctx) => `throw_if(${ctx.op('n')}, ${ctx.in('f')})`);
+  registerInlinePrinter('THROWANYIF', (_st, ctx) => `throw_if(${ctx.in('n')}, ${ctx.in('f')})`);
+  registerInlinePrinter('THROWIFNOT', (_st, ctx) => `throw_unless(${ctx.op('n')}, ${ctx.in('f')})`);
+  registerInlinePrinter('THROWIFNOT_SHORT', (_st, ctx) => `throw_unless(${ctx.op('n')}, ${ctx.in('f')})`);
+  registerInlinePrinter('THROWANYIFNOT', (_st, ctx) => `throw_unless(${ctx.in('n')}, ${ctx.in('f')})`);
+  registerInlinePrinter('THROWARG', (_st, ctx) => `throw_arg(${ctx.in('x')}, ${ctx.op('n')})`);
+  registerInlinePrinter('THROWARG_SHORT', (_st, ctx) => `throw_arg(${ctx.in('x')}, ${ctx.op('n')})`);
+  registerInlinePrinter('THROWARGIF', (_st, ctx) => `throw_arg_if(${ctx.in('x')}, ${ctx.op('n')}, ${ctx.in('f')})`);
+  registerInlinePrinter('THROWARGIFNOT', (_st, ctx) => `throw_arg_unless(${ctx.in('x')}, ${ctx.op('n')}, ${ctx.in('f')})`);
+  registerInlinePrinter('THROWARGANY', (_st, ctx) => `throw_arg(${ctx.in('x')}, ${ctx.in('n')})`);
+  registerInlinePrinter('THROWARGANYIF', (_st, ctx) => `throw_arg_if(${ctx.in('x')}, ${ctx.in('n')}, ${ctx.in('f')})`);
+  registerInlinePrinter('THROWARGANYIFNOT', (_st, ctx) => `throw_arg_unless(${ctx.in('x')}, ${ctx.in('n')}, ${ctx.in('f')})`);
+
+  // Compare (spaceship operator)
+  registerInlinePrinter('CMP', (_st, ctx) => `${ctx.inP('x', 'left')} <=> ${ctx.inP('y', 'right')}`);
+
+  // Constants
+  registerInlinePrinter('NIL', () => `Nil`);
 }

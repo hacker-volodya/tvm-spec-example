@@ -100,7 +100,7 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
   };
   const fmtTypes = (t?: IRValueRef['types']) => t && t.length ? `: ${t.join('|')}` : '';
   const fmtValRef = (v: IRValueRef) => `${resolveAlias(v.id)}`;
-  const fmtValDef = (v: IRValueDef) => `${v.id}${fmtTypes(v.types)}`;
+  const fmtValDef = (v: IRValueDef) => `${v.id}`;
 
   const formatInlineFn = (f: IRFunction): string => {
     return formatIR(f);
@@ -415,7 +415,7 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
     out += `    ${outs ? outs + ' = ' : ''}${expr};\n`;
   }
   if (fn.result.length) {
-    out += `    // result: ${fn.result.map(v => `${fmtValRef(v)}${fmtTypes(v.types)}`).join(', ')}\n`;
+    out += `    return ${fn.result.map(v => `${fmtValRef(v)}${fmtTypes(v.types)}`).join(', ')}\n`;
   }
   if (fn.decompileError) out += `    // decompilation error: ${fn.decompileError}\n`;
   if (fn.asmTail && fn.asmTail.length) {
