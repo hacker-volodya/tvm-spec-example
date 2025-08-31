@@ -1,6 +1,7 @@
 import type { Program } from "./core/program";
 import { defaultPipeline } from "./middle/pipeline";
 import { printProgram } from "./backend/printer";
+import "./backend/stdlibPrinters"; // register stdlib-friendly printers
 import { liftSliceToIR } from "./frontend/lifter";
 import { loadEntrySlice, tryDecodeFunctionDictFromRoot } from "./frontend/loader";
 
