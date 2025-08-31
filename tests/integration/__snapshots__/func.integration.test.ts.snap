@@ -7,7 +7,7 @@ function recv_internal () {
 
 /* methodId: 119863 */
 function (arg0, arg1) {
-    var6 = NULLSWAPIFNOT(x=DICTGET(n=8, D=arg0, k=arg1));
+    var5, var6 = NULLSWAPIFNOT(x=DICTGET(n=8, D=arg0, k=arg1));
     return var5, var6
 }
 "

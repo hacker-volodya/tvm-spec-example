@@ -134,20 +134,22 @@ export class Stack {
         this._guard.branches[armIndex].push(...vars);
     }
 
-    public tryFinalizeGuard(): boolean {
-        if (!this._guard) return false;
+    // Finalize guard if all arms have equalized lengths.
+    // Returns merged variables inserted (possibly empty) on success, or null if not finalized.
+    public tryFinalizeGuard(): StackVariable[] | null {
+        if (!this._guard) return null;
         const lens = this._guard.branches.map(b => b.length);
-        if (lens.length === 0) return false;
+        if (lens.length === 0) return null;
         const first = lens[0];
         if (!lens.every(l => l === first)) {
             // not aligned yet
-            return false;
+            return null;
         }
         const count = first;
         if (count === 0) {
             // nothing to insert, just drop guard
             this._guard = null;
-            return true;
+            return [];
         }
         // Insert merged variables just below the guard boundary
         const insertIndex = Math.max(0, this._stack.length - this._guard.depth);
@@ -155,7 +157,7 @@ export class Stack {
         this._stack.splice(insertIndex, 0, ...merged);
         // Guard removed after equalization
         this._guard = null;
-        return true;
+        return merged;
     }
 
     private xchg(i: number, j: number) {

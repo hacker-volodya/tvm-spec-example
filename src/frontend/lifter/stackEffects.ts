@@ -60,6 +60,7 @@ function allocateStackOutputs(spec: Instruction, operands: VarMap, stack: Stack)
   const stackOutputs: { [k: string]: { var: StackVariable; types?: string[] } } = {};
   let constCounter = 0;
   let pushedThisInsn = 0;
+  let condOutCounter = 0; // running index for synthesized conditional outputs
 
   for (const output of spec.value_flow.outputs.stack) {
     if (output.type === 'simple') {
@@ -110,9 +111,24 @@ function allocateStackOutputs(spec: Instruction, operands: VarMap, stack: Stack)
         }
         stack.appendToGuardArm(idx, newVars);
       });
-      stack.tryFinalizeGuard();
+      // Try to finalize guard progressively in case this instruction aligns it fully
+      const mergedNow = stack.tryFinalizeGuard();
+      if (mergedNow && mergedNow.length) {
+        for (const v of mergedNow) {
+          const name = `__cond${condOutCounter++}`;
+          stackOutputs[name] = { var: v, types: [] };
+        }
+      }
     } else {
       throw new Error(`not supported stack output '${(output as any).type}' while parsing ${spec.mnemonic}`);
+    }
+  }
+  // If guard was finalized by this instruction, collect merged variables and expose them as outputs too
+  const merged = stack.tryFinalizeGuard();
+  if (merged && merged.length) {
+    for (const v of merged) {
+      const name = `__cond${condOutCounter++}`;
+      stackOutputs[name] = { var: v, types: [] };
     }
   }
 
@@ -134,8 +150,16 @@ function mapIRPorts(
   const outputsSpec = (spec as any)?.value_flow?.outputs?.stack as any[] | undefined;
   const outMap = stackOutputs as any as { [k: string]: { var: StackVariable; types?: string[] } };
   if (outputsSpec && Array.isArray(outputsSpec)) {
+    // Emit conditional outputs in spec order using synthesized names (__cond0, __cond1, ...)
+    let condIdx = 0;
     for (const o of outputsSpec) {
-      if (o.type === 'simple') {
+      if (o.type === 'conditional') {
+        const name = `__cond${condIdx++}`;
+        // debug: check presence
+        // console.log('mapIRPorts conditional pick', spec.mnemonic, name, !!outMap[name]);
+        const v = outMap[name];
+        if (v) outputs.push({ name, value: { id: v.var.name, types: v.types as any } as IRValueDef });
+      } else if (o.type === 'simple') {
         const name = o.name as string;
         const v = outMap[name];
         if (v) outputs.push({ name, value: { id: v.var.name, types: v.types as any } as IRValueDef });
