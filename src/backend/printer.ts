@@ -175,3 +175,33 @@ registerInlinePrinterPrefix('PUSHINT_', (st, ctx) => {
   if (v == null) return null;
   return ctx.formatInlineOperand(v);
 });
+
+registerInlinePrinter('PUSHCTR', (st, _) => {
+  const i = st.operands.find(o => o.name === 'i')?.value.value;
+  if (i === 4) {
+    return "get_data()";
+  }
+});
+
+registerInlinePrinter('POPCTR', (st, ctx) => {
+  const i = st.operands.find(o => o.name === 'i')?.value.value;
+  if (i === 4) {
+    return `set_data(${ctx.formatInputArg(st.inputs.find(i => i.name === 'x')!.value)})`;
+  }
+});
+
+registerInlinePrinter('CTOS', (st, ctx) => {
+  return `${ctx.formatInputArg(st.inputs.find(i => i.name === 'c')!.value)}.begin_parse()`;
+});
+
+registerInlinePrinter('PLDU', (st, ctx) => {
+  return `${ctx.formatInputArg(st.inputs.find(i => i.name === 's')!.value)}.preload_uint(${ctx.formatInlineOperand(st.operands.find(o => o.name === 'c')!.value)})`;
+});
+
+registerInlinePrinter('NEWC', (_st, _ctx) => {
+  return "begin_cell()";
+});
+
+registerInlinePrinter('SDSKIPFIRST', (st, ctx) => {
+  return `${ctx.formatInputArg(st.inputs.find(i => i.name === 's')!.value)}.skip_bits(${ctx.formatInputArg(st.inputs.find(o => o.name === 'l')!.value)})`;
+});
