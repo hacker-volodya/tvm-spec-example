@@ -1,5 +1,6 @@
 import type { Program } from "../core/program";
 import { IRFunction, IRInlineExpr, IRInputArg, IRValueDef, IRValueRef, IROpPrim, IROperandValue } from "../core/ir";
+import { registerPrinters } from "./stdImpl";
 
 // Pretty printer for IR → textual pseudocode
 export function printIR(fn: IRFunction, opts?: { methodId?: number }): string {
@@ -403,3 +404,5 @@ export function printProgram(p: Program): string {
   }
   return out.join("\n");
 }
+
+registerPrinters();
