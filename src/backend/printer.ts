@@ -6,6 +6,24 @@ export function printIR(fn: IRFunction, opts?: { methodId?: number }): string {
   return formatIR(fn, opts);
 }
 
+// Extension point: custom inline printers per instruction mnemonic
+// Return string to override default formatting of an inline op expression
+export type InlinePrinter = (st: IROpPrim, ctx: {
+  formatInlineOperand: (v: IROperandValue) => string;
+  formatInputArg: (a: IRInputArg) => string;
+}) => string | null | undefined;
+
+const inlinePrinters = new Map<string, InlinePrinter>();
+const inlinePrintersByPrefix: Array<{ prefix: string; printer: InlinePrinter }> = [];
+
+export function registerInlinePrinter(mnemonic: string, fn: InlinePrinter) {
+  inlinePrinters.set(mnemonic, fn);
+}
+
+export function registerInlinePrinterPrefix(prefix: string, fn: InlinePrinter) {
+  inlinePrintersByPrefix.push({ prefix, printer: fn });
+}
+
 function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
   const fmtTypes = (t?: IRValueRef['types']) => t && t.length ? `: ${t.join('|')}` : '';
   const fmtValRef = (v: IRValueRef) => `${v.id}${fmtTypes(v.types)} `;
@@ -46,6 +64,19 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
   };
 
   const formatInlineOpAsExpr = (st: IROpPrim): string => {
+    // Custom printer hook first
+    const hook = inlinePrinters.get(st.mnemonic);
+    if (hook) {
+      const res = hook(st, { formatInlineOperand, formatInputArg });
+      if (res != null) return res;
+    }
+    for (const { prefix, printer } of inlinePrintersByPrefix) {
+      if (st.mnemonic.startsWith(prefix)) {
+        const res = printer(st, { formatInlineOperand, formatInputArg });
+        if (res != null) return res;
+      }
+    }
+
     const insOrder = Object.entries(st.inputs).map(([k, v]) => `${k}=${formatInputArg(v)}`).join(', ');
     const opPairs = Object.entries(st.operands).map(([k, v]) => [k, formatInlineOperand(v)] as [string, string]);
     const hasMultiline = opPairs.some(([, v]) => v.includes('\n'));
@@ -116,30 +147,9 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
     };
 
     const outs = getOutputsInOrder().map(fmtValDef).join(', ');
-    const insOrder = Object.entries(st.inputs).map(([k, v]) => `${k}=${formatInputArg(v)}`).join(', ');
-    const opPairs = Object.entries(st.operands).map(([k, v]) => [k, formatInlineOperand(v)] as [string, string]);
-    const hasMultiline = opPairs.some(([, v]) => v.includes('\n'));
-
-    if (!hasMultiline) {
-      const ops = opPairs.map(([k, v]) => `${k}=${v}`).join(', ');
-      const parts = [insOrder, ops].filter(Boolean).join(' | ');
-      out += `    ${outs ? outs + ' = ' : ''}${st.mnemonic}(${parts});\n`;
-    } else {
-      out += `    ${outs ? outs + ' = ' : ''}${st.mnemonic}(` + '\n';
-      const indent8 = '        ';
-      if (insOrder) {
-        out += indent8 + insOrder + (opPairs.length ? ' |' : '') + '\n';
-      }
-      for (let i = 0; i < opPairs.length; i++) {
-        const [k, v] = opPairs[i];
-        const lines = v.split('\n');
-        out += indent8 + k + '=' + lines[0] + (i < opPairs.length - 1 ? ',' : '') + '\n';
-        for (let j = 1; j < lines.length; j++) {
-          out += indent8 + ' '.repeat(k.length + 1) + lines[j] + (i < opPairs.length - 1 && j === lines.length - 1 ? ',' : '') + '\n';
-        }
-      }
-      out += `    );\n`;
-    }
+    const expr = formatInlineOpAsExpr(st);
+    // If multi-line, expr ends with a closing ')' at correct indent
+    out += `    ${outs ? outs + ' = ' : ''}${expr};\n`;
   }
   if (fn.result.length) {
     out += `    // result: ${fn.result.map(v => `${v.id}${fmtTypes(v.types)}`).join(', ')}\n`;
@@ -171,3 +181,11 @@ export function printProgram(p: Program): string {
   }
   return out.join("\n");
 }
+
+// Default custom printers
+// Collapse PUSHINT_* wrappers used as inline operands into bare literals
+registerInlinePrinterPrefix('PUSHINT_', (st, ctx) => {
+  const v = (st.operands as any)?.x ?? (st.operands as any)?.i;
+  if (v == null) return null;
+  return ctx.formatInlineOperand(v);
+});
