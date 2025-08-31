@@ -9,8 +9,16 @@ export function printIR(fn: IRFunction, opts?: { methodId?: number }): string {
 // Extension point: custom inline printers per instruction mnemonic
 // Return string to override default formatting of an inline op expression
 export type InlinePrinter = (st: IROpPrim, ctx: {
+  // Low-level formatters (existing)
   formatInlineOperand: (v: IROperandValue) => string;
   formatInputArg: (a: IRInputArg) => string;
+  // Convenience helpers (new)
+  in: (name: string) => string;              // formatted input by name
+  inRaw: (name: string) => IRInputArg | undefined; // raw input by name
+  op: (name: string) => string;              // formatted operand by name
+  opRaw: (name: string) => IROperandValue | undefined; // raw operand by name
+  opInt: (name: string) => number | bigint | undefined; // numeric operand as number/bigint
+  opNum: (name: string) => number | undefined;          // numeric operand coerced to JS number if safe
 }) => string | null | undefined;
 
 const inlinePrinters = new Map<string, InlinePrinter>();
@@ -154,14 +162,46 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
     } catch {}
 
     // Custom printer hook first
+    const ctx = {
+      formatInlineOperand,
+      formatInputArg,
+      in: (name: string) => {
+        const val = st.inputs.find((i) => i.name === name)?.value;
+        return val != null ? formatInputArg(val) : '';
+      },
+      inRaw: (name: string) => st.inputs.find((i) => i.name === name)?.value,
+      op: (name: string) => {
+        const val = st.operands.find((o) => o.name === name)?.value as IROperandValue | undefined;
+        return val != null ? formatInlineOperand(val) : '';
+      },
+      opRaw: (name: string) => st.operands.find((o) => o.name === name)?.value as IROperandValue | undefined,
+      opInt: (name: string) => {
+        const v = st.operands.find((o) => o.name === name)?.value as IROperandValue | undefined;
+        if (!v) return undefined;
+        if (v.kind === 'int') return v.value;
+        if (v.kind === 'bigint') return v.value;
+        return undefined;
+      },
+      opNum: (name: string) => {
+        const v = st.operands.find((o) => o.name === name)?.value as IROperandValue | undefined;
+        if (!v) return undefined;
+        if (v.kind === 'int') return v.value;
+        if (v.kind === 'bigint') {
+          const asNum = Number(v.value);
+          return Number.isFinite(asNum) ? asNum : undefined;
+        }
+        return undefined;
+      },
+    } as const;
+
     const hook = inlinePrinters.get(st.mnemonic);
     if (hook) {
-      const res = hook(st, { formatInlineOperand, formatInputArg });
+      const res = hook(st, ctx);
       if (res != null) return res;
     }
     for (const { prefix, printer } of inlinePrintersByPrefix) {
       if (st.mnemonic.startsWith(prefix)) {
-        const res = printer(st, { formatInlineOperand, formatInputArg });
+        const res = printer(st, ctx);
         if (res != null) return res;
       }
     }
@@ -260,40 +300,36 @@ export function printProgram(p: Program): string {
 
 // Default custom printers
 // Collapse PUSHINT_* wrappers used as inline operands into bare literals
-registerInlinePrinterPrefix('PUSHINT_', (st, ctx) => {
-  const vx = st.operands.find(o => o.name === 'x')?.value;
-  const vi = st.operands.find(o => o.name === 'i')?.value;
-  const v = vx ?? vi;
+registerInlinePrinterPrefix('PUSHINT_', (_st, ctx) => {
+  const v = ctx.opRaw('x') ?? ctx.opRaw('i');
   if (v == null) return null;
   return ctx.formatInlineOperand(v);
 });
 
-registerInlinePrinter('PUSHCTR', (st, _) => {
-  const i = st.operands.find(o => o.name === 'i')?.value.value;
-  if (i === 4) {
+registerInlinePrinter('PUSHCTR', (_st, ctx) => {
+  if (ctx.opNum('i') === 4) {
     return "get_data()";
   }
 });
 
-registerInlinePrinter('POPCTR', (st, ctx) => {
-  const i = st.operands.find(o => o.name === 'i')?.value.value;
-  if (i === 4) {
-    return `set_data(${ctx.formatInputArg(st.inputs.find(i => i.name === 'x')!.value)})`;
+registerInlinePrinter('POPCTR', (_st, ctx) => {
+  if (ctx.opNum('i') === 4) {
+    return `set_data(${ctx.in('x')})`;
   }
 });
 
-registerInlinePrinter('CTOS', (st, ctx) => {
-  return `${ctx.formatInputArg(st.inputs.find(i => i.name === 'c')!.value)}.begin_parse()`;
+registerInlinePrinter('CTOS', (_st, ctx) => {
+  return `${ctx.in('c')}.begin_parse()`;
 });
 
-registerInlinePrinter('PLDU', (st, ctx) => {
-  return `${ctx.formatInputArg(st.inputs.find(i => i.name === 's')!.value)}.preload_uint(${ctx.formatInlineOperand(st.operands.find(o => o.name === 'c')!.value)})`;
+registerInlinePrinter('PLDU', (_st, ctx) => {
+  return `${ctx.in('s')}.preload_uint(${ctx.op('c')})`;
 });
 
 registerInlinePrinter('NEWC', (_st, _ctx) => {
   return "begin_cell()";
 });
 
-registerInlinePrinter('SDSKIPFIRST', (st, ctx) => {
-  return `${ctx.formatInputArg(st.inputs.find(i => i.name === 's')!.value)}.skip_bits(${ctx.formatInputArg(st.inputs.find(o => o.name === 'l')!.value)})`;
+registerInlinePrinter('SDSKIPFIRST', (_st, ctx) => {
+  return `${ctx.in('s')}.skip_bits(${ctx.in('l')})`;
 });
