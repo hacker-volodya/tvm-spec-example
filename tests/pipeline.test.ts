@@ -1,5 +1,5 @@
 import { defaultPipeline } from '../src/middle/pipeline';
-import { IRFunction, IROpPrim, IRValueDef, IRValueRef } from '../src/ir';
+import { IRFunction, IROpPrim, IRValueDef, IRValueRef } from '../src/core/ir';
 import type { Instruction } from '../src/gen/tvm-spec';
 
 function fakeSpec(category: string): Instruction {

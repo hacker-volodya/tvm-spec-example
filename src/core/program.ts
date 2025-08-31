@@ -1,4 +1,4 @@
-import type { IRFunction } from "../ir";
+import type { IRFunction } from "./ir";
 
 // Program representation for frontend output and backend input
 // - A contract can be either a single entry function or a map of methods

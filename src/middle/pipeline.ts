@@ -1,4 +1,4 @@
-import type { IRFunction } from "../ir";
+import type { IRFunction } from "../core/ir";
 import { inlinePrevSingleUse, inlineSingleUseConsts } from "../opt/inline";
 
 export type Pass = (fn: IRFunction) => IRFunction;
@@ -21,4 +21,3 @@ export function defaultPipeline(): Pipeline {
     .use(inlineSingleUseConsts)
     .use(inlinePrevSingleUse);
 }
-

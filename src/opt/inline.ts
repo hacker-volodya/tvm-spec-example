@@ -1,4 +1,4 @@
-import { IRFunction, IRInlineExpr, IRInputArg, IROpPrim, IRStmt, IRValueRef } from "../ir";
+import { IRFunction, IRInlineExpr, IRInputArg, IROpPrim, IRStmt, IRValueRef } from "../core/ir";
 
 function isConstCategory(cat: string | undefined): boolean {
   return cat === 'const_int' || cat === 'const_data';
