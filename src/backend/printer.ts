@@ -136,15 +136,15 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
 
   const formatNumber = (n: number): string => {
     if (Number.isInteger(n) && Math.abs(n) <= 512) return String(n);
-    const hex = '0x' + (n >>> 0).toString(16);
-    return `${n} (${hex})`;
+    if (Number.isInteger(n) && Math.abs(n) % 1000 == 0) return String(n);
+    return '0x' + (n >>> 0).toString(16);
   };
 
   const formatBigInt = (n: bigint): string => {
     const abs = n < 0n ? -n : n;
     if (abs <= 512n) return n.toString();
-    const hex = '0x' + abs.toString(16);
-    return n.toString() + ' (' + hex + ')';
+    if (abs % 1000n == 0n) return n.toString();
+    return '0x' + abs.toString(16);
   };
 
   const formatInlineOpAsExpr = (st: IROpPrim): string => {
