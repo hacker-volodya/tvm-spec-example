@@ -326,8 +326,44 @@ registerInlinePrinter('PLDU', (_st, ctx) => {
   return `${ctx.in('s')}.preload_uint(${ctx.op('c')})`;
 });
 
+registerInlinePrinter('PLDI', (_st, ctx) => {
+  return `${ctx.in('s')}.preload_uint(${ctx.op('c')})`;
+});
+
+registerInlinePrinter('STU', (_st, ctx) => {
+  return `${ctx.in('b')}.store_uint(${ctx.in('x')}, ${ctx.op('c')})`;
+});
+
+registerInlinePrinter('STI', (_st, ctx) => {
+  return `${ctx.in('b')}.store_int(${ctx.in('x')}, ${ctx.op('c')})`;
+});
+
+registerInlinePrinter('STDICT', (_st, ctx) => {
+  return `${ctx.in('b')}.store_dict(${ctx.in('D')}, ${ctx.op('c')})`;
+});
+
+registerInlinePrinter('STSLICER', (_st, ctx) => {
+  return `${ctx.in('b')}.store_slice(${ctx.in('s')})`;
+});
+
+registerInlinePrinter('SDCUTFIRST', (_st, ctx) => {
+  return `${ctx.in('s')}.first_bits(${ctx.in('l')})`;
+});
+
 registerInlinePrinter('NEWC', (_st, _ctx) => {
   return "begin_cell()";
+});
+
+registerInlinePrinter('ENDC', (_st, ctx) => {
+  return `${ctx.in('b')}.end_cell()`;
+});
+
+registerInlinePrinter('EQUAL', (_st, ctx) => {
+  return `${ctx.in('x')} == ${ctx.in('y')}`;
+});
+
+registerInlinePrinter('INC', (_st, ctx) => {
+  return `${ctx.in('x')} + 1`;
 });
 
 registerInlinePrinter('SDSKIPFIRST', (_st, ctx) => {
