@@ -34,7 +34,7 @@ export function registerInlinePrinterPrefix(prefix: string, fn: InlinePrinter) {
 
 function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
   const fmtTypes = (t?: IRValueRef['types']) => t && t.length ? `: ${t.join('|')}` : '';
-  const fmtValRef = (v: IRValueRef) => `${v.id}${fmtTypes(v.types)} `;
+  const fmtValRef = (v: IRValueRef) => `${v.id}`;
   const fmtValDef = (v: IRValueDef) => `${v.id}${fmtTypes(v.types)}`;
 
   const formatInlineFn = (f: IRFunction): string => {
