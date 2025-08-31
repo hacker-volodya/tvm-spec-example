@@ -13,6 +13,19 @@ function (arg0, arg1) {
 "
 `;
 
+exports[`Func → Decompiler → Pseudocode snapshot multi arg use 1`] = `
+"/* methodId: 0 */
+function recv_internal () {
+}
+
+/* methodId: 83863 */
+function (arg3, arg2, arg1, arg0) {
+    var9 = (arg2 + (arg1 + arg0)) + arg3;
+    return var9
+}
+"
+`;
+
 exports[`Func → Decompiler → Pseudocode snapshot simple arithmetic 1`] = `
 "/* methodId: 0 */
 function recv_internal () {

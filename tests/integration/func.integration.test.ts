@@ -23,4 +23,14 @@ describe('Func → Decompiler → Pseudocode snapshot', () => {
 
     await expect(decompileFunc(code)).resolves.toMatchSnapshot();
   });
+
+  test('multi arg use', async () => {
+    const code = `
+      int add(int a, int b) method_id {
+        return a + b + a + b;
+      }
+    `;
+
+    await expect(decompileFunc(code)).resolves.toMatchSnapshot();
+  });
 });
