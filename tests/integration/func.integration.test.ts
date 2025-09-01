@@ -33,4 +33,20 @@ describe('Func → Decompiler → Pseudocode snapshot', () => {
 
     await expect(decompileFunc(code)).resolves.toMatchSnapshot();
   });
+
+  test('ifs', async () => {
+    const code = `
+      int add(int a, int b) method_id {
+        var r = a * b;
+        if (a > b) {
+          r += a;
+        } else {
+          r += b;  
+        }
+        return r;
+      }
+    `;
+
+    await expect(decompileFunc(code)).resolves.toMatchSnapshot();
+  });
 });

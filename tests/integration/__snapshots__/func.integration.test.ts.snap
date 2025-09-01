@@ -13,6 +13,26 @@ function (arg0, arg1) {
 "
 `;
 
+exports[`Func → Decompiler → Pseudocode snapshot ifs 1`] = `
+"/* methodId: 0 */
+function recv_internal () {
+}
+
+/* methodId: 83863 */
+function (arg0, arg1) {
+    var10 = arg0 * arg1;
+    IFELSE(c2=function (arg0, arg1, arg2) {
+    var14 = arg2 + arg1;
+    return var14
+}, c=function (arg2, arg0, arg1) {
+    var12 = arg1 + arg2;
+    return var12
+}, f=arg0 > arg1);
+    return arg0, arg1, var10
+}
+"
+`;
+
 exports[`Func → Decompiler → Pseudocode snapshot multi arg use 1`] = `
 "/* methodId: 0 */
 function recv_internal () {
