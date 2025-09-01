@@ -174,11 +174,23 @@ export class Stack {
             throw new Error(`Stack operation '${insn.mnemonic}' is not allowed while conditional guard is active`);
         }
         switch (insn.mnemonic) {
+            case 'NOP': {
+                // No-op
+                break;
+            }
             case 'PUSH': {
                 this.execStackOperation({ op: 'push', i: operands.i });
                 break;
             }
             case 'POP': {
+                this.execStackOperation({ op: 'pop', i: operands.i });
+                break;
+            }
+            case 'PUSH_LONG': {
+                this.execStackOperation({ op: 'push', i: operands.i });
+                break;
+            }
+            case 'POP_LONG': {
                 this.execStackOperation({ op: 'pop', i: operands.i });
                 break;
             }
@@ -214,6 +226,100 @@ export class Stack {
                 this.execStackOperation({ op: 'xchg', i: 1, j: operands.i });
                 this.execStackOperation({ op: 'xchg', i: 0, j: operands.j });
                 break;
+            }
+            case 'ROT': {
+                // a b c -> b c a
+                this.execStackOperation({ op: 'xchg2', i: 2, j: 1 });
+                break;
+            }
+            case 'ROTREV': {
+                // a b c -> c a b
+                this.execStackOperation({ op: 'xchg2', i: 2, j: 2 });
+                break;
+            }
+            case 'SWAP2': {
+                // a b c d -> c d a b
+                this.execStackOperation({ op: 'xchg2', i: 3, j: 2 });
+                break;
+            }
+            case 'DROP2': {
+                this.execStackOperation({ op: 'blkpop', i: 2, j: 0 });
+                break;
+            }
+            case 'DUP2': {
+                // s1 s0 PUSH2
+                this.execStackOperation({ op: 'push', i: 1 });
+                this.execStackOperation({ op: 'push', i: 1 });
+                break;
+            }
+            case 'OVER2': {
+                // s3 s2 PUSH2
+                this.execStackOperation({ op: 'push', i: 3 });
+                this.execStackOperation({ op: 'push', i: 3 });
+                break;
+            }
+            case 'REVERSE': {
+                this.execStackOperation({ op: 'reverse', i: operands.i, j: operands.j });
+                break;
+            }
+            case 'BLKDROP': {
+                this.execStackOperation({ op: 'blkpop', i: operands.i, j: 0 });
+                break;
+            }
+            case 'BLKPUSH': {
+                this.execStackOperation({ op: 'blkpush', i: operands.i, j: operands.j });
+                break;
+            }
+            case 'BLKSWAP': {
+                // [i+1] [j+1] REVERSE; [j+1] 0 REVERSE; [i+j+2] 0 REVERSE
+                this.execStackOperation({ op: 'reverse', i: operands.i + 1, j: operands.j + 1 });
+                this.execStackOperation({ op: 'reverse', i: operands.j + 1, j: 0 });
+                this.execStackOperation({ op: 'reverse', i: operands.i + operands.j + 2, j: 0 });
+                break;
+            }
+            case 'BLKDROP2': {
+                // [i+j] 0 REVERSE; [i] BLKDROP; [j] 0 REVERSE
+                this.execStackOperation({ op: 'reverse', i: operands.i + operands.j, j: 0 });
+                this.execStackOperation({ op: 'blkpop', i: operands.i, j: 0 });
+                this.execStackOperation({ op: 'reverse', i: operands.j, j: 0 });
+                break;
+            }
+            case 'TUCK': {
+                // SWAP; OVER
+                this.execStackOperation({ op: 'xchg', i: 0, j: 1 });
+                this.execStackOperation({ op: 'push', i: 1 });
+                break;
+            }
+            case 'DEPTH': {
+                // Push depth value; represent as fresh var
+                this.push();
+                break;
+            }
+            case 'CHKDEPTH': {
+                throw new Error("Dynamic stack operation 'CHKDEPTH' is not supported in analysis");
+            }
+            case 'PICK': {
+                throw new Error("Dynamic stack operation 'PICK' is not supported in analysis");
+            }
+            case 'ROLLX':
+            case '-ROLLX': {
+                throw new Error("Dynamic stack operation 'ROLLX' is not supported in analysis");
+            }
+            case 'BLKSWX':
+            case 'REVX': {
+                throw new Error("Dynamic stack operation 'BLKSWX/REVX' is not supported in analysis");
+            }
+            case 'DROPX': {
+                throw new Error("Dynamic stack operation 'DROPX' is not supported in analysis");
+            }
+            case 'XCHGX': {
+                throw new Error("Dynamic stack operation 'XCHGX' is not supported in analysis");
+            }
+            case 'ONLYTOPX': {
+                throw new Error("Dynamic stack operation 'ONLYTOPX' is not supported in analysis");
+            }
+            case 'ONLYX': {
+                throw new Error("Dynamic stack operation 'ONLYX' is not supported in analysis");
             }
             case 'PUXC': {
                 this.execStackOperation({ op: 'push', i: operands.i });

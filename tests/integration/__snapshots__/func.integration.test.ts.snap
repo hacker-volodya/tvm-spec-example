@@ -19,8 +19,8 @@ function recv_internal () {
 }
 
 /* methodId: 83863 */
-function (arg3, arg2, arg1, arg0) {
-    var9 = (arg2 + (arg1 + arg0)) + arg3;
+function (arg0, arg1) {
+    var9 = ((arg0 + arg1) + arg0) + arg1;
     return var9
 }
 "
