@@ -1,3 +1,4 @@
+import { IRFunction } from "./core/ir";
 import { VarMap } from "./disasm";
 import { Instruction } from "./gen/tvm-spec";
 
@@ -12,7 +13,12 @@ export class StackUnderflowError extends Error {
   }
   
 
-export type StackVariable = { name: string };
+export type StackVariable = {
+    name: string;
+    continuationMeta?: {
+        continuation: IRFunction;
+    };
+};
 
 export class GuardUnresolvedError extends Error {
     public constructor() {

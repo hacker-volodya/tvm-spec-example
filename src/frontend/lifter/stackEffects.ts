@@ -65,6 +65,9 @@ function allocateStackOutputs(spec: Instruction, operands: VarMap, stack: Stack)
   for (const output of spec.value_flow.outputs.stack) {
     if (output.type === 'simple') {
       const v = stack.push();
+      if (spec.mnemonic == 'PUSHCONT_SHORT' || spec.mnemonic == 'PUSHCONT') {
+        v.continuationMeta = { continuation: operands['s'] };
+      }
       pushedThisInsn += 1;
       stackOutputs[output.name] = { var: v, types: output.value_types };
     } else if (output.type === 'const') {
