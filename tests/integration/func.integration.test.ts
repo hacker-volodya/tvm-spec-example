@@ -37,11 +37,13 @@ describe('Func → Decompiler → Pseudocode snapshot', () => {
   test('ifs', async () => {
     const code = `
       int add(int a, int b) method_id {
+        var x = a - 10;
+        var y = b + 20;
         var r = a * b;
         if (a > b) {
-          r += a;
+          r += a / y;
         } else {
-          r += b;  
+          r += b / x;  
         }
         return r;
       }

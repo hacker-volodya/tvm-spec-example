@@ -103,7 +103,8 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
   const fmtValDef = (v: IRValueDef) => `${v.id}`;
 
   const formatInlineFn = (f: IRFunction): string => {
-    return formatIR(f);
+    const indentString = (str: string, count: number, indent = " ") => str.replace(/^/gm, indent.repeat(count));
+    return indentString(formatIR(f), 4).trimStart();
   };
 
   const formatInlineMap = (m: Map<number, IRFunction>): string => {
