@@ -6,8 +6,8 @@ function recv_internal () {
 }
 
 /* methodId: 119863 */
-function (arg0, arg1) {
-    var5, var6 = NULLSWAPIFNOT(x=DICTGET(n=8, D=arg0, k=arg1));
+function (arg1, arg0) {
+    var5, var6 = NULLSWAPIFNOT(x=DICTGET(n=8, D=arg1, k=arg0));
     return var5, var6
 }
 "
@@ -19,18 +19,18 @@ function recv_internal () {
 }
 
 /* methodId: 83863 */
-function (arg2, arg0, arg1) {
-    var10 = ADDCONST(x=arg0 | c=-10);
-    var11 = ADDCONST(x=arg1 | c=20);
-    var12 = arg0 * arg1;
-    IFELSE(c2=function (arg2, arg3, arg4, arg0, arg1) {
-        var18 = arg1 + arg3 / arg4;
+function (arg1, arg0) {
+    var10 = ADDCONST(x=arg1 | c=-10);
+    var11 = ADDCONST(x=arg0 | c=20);
+    var12 = arg1 * arg0;
+    IFELSE(c2=function (arg4, arg3, arg2, arg1, arg0) {
+        var18 = arg0 + arg3 / arg2;
         return var18
-    }, c=function (arg0, arg1, arg2, arg3, arg4, arg5) {
-        var15 = arg5 + arg3 / arg4;
-        return arg2, var15
-    }, f=arg0 > arg1);
-    return arg2, arg0, arg1, var10, var11, var12
+    }, c=function (arg4, arg3, arg2, arg1, arg0) {
+        var15 = arg0 + arg4 / arg1;
+        return var15
+    }, f=arg1 > arg0, c_arg0=var12, c_arg1=var11, c_arg2=var10, c_arg3=arg0, c_arg4=arg1, c2_arg0=var12, c2_arg1=var11, c2_arg2=var10, c2_arg3=arg0, c2_arg4=arg1);
+    return arg1, arg0, var10, var11, var12
 }
 "
 `;
@@ -41,8 +41,8 @@ function recv_internal () {
 }
 
 /* methodId: 83863 */
-function (arg0, arg1) {
-    var9 = ((arg0 + arg1) + arg0) + arg1;
+function (arg1, arg0) {
+    var9 = ((arg1 + arg0) + arg1) + arg0;
     return var9
 }
 "

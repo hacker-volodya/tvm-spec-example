@@ -10,6 +10,9 @@ export type IRValueId = string;
 export type IRValueRef = {
   id: IRValueId;
   types?: IRType[];
+  continuationMeta?: {
+      continuation: IRFunction;
+  };
 };
 
 export type IRValueDef = {
