@@ -3,6 +3,9 @@ import { Decompiler } from '../../src/decompiler';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
+import { OpcodeParser } from '../../src/disasm';
+import { Slice } from 'ton3-core';
+import { tryDecodeFunctionDictFromRoot } from '../../src/frontend/loader';
 
 export type FuncTestInput = string | SourcesMap;
 
@@ -46,8 +49,37 @@ export async function decompileFunc(input: FuncTestInput, opts: FuncTestOptions 
   try {
     const decomp = new Decompiler();
     const program = decomp.decompileFile(tmp);
-    return decomp.format(program);
+    return decomp.format(program); // + '\n\n' + disassemble(BOC.from(boc as Uint8Array).root[0].slice());
   } finally {
-    try { fs.unlinkSync(tmp); } catch {}
+    try { fs.unlinkSync(tmp); } catch { }
   }
+}
+
+export function disassemble(slice: Slice): string {
+  const indentString = (str: string, count: number, indent = " ") => str.replace(/^/gm, indent.repeat(count));
+  let code = "";
+  const map = tryDecodeFunctionDictFromRoot(slice);
+  if (map != null) {
+    for (let [k, v] of map.entries()) {
+      code += `// function ${k}\n`;
+      code += disassemble(v);
+      code += '\n';
+    }
+  }
+  while (slice.bits.length > 0) {
+    const [spec, operands] = OpcodeParser.nextInstruction(slice);
+    code += spec.mnemonic;
+    for (const operandSpec of spec.bytecode.operands) {
+      if (operandSpec.type == 'subslice' || operandSpec.type == 'ref') {
+        if (operandSpec.display_hints.some(h => h.type == 'continuation')) {
+          const innerCont = disassemble(operands[operandSpec.name]);
+          code += ' ' + operandSpec.name + '=<{\n' + indentString(innerCont, 4).trimEnd() + '\n}>';
+          continue;
+        }
+      }
+      code += ` ${operandSpec.name}=${operands[operandSpec.name]}`;
+    }
+    code += '\n'
+  }
+  return code;
 }
