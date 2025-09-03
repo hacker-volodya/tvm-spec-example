@@ -165,8 +165,9 @@ export interface BranchInfo {
 
 export function analyzeControlFlow(spec: Instruction, operands: VarMap, stack: Stack, stackInputs: IRInputs): { inputs: IRInputs, outputs: IROutputs } {
   let inputs: IRInputs = [];
-  let rets = -1;
-  let args = -1;
+  let maxRets = -1;
+  let maxArgs = 0;
+  let hasJumps = false;
   for (let i = 0; i < spec.control_flow.branches.length; i++) {
     const branch = spec.control_flow.branches[i];
     if (branch.type == 'variable') {
@@ -189,27 +190,28 @@ export function analyzeControlFlow(spec: Instruction, operands: VarMap, stack: S
         const v = stackCopy.pop();
         inputs.push({ name: varName + '_' + arg.id, value: { id: v.name } });
       }
-      if (args == -1) {
-        args = target.args.length;
-      } else if (args != target.args.length) {
-        throw new Error(`bad branch ${varName} with ${target.args.length} args`);
+      if (maxRets != -1 && maxArgs - maxRets != target.args.length - target.result.length) {
+        throw new Error(`bad branch ${varName} with ${target.args.length} args and ${target.result.length}`);
       }
-      if (branch.save?.c0?.type == "cc" && !spec.control_flow.nobranch) {
-        if (rets == -1) {
-          rets = target.result.length;
-        } else if (rets != target.result.length) {
-          throw new Error(`bad branch ${varName} with ${target.result.length} returns`);
-        }
+      if (target.args.length > maxArgs) {
+        maxArgs = target.args.length;
+        maxRets = target.result.length;
+      }
+      if (branch.save?.c0?.type != "cc") {
+        hasJumps = true;
       }
     }
   }
-  if (rets == -1) {
-    rets = 0;
-  } 
-  for (let i = 0; i < args; i++) {
+  if (hasJumps || maxRets == -1) {
+    maxRets = 0;
+  }
+  if (spec.control_flow.nobranch && maxArgs != maxRets && !hasJumps) {
+    throw new Error(`for nobranch, args=${maxArgs} must be same as rets=${maxRets}`);
+  }
+  for (let i = 0; i < maxArgs; i++) {
     stack.pop();
   }
-  const outputs = (new Array(rets)).fill(undefined).map((_, i) => {
+  const outputs = (new Array(maxRets)).fill(undefined).map((_, i) => {
     const v = stack.push();
     return { name: `out_${i}`, value: { id: v.name } };
   });
