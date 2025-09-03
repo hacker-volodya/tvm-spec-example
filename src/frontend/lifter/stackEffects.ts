@@ -165,8 +165,10 @@ export interface BranchInfo {
 
 export function analyzeControlFlow(spec: Instruction, operands: VarMap, stack: Stack, stackInputs: IRInputs): { inputs: IRInputs, outputs: IROutputs } {
   let inputs: IRInputs = [];
-  let outputs: IROutputs = [];
-  for (const branch of spec.control_flow.branches) {
+  let rets = -1;
+  let args = -1;
+  for (let i = 0; i < spec.control_flow.branches.length; i++) {
+    const branch = spec.control_flow.branches[i];
     if (branch.type == 'variable') {
       const varName = branch.var_name;
       let target: IRFunction | undefined = operands[varName];
@@ -181,18 +183,35 @@ export function analyzeControlFlow(spec: Instruction, operands: VarMap, stack: S
         }
         target = value.continuationMeta.continuation;
       }
+      
       const stackCopy = stack.copy();
-      //let args = [];
       for (const arg of target.args.slice().reverse()) {
-        //args.unshift({ outer: stackCopy.pop(), inner: arg });
         const v = stackCopy.pop();
         inputs.push({ name: varName + '_' + arg.id, value: { id: v.name } });
       }
-      // let parentPop = 0;
-      // for (let i = 0; i < target.result.length; i++) {
-      //   target.result[i].id == target.args[i]
-      // }
+      if (args == -1) {
+        args = target.args.length;
+      } else if (args != target.args.length) {
+        throw new Error(`bad branch ${varName} with ${target.args.length} args`);
+      }
+      if (branch.save?.c0?.type == "cc" && !spec.control_flow.nobranch) {
+        if (rets == -1) {
+          rets = target.result.length;
+        } else if (rets != target.result.length) {
+          throw new Error(`bad branch ${varName} with ${target.result.length} returns`);
+        }
+      }
     }
   }
+  if (rets == -1) {
+    rets = 0;
+  } 
+  for (let i = 0; i < args; i++) {
+    stack.pop();
+  }
+  const outputs = (new Array(rets)).fill(undefined).map((_, i) => {
+    const v = stack.push();
+    return { name: `out_${i}`, value: { id: v.name } };
+  });
   return { inputs, outputs };
 }
