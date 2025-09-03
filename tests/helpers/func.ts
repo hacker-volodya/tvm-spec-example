@@ -1,10 +1,6 @@
 import { compileFunc, SourcesMap } from '@ton-community/func-js';
-import { Decompiler } from '../../src/decompiler';
-import * as fs from 'fs';
-import * as os from 'os';
-import * as path from 'path';
 import { OpcodeParser } from '../../src/disasm';
-import { Slice } from 'ton3-core';
+import { BOC, Slice } from 'ton3-core';
 import { tryDecodeFunctionDictFromRoot } from '../../src/frontend/loader';
 
 export type FuncTestInput = string | SourcesMap;
@@ -20,8 +16,8 @@ export type FuncTestOptions = {
  * - If `input` is a string, it is used as 'main.fc' and targeted by default.
  * - If `input` is a map, all keys are used as sources; default target is the first key.
  */
-export async function compileFuncToBoc(input: FuncTestInput, opts: FuncTestOptions = {}): Promise<Buffer> {
-  const sources: SourcesMap = typeof input === 'string' ? { 'main.fc': input } : input;
+export async function compileFuncToSlice(input: FuncTestInput, opts: FuncTestOptions = {}): Promise<Slice> {
+  const sources: SourcesMap = typeof input === 'string' ? { 'main.fc': input + '\n\n() main() { }' } : input;
   const targetDefaults = typeof input === 'string'
     ? ['main.fc']
     : (sources['main.fc'] ? ['main.fc'] : (Object.keys(sources).length === 1 ? [Object.keys(sources)[0]] : []));
@@ -34,25 +30,7 @@ export async function compileFuncToBoc(input: FuncTestInput, opts: FuncTestOptio
   if (res.status !== 'ok') {
     throw new Error(`FunC compile error: ${res.message}`);
   }
-  return Buffer.from(res.codeBoc, 'base64');
-}
-
-/**
- * Decompiles a FunC program (provided as sources or single string) to pseudocode text.
- * Under the hood: FunC -> BOC -> Decompiler -> Printer.
- */
-export async function decompileFunc(input: FuncTestInput, opts: FuncTestOptions = {}): Promise<string> {
-  const boc = await compileFuncToBoc((typeof input == 'string') ? input + '\n\n() main() { }' : input, opts);
-  // Write to a temp file and let Decompiler load it like a real BOC
-  const tmp = path.join(os.tmpdir(), `func-${Date.now()}-${Math.random().toString(16).slice(2)}.boc`);
-  fs.writeFileSync(tmp, boc);
-  try {
-    const decomp = new Decompiler();
-    const program = decomp.decompileFile(tmp);
-    return decomp.format(program); // + '\n\n' + disassemble(BOC.from(boc as Uint8Array).root[0].slice());
-  } finally {
-    try { fs.unlinkSync(tmp); } catch { }
-  }
+  return BOC.from(res.codeBoc).root[0].slice();
 }
 
 export function disassemble(slice: Slice): string {
