@@ -3,10 +3,10 @@ import { defaultPipeline } from "./middle/pipeline";
 import { printProgram } from "./backend/printer";
 import { liftSliceToIR } from "./frontend/lifter";
 import { loadEntrySlice, tryDecodeFunctionDictFromRoot } from "./frontend/loader";
+import { Slice } from "ton3-core";
 
 export class Decompiler {
-  decompileFile(path: string): Program {
-    const root = loadEntrySlice(path);
+  decompileSlice(root: Slice): Program {
     const dict = tryDecodeFunctionDictFromRoot(root);
     if (dict) {
       const methods = new Map<number, ReturnType<typeof liftSliceToIR>>();
@@ -19,6 +19,11 @@ export class Decompiler {
       const ir = liftSliceToIR(root);
       return { kind: 'single', entry: this.runMiddle(ir) };
     }
+  }
+
+  decompileFile(path: string): Program {
+    const root = loadEntrySlice(path);
+    return this.decompileSlice(root);
   }
 
   private runMiddle(fn: ReturnType<typeof liftSliceToIR>) {
