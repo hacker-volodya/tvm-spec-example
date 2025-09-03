@@ -107,7 +107,7 @@ export class Stack {
     }
 
     public insertArgs(start: number, length: number): StackVariable[] {
-        let result = [...new Array(length).keys()].map(i => ({ name: `arg${start + i}` }));
+        let result = [...new Array(length).keys()].map(i => ({ name: `arg${start + i}` })).reverse();
         this._stack.unshift(...result);
         return result;
     }
@@ -444,7 +444,7 @@ export class Stack {
                 break;
             }
             case "reverse": {
-                let length = op.i + 2;
+                let length = op.i;
                 let endIndex = this._stack.length - 1 - op.j;
                 let startIndex = endIndex + 1 - length;
                 if (startIndex < 0 || endIndex < 0) {
