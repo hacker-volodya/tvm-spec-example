@@ -1,0 +1,3349 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Func → Decompiler → testdata snapshots decompile a6.fc: a6.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal () {
+    var7 = CALLDICT(n=6);
+    return var7
+}
+
+/* methodId: 5 */
+function (arg5, arg4, arg3, arg2, arg1, arg0) {
+    UNTIL(c=function (arg3, arg2, arg1, arg0) {
+        var14 = arg1 + DIVR(y=arg0, x=arg3);
+        var15 = DIVR(y=arg2, x=arg3);
+        var16 = ADDCONST(x=arg0 | c=2);
+        var17 = EQINT(x=var15 | y=0);
+        return var15, arg2, var14, var16, var17
+    }, c_arg0=1, c_arg1=0, c_arg2=arg0 * -arg0, c_arg3=DIVR(y=arg0, x=arg1));
+    return arg3
+}
+
+/* methodId: 6 */
+function () {
+    var19 = 64;
+    REPEAT(c=function (arg0) {
+        var21 = MULCONST(x=arg0 | c=10);
+        return var21
+    }, n=70);
+    var23 = 64 << 2;
+    var24 = 5;
+    var25 = CALLDICT(n=5);
+    var27 = CALLDICT(n=5);
+    var29 = 239 - var27 ~>> ;
+    return var19, var23, var25, var24, var29
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile a6_1.fc: a6_1.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal (arg5, arg4, arg3, arg2, arg1, arg0) {
+    var32 = arg5 * arg2 - arg4 * arg3;
+    var35 = arg1 * arg2 - arg4 * arg0;
+    var38 = arg5 * arg0 - arg1 * arg3;
+    var39 = var35 / var32;
+    var40 = var38 / var32;
+    return var39, var40
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile a6_5.fc: a6_5.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal (arg0) {
+    var42 = function () {
+        var41 = CALLDICT(n=2);
+        return var41
+    };
+    var43 = CALLDICT(n=1);
+    return arg0, var42, var43, var42, arg0
+    // decompilation error: Error: continuation has no meta!
+    CALLXARGS p=1, r=1
+    MUL 
+}
+
+/* methodId: 1 */
+function (arg1, arg0) {
+    return arg1, arg0, arg1
+    // decompilation error: Error: continuation has no meta!
+    CALLXARGS p=1, r=1
+    XCHG_0I i=s1
+    CALLXARGS p=1, r=1
+}
+
+/* methodId: 2 */
+function (arg0) {
+    var44 = arg0 * arg0;
+    return var44
+}
+
+/* methodId: 4 */
+function (arg0) {
+    var46 = function () {
+        var45 = CALLDICT(n=2);
+        return var45
+    };
+    var47 = CALLDICT(n=1);
+    var48 = CALLDICT(n=2);
+    var49 = arg0 * var48;
+    return arg0, var46, var47, var49
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile a7.fc: a7.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal () {
+}
+
+/* methodId: 1 */
+function (arg2, arg1, arg0) {
+    WHILE(c=function (arg1, arg0) {
+        var53 = arg0 + 1;
+        if ((arg1 & 1)) {
+            var57 = MULCONST(x=arg1 | c=3) + 1;
+            var61 = var53;
+            var62 = var57;
+        } else {
+            var59 = arg1 >> 1;
+            var61 = var53;
+            var62 = var59;
+        }
+        return var62, var61
+    }, c2=function (arg1, arg0) {
+        var51 = GTINT(x=arg1 | y=1);
+        return arg1, arg0, var51
+    }, c2_arg0=0, c2_arg1=arg0);
+    return arg1
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile a10.fc: a10.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal (arg5, arg4, arg3, arg2, arg1, arg0) {
+    WHILE(c=function (arg2, arg1, arg0) {
+        var4 = arg2 - 1;
+        var5 = 1;
+        return var4, var5
+    }, c2=function (arg2, arg1, arg0) {
+        var1 = arg1 * arg1;
+        var2 = var1 > arg2;
+        return arg2, arg1, arg0, var1, var2
+    }, c2_arg0=0, c2_arg1=arg0, c2_arg2=arg1);
+    return arg2, arg3
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile allow_post_modification.fc: allow_post_modification.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal () {
+}
+
+/* methodId: 1 */
+function (arg1, arg0) {
+    var64 = arg1 + arg0;
+    var65 = MULCONST(x=arg0 | c=10);
+    return var64, var65
+}
+
+/* methodId: 2 */
+function () {
+}
+
+/* methodId: 3 */
+function () {
+}
+
+/* methodId: 11 */
+function (arg0) {
+    var67 = arg0 / 20;
+    var68 = CALLDICT(n=1);
+    var69 = var67 << 1;
+    var70 = var69 + 1;
+    return arg0, arg0, var68, var67, var69, var69, var70, var70
+}
+
+/* methodId: 12 */
+function (arg0) {
+    var72 = arg0 / 20;
+    var73 = CALLDICT(n=1);
+    var74 = var72 << 1;
+    var75 = var74 + 1;
+    return arg0, arg0, var73, var72, var74, var74, var75, var75
+}
+
+/* methodId: 13 */
+function (arg0) {
+    var77 = arg0 / 20;
+    var78 = CALLDICT(n=1);
+    var79 = var77 << 1;
+    var80 = var79 + 1;
+    var81 = tuple(var80, var80, var79, var79, var77, var78, arg0);
+    return arg0, var81
+}
+
+/* methodId: 14 */
+function (arg0) {
+    var83 = arg0 / 20;
+    var84 = CALLDICT(n=1);
+    var85 = var83 << 1;
+    var86 = var85 + 1;
+    return arg0, arg0, var84, var83, var85, var85, var86, var86
+}
+
+/* methodId: 15 */
+function (arg0) {
+    var88 = arg0 / 20;
+    var89 = CALLDICT(n=1);
+    var90 = var88 << 1;
+    var91 = var90 + 1;
+    var92 = CALLDICT(n=2);
+    return arg0, arg0, var89, var88, var90, var90, var91, var91, var92
+}
+
+/* methodId: 16 */
+function (arg0) {
+    var94 = arg0 / 20;
+    var95 = CALLDICT(n=1);
+    var96 = var94 << 1;
+    var97 = var96 + 1;
+    var98 = CALLDICT(n=3);
+    return arg0, arg0, var95, var94, var96, var96, var97, var97, var98
+}
+
+/* methodId: 17 */
+function (arg0) {
+    var100 = arg0 / 20;
+    var101 = CALLDICT(n=1);
+    var102 = var100 << 1;
+    var103 = var102 + 1;
+    return arg0, arg0, var101, var100, var102, var102, var103, var103
+}
+
+/* methodId: 18 */
+function (arg0) {
+    var105 = arg0 / 20;
+    var106 = CALLDICT(n=1);
+    var107 = var105 << 1;
+    var108 = var107 + 1;
+    return arg0, var107, var107, var108, var108, arg0, var106, var105
+}
+
+/* methodId: 19 */
+function (arg0) {
+    SETGLOB(x=arg0 | k=1);
+    var109 = GETGLOB(k=1);
+    var110 = GETGLOB(k=1);
+    var113 = GETGLOB(k=1) / 20;
+    var114 = CALLDICT(n=1);
+    SETGLOB(x=var113 | k=1);
+    var115 = GETGLOB(k=1);
+    var117 = GETGLOB(k=1) << 1;
+    SETGLOB(x=var117 | k=1);
+    var118 = GETGLOB(k=1);
+    var120 = GETGLOB(k=1) + 1;
+    SETGLOB(x=var120 | k=1);
+    var121 = GETGLOB(k=1);
+    return var109, var110, var114, var115, var117, var118, var120, var121
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile asm_arg_order.fc: asm_arg_order.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal () {
+}
+
+/* methodId: 1 */
+function (arg0) {
+    SETGLOB(x=TPUSH(x=arg0, t=GETGLOB(k=1)) | k=1);
+    var124 = MULCONST(x=arg0 | c=10);
+    return var124
+}
+
+/* methodId: 11 */
+function () {
+    SETGLOB(x=empty_tuple() | k=1);
+    var126 = 11;
+    var127 = CALLDICT(n=1);
+    var128 = 22;
+    var129 = CALLDICT(n=1);
+    var131 = CALLDICT(n=1);
+    var132 = triple(var131, 33, var129);
+    var133 = GETGLOB(k=1);
+    return var126, var127, var128, var133, var132
+}
+
+/* methodId: 12 */
+function () {
+    SETGLOB(x=empty_tuple() | k=1);
+    var135 = 33;
+    var136 = CALLDICT(n=1);
+    var137 = 22;
+    var138 = CALLDICT(n=1);
+    var140 = CALLDICT(n=1);
+    var141 = triple(var140, 11, var138);
+    var142 = GETGLOB(k=1);
+    return var135, var136, var137, var142, var141
+}
+
+/* methodId: 13 */
+function () {
+    SETGLOB(x=empty_tuple() | k=1);
+    var144 = 22;
+    var145 = CALLDICT(n=1);
+    var146 = 33;
+    var147 = CALLDICT(n=1);
+    var149 = CALLDICT(n=1);
+    var150 = triple(var149, 11, var147);
+    var151 = GETGLOB(k=1);
+    return var144, var145, var146, var151, var150
+}
+
+/* methodId: 14 */
+function () {
+    SETGLOB(x=empty_tuple() | k=1);
+    var153 = 11;
+    var154 = CALLDICT(n=1);
+    var155 = 22;
+    var156 = CALLDICT(n=1);
+    var157 = 33;
+    var158 = CALLDICT(n=1);
+    var160 = CALLDICT(n=1);
+    var162 = CALLDICT(n=1);
+    var163 = tuple(var162, var158, 55, var160, 44);
+    var164 = GETGLOB(k=1);
+    return var153, var154, var155, var156, var157, var164, var163
+}
+
+/* methodId: 15 */
+function () {
+    SETGLOB(x=empty_tuple() | k=1);
+    var166 = empty_tuple();
+    var167 = 33;
+    var168 = CALLDICT(n=1);
+    var170 = CALLDICT(n=1);
+    var172 = TPUSH(x=22, t=TPUSH(x=var170, t=var168));
+    var173 = GETGLOB(k=1);
+    return var166, var167, var173, var172
+}
+
+/* methodId: 16 */
+function () {
+    SETGLOB(x=empty_tuple() | k=1);
+    var175 = 22;
+    var176 = CALLDICT(n=1);
+    var177 = 33;
+    var178 = CALLDICT(n=1);
+    var180 = CALLDICT(n=1);
+    var181 = triple(var180, 11, var178);
+    var182 = GETGLOB(k=1);
+    return var175, var176, var177, var182, var181
+}
+
+/* methodId: 21 */
+function () {
+    SETGLOB(x=empty_tuple() | k=1);
+    var184 = 11;
+    var185 = CALLDICT(n=1);
+    var186 = 22;
+    var187 = CALLDICT(n=1);
+    var189 = CALLDICT(n=1);
+    var190 = triple(var189, 33, var187);
+    var191 = GETGLOB(k=1);
+    return var184, var185, var186, var191, var190
+}
+
+/* methodId: 22 */
+function () {
+    SETGLOB(x=empty_tuple() | k=1);
+    var193 = 11;
+    var194 = CALLDICT(n=1);
+    var195 = 22;
+    var196 = CALLDICT(n=1);
+    var198 = CALLDICT(n=1);
+    var199 = triple(var196, 33, var198);
+    var200 = GETGLOB(k=1);
+    return var193, var194, var195, var200, var199
+}
+
+/* methodId: 23 */
+function () {
+    SETGLOB(x=empty_tuple() | k=1);
+    var202 = 11;
+    var203 = CALLDICT(n=1);
+    var204 = 22;
+    var205 = CALLDICT(n=1);
+    var207 = CALLDICT(n=1);
+    var208 = triple(var205, var207, 33);
+    var209 = GETGLOB(k=1);
+    return var202, var203, var204, var209, var208
+}
+
+/* methodId: 24 */
+function () {
+    SETGLOB(x=empty_tuple() | k=1);
+    var211 = 11;
+    var212 = CALLDICT(n=1);
+    var213 = 22;
+    var214 = CALLDICT(n=1);
+    var215 = 33;
+    var216 = CALLDICT(n=1);
+    var218 = CALLDICT(n=1);
+    var220 = CALLDICT(n=1);
+    var221 = tuple(var220, var216, 55, var218, 44);
+    var222 = GETGLOB(k=1);
+    return var211, var212, var213, var214, var215, var222, var221
+}
+
+/* methodId: 25 */
+function () {
+    SETGLOB(x=empty_tuple() | k=1);
+    var224 = empty_tuple();
+    var225 = 22;
+    var226 = CALLDICT(n=1);
+    var228 = CALLDICT(n=1);
+    var230 = TPUSH(x=var228, t=TPUSH(x=33, t=var226));
+    var231 = GETGLOB(k=1);
+    return var224, var225, var231, var230
+}
+
+/* methodId: 26 */
+function () {
+    SETGLOB(x=empty_tuple() | k=1);
+    var233 = 11;
+    var234 = CALLDICT(n=1);
+    var235 = 22;
+    var236 = CALLDICT(n=1);
+    var238 = CALLDICT(n=1);
+    var239 = triple(var236, var238, 33);
+    var240 = GETGLOB(k=1);
+    return var233, var234, var235, var240, var239
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile bit-operators.fc: bit-operators.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal (arg4, arg3, arg2, arg1, arg0) {
+    if ((EQINT(x=arg0 | y=0))) {
+        var242 = CALLDICT(n=1);
+        return
+    }
+    if ((EQINT(x=arg1 | y=1))) {
+        var245 = CALLDICT(n=2);
+        return
+    }
+    if ((EQINT(x=arg2 | y=2))) {
+        var248 = 0;
+        var249 = CALLDICT(n=3);
+        return
+    }
+    if ((EQINT(x=arg3 | y=3))) {
+        var252 = 0;
+        var253 = CALLDICT(n=4);
+        return
+    }
+    if ((EQINT(x=arg4 | y=4))) {
+        var256 = 1;
+        var257 = CALLDICT(n=3);
+        return
+    }
+    var259 = 1;
+    var260 = CALLDICT(n=4);
+    return var259, var260
+}
+
+/* methodId: 1 */
+function () {
+    var261 = -1;
+    return var261
+}
+
+/* methodId: 2 */
+function () {
+    var262 = -1;
+    return var262
+}
+
+/* methodId: 3 */
+function (arg0) {
+    var264 = EQINT(x=1 << arg0 | y=1);
+    return var264
+}
+
+/* methodId: 4 */
+function (arg0) {
+    var267 = EQINT(x=1 >> arg0 | y=1);
+    return var267
+}
+
+/* methodId: 11 */
+function (arg0) {
+    var272 = (PUSHPOW2DEC(x=8) & var269) == 1 << (MODPOW2(x=arg0 | t=8));
+    return var272
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile c2_1.fc: c2_1.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal (arg2, arg1, arg0) {
+    var278 = function (arg1, arg0) {
+        var277 = arg1 + arg0;
+        return var277
+    };
+    var279 = CALLDICT(n=1);
+    return var278, arg2, arg1, arg0, var279
+}
+
+/* methodId: 1 */
+function (arg3, arg2, arg1, arg0) {
+    return arg3, arg2, arg1, arg0, arg2, arg1, arg3
+    // decompilation error: Error: continuation has no meta!
+    CALLXARGS p=2, r=1
+    PUSH2 i=s1, j=s4
+    CALLXARGS p=2, r=1
+    XC2PU i=s2, j=s2, k=s4
+    CALLXARGS p=2, r=1
+    XCHG2 i=s0, j=s3
+    CALLXARGS p=2, r=1
+    EQUAL 
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile co1.fc: co1.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal () {
+    var280 = CALLDICT(n=1);
+    var281 = CALLDICT(n=2);
+    var282 = CALLDICT(n=3);
+    throw_unless(101, EQINT(x=var280 | y=1));
+    throw_unless(102, EQINT(x=var281 | y=2));
+    throw_unless(103, EQINT(x=var282 | y=3));
+    var286 = CALLDICT(n=5);
+    var287 = CALLDICT(n=6);
+    var294 = begin_cell().store_slice(PUSHSLICE(s=[object Object])).store_slice(PUSHSLICE(s=[object Object])).end_cell().begin_parse();
+    throw_unless(111, var286.equal_slice_bits());
+    throw_unless(112, var287.equal_slice_bits());
+    return var294
+    // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+    // tail slice: [object Object]
+}
+
+/* methodId: 1 */
+function () {
+    var307 = 1;
+    return var307
+}
+
+/* methodId: 2 */
+function () {
+    var308 = 2;
+    return var308
+}
+
+/* methodId: 3 */
+function () {
+    var309 = 3;
+    return var309
+}
+
+/* methodId: 5 */
+function () {
+    var310 = PUSHSLICE(s=[object Object]);
+    return var310
+}
+
+/* methodId: 6 */
+function () {
+    var311 = PUSHSLICE(s=[object Object]);
+    return var311
+}
+
+/* methodId: 8 */
+function () {
+    var312 = 240;
+    return var312
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile code_after_ifelse.fc: code_after_ifelse.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal (arg0) {
+    if ((EQINT(x=arg0 | y=1))) {
+        var314 = 111;
+        var319 = var314;
+    } else {
+        var317 = (arg0 << 1) + 1;
+        var319 = var317;
+    }
+    var320 = 222;
+    return var319, var320
+}
+
+/* methodId: 1 */
+function (arg0) {
+    if ((EQINT(x=arg0 | y=1))) {
+        var322 = 111;
+        var327 = var322;
+    } else {
+        var325 = (arg0 << 1) + 1;
+        var327 = var325;
+    }
+    return var327
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile inline_big.fc: inline_big.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal (arg0) {
+    var428 = CALLREF(
+        c_arg0=arg0 |
+        c=function (arg0) {
+                  var427 = MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=arg0 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1;
+                  return var427
+              }
+    );
+    var430 = ADDCONST(x=MULCONST(x=var428 | c=10) | c=5);
+    return var430
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile inline_if.fc: inline_if.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal (arg0) {
+    var431 = CALLDICT(n=1);
+    var432 = var431 + 1;
+    if ((EQINT(x=arg0 | y=1))) {
+        var434 = 11;
+    } else {
+        var436 = 22;
+    }
+    var438 = var432 + 1;
+    var443 = CALLREF(
+        c_arg0=arg0 |
+        c=function (arg0) {
+                  if ((EQINT(x=arg0 | y=1))) {
+                      var440 = 111;
+                      return
+                  }
+                  var442 = 222;
+                  return var442
+              }
+    );
+    var444 = var443 + 1;
+    return arg0, var438, var444
+}
+
+/* methodId: 1 */
+function (arg0) {
+    if ((EQINT(x=arg0 | y=1))) {
+        var446 = 1;
+        return
+    }
+    var448 = 2;
+    return var448
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile inline_loops.fc: inline_loops.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal () {
+    SETGLOB(x=1 | k=1);
+    REPEAT(c=function () {
+        SETGLOB(x=GETGLOB(k=1) << 1 | k=1);
+    }, n=5);
+    var454 = GETGLOB(k=1);
+    SETGLOB(x=1 | k=1);
+    UNTIL(c=function (arg0) {
+        SETGLOB(x=GETGLOB(k=1) << 1 | k=1);
+        var459 = arg0 + 1;
+        var460 = GTINT(x=var459 | y=7);
+        return var459, var460
+    }, c_arg0=0);
+    var462 = GETGLOB(k=1);
+    SETGLOB(x=1 | k=1);
+    WHILE(c=function (arg0) {
+        SETGLOB(x=GETGLOB(k=1) << 1 | k=1);
+        var469 = arg0 + 1;
+        return var469
+    }, c2=function (arg0) {
+        var465 = LESSINT(x=arg0 | y=10);
+        return arg0, var465
+    }, c2_arg0=0);
+    var471 = GETGLOB(k=1);
+    return var471
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile method_id.fc: method_id.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal () {
+    var472 = 0x3e7;
+    return var472
+}
+
+/* methodId: 1 */
+function () {
+    var473 = 111;
+    return var473
+}
+
+/* methodId: 3 */
+function () {
+    var474 = 222;
+    return var474
+}
+
+/* methodId: 10 */
+function () {
+    var475 = 333;
+    return var475
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile s1.fc: s1.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal () {
+    var476 = 0x1f60d;
+    var477 = get_c3();
+    return var476, var477
+    // decompilation error: Error: continuation has no meta!
+    EXECUTE 
+    PUSHINT_LONG x=0x10d51
+    PUSHCTR i=c3
+    EXECUTE 
+    PUSHINT_LONG x=0x1116c
+    PUSHCTR i=c3
+    EXECUTE 
+    PUSHINT_LONG x=0x1c7ea
+    PUSHCTR i=c3
+    EXECUTE 
+    PUSHINT_LONG x=0x144d3
+    PUSHCTR i=c3
+    EXECUTE 
+    PUSHINT_LONG x=0x1401b
+    PUSHCTR i=c3
+    EXECUTE 
+    PUSHINT_LONG x=0x18097
+    PUSHCTR i=c3
+    EXECUTE 
+    PUSHINT_LONG x=0x72696e67
+    NEWC 
+    STU c=48
+    ENDC 
+    CTOS 
+    XCHG_1I i=s7
+    SDEQ 
+    THROWIFNOT n=101
+    PUSHINT_LONG x=0xabcdef
+    NEWC 
+    STU c=24
+    ENDC 
+    CTOS 
+    XCHG_1I i=s5
+    SDEQ 
+    THROWIFNOT n=102
+    // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+    // tail slice: [object Object]
+}
+
+/* methodId: 68945 */
+function () {
+    var478 = PUSHSLICE(s=[object Object]);
+    return var478
+}
+
+/* methodId: 69996 */
+function () {
+    var479 = PUSHSLICE_LONG(slice=[object Object]);
+    return var479
+}
+
+/* methodId: 81947 */
+function () {
+    // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+}
+
+/* methodId: 83155 */
+function () {
+    var480 = 0x7a62e8a8;
+    return var480
+}
+
+/* methodId: 98455 */
+function () {
+    var481 = 0x8541fde8;
+    return var481
+}
+
+/* methodId: 116714 */
+function () {
+    // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+}
+
+/* methodId: 128525 */
+function () {
+    var482 = PUSHSLICE(s=[object Object]);
+    return var482
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile test-math.fc: test-math.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal () {
+}
+
+/* methodId: 10000 */
+function (arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
+    var506 = CALLREF(
+        c_arg0=arg0, c_arg1=arg1, c_arg2=arg2, c_arg3=arg3, c_arg4=arg4, c_arg5=arg5, c_arg6=arg6 |
+        c=function (arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
+                  if (!((MIN(y=arg0, x=arg1)))) {
+                      var484 = 0;
+                      return
+                  }
+                  var486 = UBITSIZE(x=arg3);
+                  var487 = UBITSIZE(x=arg2);
+                  if ((var486 == var487)) {
+                      var491 = (arg3 - arg2 >> 1) + arg2;
+                      var497 = arg3;
+                      var498 = arg2;
+                      var499 = var491;
+                  } else {
+                      var495 = 1 << (var486 + var487 >> 1);
+                      var497 = var495;
+                  }
+                  UNTIL(c=function (arg2, arg1, arg0) {
+                      var502 = muldivc(arg2, arg1, arg0) - arg0 >> 1;
+                      var503 = arg0 + var502;
+                      var504 = EQINT(x=var502 | y=0);
+                      return arg2, arg1, var503, var504
+                  }, c_arg0=var499, c_arg1=var498, c_arg2=var497);
+                  return arg4
+              }
+    );
+    return var506
+}
+
+/* methodId: 10001 */
+function (arg0) {
+    var526 = CALLREF(
+        c_arg0=arg0 |
+        c=function (arg0) {
+                  var507 = MULRSHIFTR(y=arg0, x=arg0 | t=256);
+                  var508 = PUSHPOW2(x=251);
+                  var510 = 33 << 250;
+                  REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                      var514 = (arg1 - arg2) - LSHIFTDIVR(y=var512, x=arg3 | t=236);
+                      return arg3, arg2, arg0, var514
+                  }, n=14);
+                  var519 = (3 << 254) - LSHIFTDIVR(y=var510, x=var507 | t=240);
+                  var525 = arg0 + (muldivr(arg0 >> 1, var507, var519 - (var507 ~>> )) ~>> );
+                  return var525
+              }
+    );
+    return var526
+}
+
+/* methodId: 10002 */
+function (arg0) {
+    var558, var559 = CALLREF(
+        c_arg0=arg0 |
+        c=function (arg0) {
+                  var527 = MULRSHIFTR(y=arg0, x=arg0 | t=256);
+                  var528 = PUSHPOW2(x=251);
+                  var530 = 33 << 250;
+                  REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                      var534 = (arg1 - arg2) - LSHIFTDIVR(y=var532, x=arg3 | t=236);
+                      return arg3, arg2, arg0, var534
+                  }, n=14);
+                  var539 = (3 << 254) - LSHIFTDIVR(y=var530, x=var527 | t=240);
+                  var545 = arg0 + (muldivr(arg0 >> 1, var527, var539 - (var527 ~>> )) ~>> );
+                  var546 = MULRSHIFTR(y=var545, x=var545 | t=256);
+                  var549 = (var546 ~>> ) + PUSHPOW2(x=255);
+                  var557 = (var545 - (muldivr(var545 >> 1, var546, var549) ~>> )) - (muldivr(var546 >> 1, var546, var546) ~>> );
+                  return var549, var557
+              }
+    );
+    return var558, var559
+}
+
+/* methodId: 10003 */
+function (arg5, arg4, arg3, arg2, arg1, arg0) {
+    var628, var629 = CALLREF(
+        c_arg0=arg0, c_arg1=arg1, c_arg2=arg2, c_arg3=arg3, c_arg4=arg4, c_arg5=arg5 |
+        c=function (arg5, arg4, arg3, arg2, arg1, arg0) {
+                  var560 = abs(arg1);
+                  CALLREF(
+                      c=function () {
+                                // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                            }
+                  );
+                  var595, var596 = CALLREF(
+                      c_arg0=(LSHIFTDIVMODR(y=var560, x=arg0 | t=2) << 1) + arg2 |
+                      c=function (arg0) {
+                                var564 = MULRSHIFTR(y=arg0, x=arg0 | t=256);
+                                var565 = PUSHPOW2(x=251);
+                                var567 = 33 << 250;
+                                REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                                    var571 = (arg1 - arg2) - LSHIFTDIVR(y=var569, x=arg3 | t=236);
+                                    return arg3, arg2, arg0, var571
+                                }, n=14);
+                                var576 = (3 << 254) - LSHIFTDIVR(y=var567, x=var564 | t=240);
+                                var582 = arg0 + (muldivr(arg0 >> 1, var564, var576 - (var564 ~>> )) ~>> );
+                                var583 = MULRSHIFTR(y=var582, x=var582 | t=256);
+                                var586 = (var583 ~>> ) + PUSHPOW2(x=255);
+                                var594 = (var582 - (muldivr(var582 >> 1, var583, var586) ~>> )) - (muldivr(var583 >> 1, var583, var583) ~>> );
+                                return var586, var594
+                            }
+                  );
+                  REPEAT(c=function (arg4, arg3, arg2, arg1, arg0) {
+                      var602 = MULCONST(x=arg1 | c=63) - (arg0 << 4);
+                      var605 = (arg1 << 4) + MULCONST(x=arg0 | c=63);
+                      var606 = MULCONST(x=arg4 | c=65);
+                      return var606, arg3, arg2, var602, var605
+                  }, n=arg1);
+                  var609 = LSHIFTDIVR(y=arg3, x=LSHIFTDIVMODR(y=1, x=0 | t=256) | t=7);
+                  var611 = LSHIFTDIVR(y=arg4, x=LSHIFTDIVMODR(y=arg3, x=var596 | t=256) | t=7);
+                  var620 = SGN(x=arg5) * (((MULRSHIFTR(y=1, x=var609 | t=256) - var595 ~>> ) - MULRSHIFTR(y=arg3, x=-1 | t=256) ~>> ) - var609);
+                  var627 = -1 - ((MULRSHIFTR(y=1, x=-1 | t=256) - var611 ~>> ) + MULRSHIFTR(y=arg3, x=var609 | t=256) ~>> );
+                  return var620, var627
+              }
+    );
+    return var628, var629
+}
+
+/* methodId: 10004 */
+function (arg0) {
+    var669, var670 = CALLREF(
+        c_arg0=arg0 |
+        c=function (arg0) {
+                  var630 = MULRSHIFTR(y=arg0, x=arg0 | t=256);
+                  var631 = PUSHPOW2(x=251);
+                  var633 = 33 << 250;
+                  REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                      var637 = (arg1 - arg2) - LSHIFTDIVR(y=var635, x=arg3 | t=236);
+                      return arg3, arg2, arg0, var637
+                  }, n=14);
+                  var642 = (3 << 254) - LSHIFTDIVR(y=var633, x=var630 | t=240);
+                  var648 = arg0 + (muldivr(arg0 >> 1, var630, var642 - (var630 ~>> )) ~>> );
+                  var649 = MULRSHIFTR(y=var648, x=var648 | t=256);
+                  var652 = (var649 ~>> ) + PUSHPOW2(x=255);
+                  var660 = (var648 - (muldivr(var648 >> 1, var649, var652) ~>> )) - (muldivr(var649 >> 1, var649, var649) ~>> );
+                  var661 = 7;
+                  REPEAT(c=function (arg2, arg1, arg0) {
+                      var663 = MULRSHIFTR(y=arg2, x=arg2 | t=256);
+                      var666 = arg2 - (MULRSHIFTR(y=arg1, x=arg2 | t=256) ~>> arg0);
+                      var667 = ADDCONST(x=arg0 | c=-2);
+                      return var666, var663, var667
+                  }, n=3);
+                  return var652, var660
+              }
+    );
+    return var669, var670
+}
+
+/* methodId: 10005 */
+function (arg0) {
+    var701, var702 = CALLREF(
+        c_arg0=arg0 |
+        c=function (arg0) {
+                  var671 = MULRSHIFTR(y=arg0, x=arg0 | t=256);
+                  var672 = PUSHPOW2(x=251);
+                  var674 = 41 << 250;
+                  REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                      var678 = (arg1 - arg2) - LSHIFTDIVR(y=var676, x=arg3 | t=240);
+                      return arg3, arg2, arg0, var678
+                  }, n=18);
+                  var683 = (3 << 254) - LSHIFTDIVR(y=var674, x=var671 | t=244);
+                  var696 = (muldivr(var689, MULRSHIFTR(y=var689, x=var689 | t=256), (var690 ~>> ) + PUSHNEGPOW2(x=256)) ~>> ) - (arg0 + (muldivr(arg0 >> 1, var671, var683 - (var671 ~>> )) ~>> ));
+                  var700 = (MULRSHIFTR(y=var696, x=var696 | t=256) ~>> ) + PUSHNEGPOW2(x=256);
+                  return var696, var700
+              }
+    );
+    return var701, var702
+}
+
+/* methodId: 10006 */
+function (arg3, arg2, arg1, arg0) {
+    var746 = CALLREF(
+        c_arg0=arg0, c_arg1=arg1, c_arg2=arg2, c_arg3=arg3 |
+        c=function (arg3, arg2, arg1, arg0) {
+                  CALLREF(
+                      c=function () {
+                                // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                                // tail slice: [object Object]
+                            }
+                  );
+                  var737, var738 = CALLREF(
+                      c_arg0=(LSHIFTDIVMODR(y=arg1, x=arg2 | t=7) << 1) - MULRSHIFTR(y=arg3, x=arg0 | t=127) |
+                      c=function (arg0) {
+                                var707 = MULRSHIFTR(y=arg0, x=arg0 | t=256);
+                                var708 = PUSHPOW2(x=251);
+                                var710 = 41 << 250;
+                                REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                                    var714 = (arg1 - arg2) - LSHIFTDIVR(y=var712, x=arg3 | t=240);
+                                    return arg3, arg2, arg0, var714
+                                }, n=18);
+                                var719 = (3 << 254) - LSHIFTDIVR(y=var710, x=var707 | t=244);
+                                var732 = (muldivr(var725, MULRSHIFTR(y=var725, x=var725 | t=256), (var726 ~>> ) + PUSHNEGPOW2(x=256)) ~>> ) - (arg0 + (muldivr(arg0 >> 1, var707, var719 - (var707 ~>> )) ~>> ));
+                                var736 = (MULRSHIFTR(y=var732, x=var732 | t=256) ~>> ) + PUSHNEGPOW2(x=256);
+                                return var732, var736
+                            }
+                  );
+                  if ((arg0 & 1)) {
+                      var741 = -var737;
+                      var743 = var741;
+                      var744 = var738;
+                  }
+                  var745 = LSHIFTDIVR(y=var743, x=var744 | t=248);
+                  return var745
+              }
+    );
+    return var746
+}
+
+/* methodId: 10008 */
+function (arg1, arg0) {
+    var765 = CALLREF(
+        c_arg0=arg0, c_arg1=arg1 |
+        c=function (arg1, arg0) {
+                  var747 = MULRSHIFTR(y=arg1, x=arg1 | t=256);
+                  var751 = DIVR(y=arg0, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                  REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                      var754 = arg1 - LSHIFTDIVR(y=arg0, x=arg2 | t=248);
+                      var755 = arg3 - 1;
+                      var757 = muldivr(var754, arg3, var755) + arg1;
+                      return var755, arg2, arg1, var757
+                  }, n=arg0 - 1);
+                  var764 = arg1 + (muldivr(arg1, var747 >> 1, var751 - (var747 ~>> )) ~>> );
+                  return var764
+              }
+    );
+    return var765
+}
+
+/* methodId: 10009 */
+function (arg1, arg0) {
+    var783 = CALLREF(
+        c_arg0=arg0, c_arg1=arg1 |
+        c=function (arg1, arg0) {
+                  var766 = MULRSHIFTR(y=arg1, x=arg1 | t=256);
+                  var770 = DIVR(y=arg0, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                  REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                      var773 = arg1 - LSHIFTDIVR(y=arg0, x=arg2 | t=242);
+                      var774 = arg3 - 1;
+                      var776 = muldivr(var773, arg3, var774) + arg1;
+                      return var774, arg2, arg1, var776
+                  }, n=arg0 - 1);
+                  var782 = arg1 + (muldivr(arg1, var766, var770 - (var766 ~>> )) ~>> );
+                  return var782
+              }
+    );
+    return var783
+}
+
+/* methodId: 10010 */
+function (arg1, arg0) {
+    var839, var840 = CALLREF(
+        c_arg0=arg0, c_arg1=arg1 |
+        c=function (arg1, arg0) {
+                  var834, var835, var836 = CALLREF(
+                      c_arg0=arg0 |
+                      c=function (arg0) {
+                                var785 = UBITSIZE(x=arg0) - 1;
+                                var788 = arg0 << PUSHPOW2DEC(x=8) - var785;
+                                var790 = 0xb39 << 244;
+                                var796 = ADDCONST(x=muldivr(var788 - var790 >> 1, 65, var792 + var790) | c=11);
+                                var798, var799 = divmod(var796, 5);
+                                REPEAT(c=function (arg0) {
+                                    var801 = MULCONST(x=arg0 | c=33);
+                                    return var801
+                                }, n=var799);
+                                REPEAT(c=function (arg0) {
+                                    var804 = arg0 * 0x25528a1;
+                                    return var804
+                                }, n=var798);
+                                var809 = 1 << MULCONST(x=51 - var796 | c=5);
+                                var833 = CALLREF(
+                                    c_arg0=18, c_arg1=LSHIFTDIVR(y=(var810 >> 1) + var809, x=var788 - var809 << 4 | t=256) |
+                                    c=function (arg1, arg0) {
+                                              var816 = MULRSHIFTR(y=arg1, x=arg1 | t=256);
+                                              var820 = DIVR(y=arg0, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                                              REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                                                  var823 = arg1 - LSHIFTDIVR(y=arg0, x=arg2 | t=242);
+                                                  var824 = arg3 - 1;
+                                                  var826 = muldivr(var823, arg3, var824) + arg1;
+                                                  return var824, arg2, arg1, var826
+                                              }, n=arg0 - 1);
+                                              var832 = arg1 + (muldivr(arg1, var816, var820 - (var816 ~>> )) ~>> );
+                                              return var832
+                                          }
+                                );
+                                return var785, var796, var833
+                            }
+                  );
+                  CALLREF(
+                      c=function () {
+                                // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                                // tail slice: [object Object]
+                            }
+                  );
+                  var838 = LSHIFTDIVR(y=var835, x=var834 | t=256) ~>> ;
+                  return var838, arg1
+                  // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                  // tail slice: [object Object]
+              }
+    );
+    return var839, var840
+}
+
+/* methodId: 10011 */
+function (arg0) {
+    var902, var903, var904 = CALLREF(
+        c_arg0=arg0 |
+        c=function (arg0) {
+                  var891, var892, var893 = CALLREF(
+                      c_arg0=arg0 |
+                      c=function (arg0) {
+                                var842 = UBITSIZE(x=arg0) - 1;
+                                var845 = arg0 << PUSHPOW2DEC(x=8) - var842;
+                                var847 = 0xb39 << 244;
+                                var853 = ADDCONST(x=muldivr(var845 - var847 >> 1, 65, var849 + var847) | c=11);
+                                var855, var856 = divmod(var853, 5);
+                                REPEAT(c=function (arg0) {
+                                    var858 = MULCONST(x=arg0 | c=33);
+                                    return var858
+                                }, n=var856);
+                                REPEAT(c=function (arg0) {
+                                    var861 = arg0 * 0x25528a1;
+                                    return var861
+                                }, n=var855);
+                                var866 = 1 << MULCONST(x=51 - var853 | c=5);
+                                var890 = CALLREF(
+                                    c_arg0=18, c_arg1=LSHIFTDIVR(y=(var867 >> 1) + var866, x=var845 - var866 << 4 | t=256) |
+                                    c=function (arg1, arg0) {
+                                              var873 = MULRSHIFTR(y=arg1, x=arg1 | t=256);
+                                              var877 = DIVR(y=arg0, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                                              REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                                                  var880 = arg1 - LSHIFTDIVR(y=arg0, x=arg2 | t=242);
+                                                  var881 = arg3 - 1;
+                                                  var883 = muldivr(var880, arg3, var881) + arg1;
+                                                  return var881, arg2, arg1, var883
+                                              }, n=arg0 - 1);
+                                              var889 = arg1 + (muldivr(arg1, var873, var877 - (var873 ~>> )) ~>> );
+                                              return var889
+                                          }
+                                );
+                                return var842, var853, var890
+                            }
+                  );
+                  var894, var895 = QRSHIFTRMOD(x=var893 | t=4);
+                  var901 = var894 + ((var895 << 9) + var892 * 0xfffff147 ~>> );
+                  return var891, var901, var892
+                  // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                  // tail slice: [object Object]
+              }
+    );
+    return var902, var903, var904
+}
+
+/* methodId: 10012 */
+function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
+    return arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0
+    // decompilation error: StackUnderflowError: Stack underflow occured (depth = 1)
+    CALLREF c=function (arg13, arg12, arg11, arg10, arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
+        var906 = function (arg1, arg0) {
+            var905 = PUSHPOW2(x=248);
+            return var905
+        };
+        if (!(arg0)) {
+            var905 = PUSHPOW2(x=248);
+            return
+        }
+        var907 = LESSINT(x=arg3 | y=1);
+        var912 = function (arg1, arg0) {
+            var908 = arg1 | arg0;
+            var909 = LESSINT(x=var908 | y=0);
+            var910 = 0;
+            var911 = var910 >> var909;
+            return var911
+        };
+        if (var907) {
+            var908 = arg3 | arg2;
+            var909 = LESSINT(x=var908 | y=0);
+            var910 = 0;
+            var911 = var910 >> var909;
+            return
+        }
+        var968, var969 = CALLREF(
+            c_arg0=arg5, c_arg1=arg4 |
+            c=function (arg1, arg0) {
+                      var963, var964, var965 = CALLREF(
+                          c_arg0=arg0 |
+                          c=function (arg0) {
+                                    var913 = UBITSIZE(x=arg0);
+                                    var914 = var913 - 1;
+                                    var915 = PUSHPOW2DEC(x=8);
+                                    var916 = var915 - var914;
+                                    var917 = arg0 << var916;
+                                    var918 = 0xb39;
+                                    var919 = var918 << 244;
+                                    var920 = var917 - var919;
+                                    var921 = var920 >> 1;
+                                    var922 = 65;
+                                    var923 = var921 + var919;
+                                    var924 = muldivr(var921, var922, var923);
+                                    var925 = ADDCONST(x=var924 | c=11);
+                                    var926 = 5;
+                                    var927, var928 = divmod(var925, var926);
+                                    var929 = 1;
+                                    var931 = function (arg0) {
+                                        var930 = MULCONST(x=arg0 | c=33);
+                                        return var930
+                                    };
+                                    REPEAT(c=var931, n=var928);
+                                    var934 = function (arg0) {
+                                        var932 = 0x25528a1;
+                                        var933 = arg0 * var932;
+                                        return var933
+                                    };
+                                    REPEAT(c=var934, n=var927);
+                                    var935 = 51;
+                                    var936 = var935 - var925;
+                                    var937 = MULCONST(x=var936 | c=5);
+                                    var938 = var929 << var937;
+                                    var939 = var917 - var938;
+                                    var940 = var939 << 4;
+                                    var941 = var939 >> 1;
+                                    var942 = var941 + var938;
+                                    var943 = LSHIFTDIVR(y=var942, x=var940 | t=256);
+                                    var944 = 18;
+                                    var962 = CALLREF(
+                                        c_arg0=var944, c_arg1=var943 |
+                                        c=function (arg1, arg0) {
+                                                  var945 = MULRSHIFTR(y=arg1, x=arg1 | t=256);
+                                                  var946 = PUSHPOW2(x=254);
+                                                  var947 = DIVR(y=arg0, x=var946);
+                                                  var948 = PUSHPOW2(x=255);
+                                                  var949 = var947 + var948;
+                                                  var950 = arg0 - 1;
+                                                  var956 = function (arg3, arg2, arg1, arg0) {
+                                                      var951 = LSHIFTDIVR(y=arg0, x=arg2 | t=242);
+                                                      var952 = arg1 - var951;
+                                                      var953 = arg3 - 1;
+                                                      var954 = muldivr(var952, arg3, var953);
+                                                      var955 = var954 + arg1;
+                                                      return var953, arg2, arg1, var955
+                                                  };
+                                                  REPEAT(c=var956, n=var950);
+                                                  var957 = var945 ~>> ;
+                                                  var958 = var949 - var957;
+                                                  var959 = muldivr(arg1, var945, var958);
+                                                  var960 = var959 ~>> ;
+                                                  var961 = arg1 + var960;
+                                                  return var961
+                                              }
+                                    );
+                                    return var914, var925, var962
+                                }
+                      );
+                      CALLREF(
+                          c=function () {
+                                    // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                                    // tail slice: [object Object]
+                                }
+                      );
+                      var966 = LSHIFTDIVR(y=var964, x=var963 | t=256);
+                      var967 = var966 ~>> ;
+                      return var967, arg1
+                      // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                      // tail slice: [object Object]
+                  }
+        );
+        var970 = 248;
+        var971 = var969 - var970;
+        var972 = MULRSHIFTRMOD(y=arg6, x=var971 | t=248);
+        var973 = MULRSHIFTMOD(y=arg7, x=arg6 | t=256);
+        var974 = var973 >> 247;
+        var975, var976 = QRSHIFTRMOD(x=var968 | t=248);
+        var977 = arg8 + var976;
+        var978, var979 = QRSHIFTRMOD(x=var977 | t=248);
+        var980 = var979 << 9;
+        var981 = var980 + var974;
+        var982 = var972 + var975;
+        var983 = var978 + var982;
+        var984 = 248;
+        var985 = var983 + var984;
+        var986 = LESSINT(x=var985 | y=1);
+        var989 = function (arg2, arg1, arg0) {
+            var987 = EQINT(x=arg0 | y=0);
+            var988 = -var987;
+            return var988
+        };
+        if (var986) {
+            var987 = EQINT(x=var985 | y=0);
+            var988 = -var987;
+            return
+        }
+        CALLREF(
+            c=function () {
+                      // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                      // tail slice: [object Object]
+                  }
+        );
+        var990 = MULRSHIFTR(y=arg10, x=arg13 | t=256);
+        var1013 = CALLREF(
+            c_arg0=var990 |
+            c=function (arg0) {
+                      var991 = MULRSHIFTR(y=arg0, x=arg0 | t=255);
+                      var992 = PUSHPOW2(x=251);
+                      var993 = 39;
+                      var994 = var993 << 250;
+                      var995 = 17;
+                      var999 = function (arg3, arg2, arg1, arg0) {
+                          var996 = arg1 - arg2;
+                          var997 = LSHIFTDIVR(y=var996, x=arg3 | t=239);
+                          var998 = var996 + var997;
+                          return arg3, arg2, arg0, var998
+                      };
+                      REPEAT(c=var999, n=var995);
+                      var1000 = 3;
+                      var1001 = var1000 << 254;
+                      var1002 = LSHIFTDIVR(y=var994, x=var991 | t=243);
+                      var1003 = var1001 + var1002;
+                      var1004 = arg0 ~>> ;
+                      var1005 = var1004 - var1003;
+                      var1006 = var1005 >> 1;
+                      var1007 = MULRSHIFTR(y=var1005, x=arg0 | t=256);
+                      var1008 = var1007 ~>> ;
+                      var1009 = var1003 + var1008;
+                      var1010 = muldivr(var991, var1006, var1009);
+                      var1011 = var1010 ~>> ;
+                      var1012 = arg0 - var1011;
+                      return var1012
+                  }
+        );
+        var1014 = 9;
+        var1015 = var1014 - arg12;
+        var1016 = var1013 ~>> var1015;
+        var1017 = -1;
+        var1018 = var1017 << arg11;
+        var1019 = var1016 - var1018;
+        return var1019
+    }
+}
+
+/* methodId: 10013 */
+function (arg5, arg4, arg3, arg2, arg1, arg0) {
+    var1090 = CALLREF(
+        c_arg0=arg1 << 248, c_arg1=arg0 |
+        c=function (arg1, arg0) {
+                  var1082, var1083, var1084 = CALLREF(
+                      c_arg0=arg0 |
+                      c=function (arg0) {
+                                var1071, var1072, var1073 = CALLREF(
+                                    c_arg0=arg0 |
+                                    c=function (arg0) {
+                                              var1022 = UBITSIZE(x=arg0) - 1;
+                                              var1025 = arg0 << PUSHPOW2DEC(x=8) - var1022;
+                                              var1027 = 0xb39 << 244;
+                                              var1033 = ADDCONST(x=muldivr(var1025 - var1027 >> 1, 65, var1029 + var1027) | c=11);
+                                              var1035, var1036 = divmod(var1033, 5);
+                                              REPEAT(c=function (arg0) {
+                                                  var1038 = MULCONST(x=arg0 | c=33);
+                                                  return var1038
+                                              }, n=var1036);
+                                              REPEAT(c=function (arg0) {
+                                                  var1041 = arg0 * 0x25528a1;
+                                                  return var1041
+                                              }, n=var1035);
+                                              var1046 = 1 << MULCONST(x=51 - var1033 | c=5);
+                                              var1070 = CALLREF(
+                                                  c_arg0=18, c_arg1=LSHIFTDIVR(y=(var1047 >> 1) + var1046, x=var1025 - var1046 << 4 | t=256) |
+                                                  c=function (arg1, arg0) {
+                                                            var1053 = MULRSHIFTR(y=arg1, x=arg1 | t=256);
+                                                            var1057 = DIVR(y=arg0, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                                                            REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                                                                var1060 = arg1 - LSHIFTDIVR(y=arg0, x=arg2 | t=242);
+                                                                var1061 = arg3 - 1;
+                                                                var1063 = muldivr(var1060, arg3, var1061) + arg1;
+                                                                return var1061, arg2, arg1, var1063
+                                                            }, n=arg0 - 1);
+                                                            var1069 = arg1 + (muldivr(arg1, var1053, var1057 - (var1053 ~>> )) ~>> );
+                                                            return var1069
+                                                        }
+                                              );
+                                              return var1022, var1033, var1070
+                                          }
+                                );
+                                var1074, var1075 = QRSHIFTRMOD(x=var1073 | t=4);
+                                var1081 = var1074 + ((var1075 << 9) + var1072 * 0xfffff147 ~>> );
+                                return var1071, var1081, var1072
+                                // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                                // tail slice: [object Object]
+                            }
+                  );
+                  var1086 = var1084 - 248;
+                  CALLREF(
+                      c=function () {
+                                // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                                // tail slice: [object Object]
+                            }
+                  );
+                  var1089 = MULRSHIFTR(y=var1083, x=var1082 | t=8) + (arg1 ~>> );
+                  return var1089
+              }
+    );
+    var1128 = CALLREF(
+        c_arg0=DIVR(y=arg2, x=var1090), c_arg1=arg3, c_arg2=arg4, c_arg3=arg5 |
+        c=function (arg3, arg2, arg1, arg0) {
+                  CALLREF(
+                      c=function () {
+                                // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                                // tail slice: [object Object]
+                            }
+                  );
+                  var1119 = CALLREF(
+                      c_arg0=(LSHIFTDIVMODR_VAR(z=8, y=arg1, x=arg2) << 1) - MULRSHIFTR(y=arg3, x=arg0 | t=127) |
+                      c=function (arg0) {
+                                var1097 = MULRSHIFTR(y=arg0, x=arg0 | t=255);
+                                var1098 = PUSHPOW2(x=251);
+                                var1100 = 39 << 250;
+                                REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                                    var1104 = (arg1 - arg2) + LSHIFTDIVR(y=var1102, x=arg3 | t=239);
+                                    return arg3, arg2, arg0, var1104
+                                }, n=17);
+                                var1109 = (3 << 254) + LSHIFTDIVR(y=var1100, x=var1097 | t=243);
+                                var1118 = arg0 - (muldivr(var1097, (arg0 ~>> ) - var1109 >> 1, var1109 + (MULRSHIFTR(y=var1111, x=arg0 | t=256) ~>> )) ~>> );
+                                return var1118
+                            }
+                  );
+                  var1127 = (var1119 ~>> 9 - arg0) - (-1 << 248 + arg0);
+                  return var1127
+              }
+    );
+    return var1128
+}
+
+/* methodId: 10014 */
+function (arg1, arg0) {
+    var1198 = CALLREF(
+        c_arg0=arg0, c_arg1=arg1 |
+        c=function (arg1, arg0) {
+                  var1190, var1191, var1192 = CALLREF(
+                      c_arg0=arg0 |
+                      c=function (arg0) {
+                                var1179, var1180, var1181 = CALLREF(
+                                    c_arg0=arg0 |
+                                    c=function (arg0) {
+                                              var1130 = UBITSIZE(x=arg0) - 1;
+                                              var1133 = arg0 << PUSHPOW2DEC(x=8) - var1130;
+                                              var1135 = 0xb39 << 244;
+                                              var1141 = ADDCONST(x=muldivr(var1133 - var1135 >> 1, 65, var1137 + var1135) | c=11);
+                                              var1143, var1144 = divmod(var1141, 5);
+                                              REPEAT(c=function (arg0) {
+                                                  var1146 = MULCONST(x=arg0 | c=33);
+                                                  return var1146
+                                              }, n=var1144);
+                                              REPEAT(c=function (arg0) {
+                                                  var1149 = arg0 * 0x25528a1;
+                                                  return var1149
+                                              }, n=var1143);
+                                              var1154 = 1 << MULCONST(x=51 - var1141 | c=5);
+                                              var1178 = CALLREF(
+                                                  c_arg0=18, c_arg1=LSHIFTDIVR(y=(var1155 >> 1) + var1154, x=var1133 - var1154 << 4 | t=256) |
+                                                  c=function (arg1, arg0) {
+                                                            var1161 = MULRSHIFTR(y=arg1, x=arg1 | t=256);
+                                                            var1165 = DIVR(y=arg0, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                                                            REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                                                                var1168 = arg1 - LSHIFTDIVR(y=arg0, x=arg2 | t=242);
+                                                                var1169 = arg3 - 1;
+                                                                var1171 = muldivr(var1168, arg3, var1169) + arg1;
+                                                                return var1169, arg2, arg1, var1171
+                                                            }, n=arg0 - 1);
+                                                            var1177 = arg1 + (muldivr(arg1, var1161, var1165 - (var1161 ~>> )) ~>> );
+                                                            return var1177
+                                                        }
+                                              );
+                                              return var1130, var1141, var1178
+                                          }
+                                );
+                                var1182, var1183 = QRSHIFTRMOD(x=var1181 | t=4);
+                                var1189 = var1182 + ((var1183 << 9) + var1180 * 0xfffff147 ~>> );
+                                return var1179, var1189, var1180
+                                // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                                // tail slice: [object Object]
+                            }
+                  );
+                  var1194 = var1192 - 248;
+                  CALLREF(
+                      c=function () {
+                                // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                                // tail slice: [object Object]
+                            }
+                  );
+                  var1197 = MULRSHIFTR(y=var1191, x=var1190 | t=8) + (arg1 ~>> );
+                  return var1197
+              }
+    );
+    return var1198
+}
+
+/* methodId: 10015 */
+function (arg0) {
+    var1237, var1238 = CALLREF(
+        c_arg0=arg0 |
+        c=function (arg0) {
+                  if ((LESSINT(x=var1202 >> 249 | y=91))) {
+                      var1206 = arg0 >> 1;
+                      var1207 = arg2 - 1;
+                      var1209 = var1207;
+                      var1210 = arg1;
+                      var1211 = var1206;
+                  }
+                  var1236 = CALLREF(
+                      c_arg0=36, c_arg1=LSHIFTDIVR(y=(var1212 >> 1) - var1211, x=var1210 + var1211 << 1 | t=256) |
+                      c=function (arg1, arg0) {
+                                var1218 = MULRSHIFTR(y=arg1, x=arg1 | t=256);
+                                var1222 = DIVR(y=arg0, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                                REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                                    var1225 = arg1 - LSHIFTDIVR(y=arg0, x=arg2 | t=248);
+                                    var1226 = arg3 - 1;
+                                    var1228 = muldivr(var1225, arg3, var1226) + arg1;
+                                    return var1226, arg2, arg1, var1228
+                                }, n=arg0 - 1);
+                                var1235 = arg1 + (muldivr(arg1, var1218 >> 1, var1222 - (var1218 ~>> )) ~>> );
+                                return var1235
+                            }
+                  );
+                  return var1236, var1209
+              }
+    );
+    return var1237, var1238
+}
+
+/* methodId: 10016 */
+function (arg3, arg2, arg1, arg0) {
+    var1292, var1293 = CALLREF(
+        c_arg0=arg0, c_arg1=arg1, c_arg2=arg2, c_arg3=arg3 |
+        c=function (arg3, arg2, arg1, arg0) {
+                  CALLREF(
+                      c=function () {
+                                // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                                // tail slice: [object Object]
+                            }
+                  );
+                  var1282, var1283 = CALLREF(
+                      c_arg0=(LSHIFTDIVMODR(y=arg1, x=arg2 | t=7) << 1) - MULRSHIFTR(y=arg3, x=arg0 | t=127) |
+                      c=function (arg0) {
+                                var1243 = MULRSHIFTR(y=arg0, x=arg0 | t=256);
+                                var1244 = PUSHPOW2(x=251);
+                                var1246 = 33 << 250;
+                                REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                                    var1250 = (arg1 - arg2) - LSHIFTDIVR(y=var1248, x=arg3 | t=236);
+                                    return arg3, arg2, arg0, var1250
+                                }, n=14);
+                                var1255 = (3 << 254) - LSHIFTDIVR(y=var1246, x=var1243 | t=240);
+                                var1261 = arg0 + (muldivr(arg0 >> 1, var1243, var1255 - (var1243 ~>> )) ~>> );
+                                var1262 = MULRSHIFTR(y=var1261, x=var1261 | t=256);
+                                var1265 = (var1262 ~>> ) + PUSHPOW2(x=255);
+                                var1273 = (var1261 - (muldivr(var1261 >> 1, var1262, var1265) ~>> )) - (muldivr(var1262 >> 1, var1262, var1262) ~>> );
+                                var1274 = 7;
+                                REPEAT(c=function (arg2, arg1, arg0) {
+                                    var1276 = MULRSHIFTR(y=arg2, x=arg2 | t=256);
+                                    var1279 = arg2 - (MULRSHIFTR(y=arg1, x=arg2 | t=256) ~>> arg0);
+                                    var1280 = ADDCONST(x=arg0 | c=-2);
+                                    return var1279, var1276, var1280
+                                }, n=3);
+                                return var1265, var1273
+                            }
+                  );
+                  var1286 = PUSHPOW2(x=248) - (var1283 ~>> );
+                  var1287 = var1282 ~>> ;
+                  REPEAT(c=function (arg1, arg0) {
+                      var1290 = -arg1;
+                      return arg0, var1290
+                  }, n=arg0 & 3);
+                  return var1287, var1286
+              }
+    );
+    return var1292, var1293
+}
+
+/* methodId: 10017 */
+function (arg3, arg2, arg1, arg0) {
+    var1330 = CALLREF(
+        c_arg0=arg0, c_arg1=arg1, c_arg2=arg2, c_arg3=arg3 |
+        c=function (arg3, arg2, arg1, arg0) {
+                  CALLREF(
+                      c=function () {
+                                // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                                // tail slice: [object Object]
+                            }
+                  );
+                  var1321 = CALLREF(
+                      c_arg0=(LSHIFTDIVMODR_VAR(z=8, y=arg1, x=arg2) << 1) - MULRSHIFTR(y=arg3, x=arg0 | t=127) |
+                      c=function (arg0) {
+                                var1299 = MULRSHIFTR(y=arg0, x=arg0 | t=255);
+                                var1300 = PUSHPOW2(x=251);
+                                var1302 = 39 << 250;
+                                REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                                    var1306 = (arg1 - arg2) + LSHIFTDIVR(y=var1304, x=arg3 | t=239);
+                                    return arg3, arg2, arg0, var1306
+                                }, n=17);
+                                var1311 = (3 << 254) + LSHIFTDIVR(y=var1302, x=var1299 | t=243);
+                                var1320 = arg0 - (muldivr(var1299, (arg0 ~>> ) - var1311 >> 1, var1311 + (MULRSHIFTR(y=var1313, x=arg0 | t=256) ~>> )) ~>> );
+                                return var1320
+                            }
+                  );
+                  var1329 = (var1321 ~>> 9 - arg0) - (-1 << 248 + arg0);
+                  return var1329
+              }
+    );
+    return var1330
+}
+
+/* methodId: 10018 */
+function (arg2, arg1, arg0) {
+    var1365 = CALLREF(
+        c_arg0=arg0, c_arg1=arg1, c_arg2=arg2 |
+        c=function (arg2, arg1, arg0) {
+                  var1331, var1332 = QRSHIFTRMOD(x=arg0 | t=248);
+                  CALLREF(
+                      c=function () {
+                                // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                                // tail slice: [object Object]
+                            }
+                  );
+                  var1356 = CALLREF(
+                      c_arg0=MULRSHIFTR(y=var1331, x=arg1 | t=247) |
+                      c=function (arg0) {
+                                var1334 = MULRSHIFTR(y=arg0, x=arg0 | t=255);
+                                var1335 = PUSHPOW2(x=251);
+                                var1337 = 39 << 250;
+                                REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                                    var1341 = (arg1 - arg2) + LSHIFTDIVR(y=var1339, x=arg3 | t=239);
+                                    return arg3, arg2, arg0, var1341
+                                }, n=17);
+                                var1346 = (3 << 254) + LSHIFTDIVR(y=var1337, x=var1334 | t=243);
+                                var1355 = arg0 - (muldivr(var1334, (arg0 ~>> ) - var1346 >> 1, var1346 + (MULRSHIFTR(y=var1348, x=arg0 | t=256) ~>> )) ~>> );
+                                return var1355
+                            }
+                  );
+                  var1364 = (var1356 ~>> 9 - arg2) - (-1 << 248 + arg2);
+                  return var1364
+              }
+    );
+    return var1365
+}
+
+/* methodId: 10019 */
+function (arg0) {
+    var1388 = CALLREF(
+        c_arg0=arg0 |
+        c=function (arg0) {
+                  var1366 = MULRSHIFTR(y=arg0, x=arg0 | t=255);
+                  var1367 = PUSHPOW2(x=251);
+                  var1369 = 39 << 250;
+                  REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                      var1373 = (arg1 - arg2) + LSHIFTDIVR(y=var1371, x=arg3 | t=239);
+                      return arg3, arg2, arg0, var1373
+                  }, n=17);
+                  var1378 = (3 << 254) + LSHIFTDIVR(y=var1369, x=var1366 | t=243);
+                  var1387 = arg0 - (muldivr(var1366, (arg0 ~>> ) - var1378 >> 1, var1378 + (MULRSHIFTR(y=var1380, x=arg0 | t=256) ~>> )) ~>> );
+                  return var1387
+              }
+    );
+    return var1388
+}
+
+/* methodId: 10020 */
+function (arg5, arg4, arg3, arg2, arg1, arg0) {
+    var1477 = CALLREF(
+        c_arg0=arg0, c_arg1=arg1, c_arg2=arg2, c_arg3=arg3, c_arg4=arg4, c_arg5=arg5 |
+        c=function (arg5, arg4, arg3, arg2, arg1, arg0) {
+                  var1389 = arg0 ~>> ;
+                  if (var1389) {
+                      var1391 = LSHIFTDIVR(y=arg0, x=PUSHNEGPOW2(x=255) | t=256);
+                      var1395 = var1389;
+                      var1396 = var1391;
+                  } else {
+                      var1393 = arg0 << 1;
+                      var1395 = var1389;
+                      var1396 = var1393;
+                  }
+                  var1467, var1468 = CALLREF(
+                      c_arg0=var1396, c_arg1=var1395 |
+                      c=function (arg1, arg0) {
+                                var1438, var1439, var1440 = CALLREF(
+                                    c_arg0=arg0 ~>>  |
+                                    c=function (arg0) {
+                                              var1412 = ADDCONST(x=LSHIFTDIVR(y=var1404 * var1404 + (3 << 128), x=LSHIFTDIVR(y=var1398 * 0x6e1604 + PUSHPOW2(x=48), x=abs(arg0) - 0x6e1604 | t=88) * 0xc01 | t=59) | c=13);
+                                              var1413 = 0x1fb00a0;
+                                              var1414 = 0x4fd801;
+                                              var1416, var1417 = divmod(var1412, 5);
+                                              var1421 = 1 << (MULCONST(x=51 - var1412 | c=5));
+                                              REPEAT(c=function (arg1, arg0) {
+                                                  var1424 = SUBR(y=arg0 << 5, x=arg1);
+                                                  var1426 = arg0 + (arg1 << 5);
+                                                  return var1426, var1424
+                                              }, n=var1417);
+                                              REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                                                  var1430 = arg1 * arg3 - arg0 * arg2;
+                                                  var1433 = arg1 * arg2 + arg0 * arg3;
+                                                  return arg3, arg2, var1430, var1433
+                                              }, n=var1416);
+                                              var1435 = SGN(x=arg0);
+                                              var1436 = var1435 * var1412;
+                                              var1437 = var1435 * 0;
+                                              return var1436, var1421, var1437
+                                          }
+                                );
+                                var1448 = LSHIFTDIVR(y=var1438 + MULRSHIFTR(y=arg1, x=var1439 | t=256), x=(MULRSHIFTRMOD(y=arg0, x=var1439 | t=256) ~>> ) + (var1440 - var1439 << 6) | t=255);
+                                var1450 = MULRSHIFTR(y=var1448, x=var1448 | t=256);
+                                var1454 = DIVR(y=18, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                                REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                                    var1457 = arg1 + LSHIFTDIVR(y=arg0, x=arg2 | t=242);
+                                    var1458 = arg3 - 1;
+                                    var1460 = muldivr(var1457, arg3, var1458) + arg1;
+                                    return var1458, arg2, arg1, var1460
+                                }, n=18 - 1);
+                                var1466 = var1448 - (muldivr(var1448, var1450, var1454 + (var1450 ~>> )) ~>> );
+                                return arg0, var1466
+                            }
+                  );
+                  CALLREF(
+                      c=function () {
+                                // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                                // tail slice: [object Object]
+                            }
+                  );
+                  CALLREF(
+                      c=function () {
+                                // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                            }
+                  );
+                  var1469 = MULRSHIFTRMOD(y=var1468, x=arg3 | t=6);
+                  var1476 = (arg1 + arg5 * arg2) + ((var1467 + var1469) + MULRSHIFTR(y=arg4, x=arg5 | t=122) ~>> );
+                  return var1476
+              }
+    );
+    return var1477
+}
+
+/* methodId: 10021 */
+function (arg1, arg0) {
+    var1495 = CALLREF(
+        c_arg0=arg0, c_arg1=arg1 |
+        c=function (arg1, arg0) {
+                  var1478 = MULRSHIFTR(y=arg1, x=arg1 | t=256);
+                  var1482 = DIVR(y=arg0, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                  REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                      var1485 = arg1 + LSHIFTDIVR(y=arg0, x=arg2 | t=246);
+                      var1486 = arg3 - 1;
+                      var1488 = muldivr(var1485, arg3, var1486) + arg1;
+                      return var1486, arg2, arg1, var1488
+                  }, n=arg0 - 1);
+                  var1494 = arg1 - (muldivr(arg1, var1478, var1482 + (var1478 ~>> )) ~>> );
+                  return var1494
+              }
+    );
+    return var1495
+}
+
+/* methodId: 10022 */
+function (arg1, arg0) {
+    var1566, var1567 = CALLREF(
+        c_arg0=arg0, c_arg1=arg1 |
+        c=function (arg1, arg0) {
+                  var1537, var1538, var1539 = CALLREF(
+                      c_arg0=arg0 ~>>  |
+                      c=function (arg0) {
+                                var1511 = ADDCONST(x=LSHIFTDIVR(y=var1503 * var1503 + (3 << 128), x=LSHIFTDIVR(y=var1497 * 0x6e1604 + PUSHPOW2(x=48), x=abs(arg0) - 0x6e1604 | t=88) * 0xc01 | t=59) | c=13);
+                                var1512 = 0x1fb00a0;
+                                var1513 = 0x4fd801;
+                                var1515, var1516 = divmod(var1511, 5);
+                                var1520 = 1 << (MULCONST(x=51 - var1511 | c=5));
+                                REPEAT(c=function (arg1, arg0) {
+                                    var1523 = SUBR(y=arg0 << 5, x=arg1);
+                                    var1525 = arg0 + (arg1 << 5);
+                                    return var1525, var1523
+                                }, n=var1516);
+                                REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                                    var1529 = arg1 * arg3 - arg0 * arg2;
+                                    var1532 = arg1 * arg2 + arg0 * arg3;
+                                    return arg3, arg2, var1529, var1532
+                                }, n=var1515);
+                                var1534 = SGN(x=arg0);
+                                var1535 = var1534 * var1511;
+                                var1536 = var1534 * 0;
+                                return var1535, var1520, var1536
+                            }
+                  );
+                  var1547 = LSHIFTDIVR(y=var1537 + MULRSHIFTR(y=arg1, x=var1538 | t=256), x=(MULRSHIFTRMOD(y=arg0, x=var1538 | t=256) ~>> ) + (var1539 - var1538 << 6) | t=255);
+                  var1549 = MULRSHIFTR(y=var1547, x=var1547 | t=256);
+                  var1553 = DIVR(y=18, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                  REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                      var1556 = arg1 + LSHIFTDIVR(y=arg0, x=arg2 | t=242);
+                      var1557 = arg3 - 1;
+                      var1559 = muldivr(var1556, arg3, var1557) + arg1;
+                      return var1557, arg2, arg1, var1559
+                  }, n=18 - 1);
+                  var1565 = var1547 - (muldivr(var1547, var1549, var1553 + (var1549 ~>> )) ~>> );
+                  return arg0, var1565
+              }
+    );
+    return var1566, var1567
+}
+
+/* methodId: 10023 */
+function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
+    return arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0
+    // decompilation error: StackUnderflowError: Stack underflow occured (depth = 1)
+    CALLREF c=function (arg12, arg11, arg10, arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
+        var1568 = PUSHPOW2(x=255);
+        var1569 = MULRSHIFTR(y=arg0, x=arg0 | t=255);
+        var1570 = var1568 - var1569;
+        var1573 = function (arg3, arg2, arg1, arg0) {
+            var1571 = SGN(x=arg1);
+            CALLREF(
+                c=function () {
+                          // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                          // tail slice: [object Object]
+                      }
+            );
+            var1572 = arg3 * arg2;
+            return var1572
+        };
+        if (!(var1570)) {
+            var1571 = SGN(x=arg0);
+            CALLREF(
+                c=function () {
+                          // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                          // tail slice: [object Object]
+                      }
+            );
+            var1572 = arg2 * arg1;
+            return
+        }
+        var1574 = PUSHPOW2(x=255);
+        var1598 = CALLREF(
+            c_arg0=var1574, c_arg1=arg3, c_arg2=arg4, c_arg3=arg5, c_arg4=arg6, c_arg5=arg7, c_arg6=arg8 |
+            c=function (arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
+                      var1575 = MIN(y=arg0, x=arg1);
+                      var1577 = function (arg1, arg0) {
+                          var1576 = 0;
+                          return var1576
+                      };
+                      if (!(var1575)) {
+                          var1576 = 0;
+                          return
+                      }
+                      var1578 = UBITSIZE(x=arg3);
+                      var1579 = UBITSIZE(x=arg2);
+                      var1580 = var1578 == var1579;
+                      var1584 = function (arg3, arg2, arg1, arg0) {
+                          var1581 = arg3 - arg2;
+                          var1582 = var1581 >> 1;
+                          var1583 = var1582 + arg2;
+                          return arg3, arg2, var1583
+                      };
+                      var1588 = function (arg1, arg0) {
+                          var1585 = arg1 + arg0;
+                          var1586 = var1585 >> 1;
+                          var1587 = 1 << var1586;
+                          return var1587
+                      };
+                      if (var1580) {
+                          var1581 = arg3 - arg2;
+                          var1582 = var1581 >> 1;
+                          var1583 = var1582 + arg2;
+                          var1589 = arg3;
+                          var1590 = arg2;
+                          var1591 = var1583;
+                      } else {
+                          var1585 = var1578 + var1579;
+                          var1586 = var1585 >> 1;
+                          var1587 = 1 << var1586;
+                          var1589 = var1587;
+                      }
+                      var1597 = function (arg2, arg1, arg0) {
+                          var1592 = muldivc(arg2, arg1, arg0);
+                          var1593 = var1592 - arg0;
+                          var1594 = var1593 >> 1;
+                          var1595 = arg0 + var1594;
+                          var1596 = EQINT(x=var1594 | y=0);
+                          return arg2, arg1, var1595, var1596
+                      };
+                      UNTIL(c=var1597, c_arg0=var1591, c_arg1=var1590, c_arg2=var1589);
+                      return arg4
+                  }
+        );
+        var1599 = PUSHNEGPOW2(x=255);
+        var1600 = var1599 - var1598;
+        var1601 = LSHIFTDIVR(y=var1600, x=arg9 | t=256);
+        var1602 = -var1601;
+        var1679 = CALLREF(
+            c_arg0=var1602, c_arg1=arg10, c_arg2=arg11, c_arg3=arg12 |
+            c=function (arg3, arg2, arg1, arg0) {
+                      var1673, var1674 = CALLREF(
+                          c_arg0=arg0, c_arg1=arg1 |
+                          c=function (arg1, arg0) {
+                                    var1603 = arg0 ~>> ;
+                                    var1644, var1645, var1646 = CALLREF(
+                                        c_arg0=var1603 |
+                                        c=function (arg0) {
+                                                  var1604 = abs(arg0);
+                                                  var1605 = 0x6e1604;
+                                                  var1606 = var1604 - var1605;
+                                                  var1607 = var1604 * var1605;
+                                                  var1608 = PUSHPOW2(x=48);
+                                                  var1609 = var1607 + var1608;
+                                                  var1610 = LSHIFTDIVR(y=var1609, x=var1606 | t=88);
+                                                  var1611 = 0xc01;
+                                                  var1612 = var1610 * var1611;
+                                                  var1613 = var1610 * var1610;
+                                                  var1614 = 3;
+                                                  var1615 = var1614 << 128;
+                                                  var1616 = var1613 + var1615;
+                                                  var1617 = LSHIFTDIVR(y=var1616, x=var1612 | t=59);
+                                                  var1618 = ADDCONST(x=var1617 | c=13);
+                                                  var1619 = 0x1fb00a0;
+                                                  var1620 = 0x4fd801;
+                                                  var1621 = 5;
+                                                  var1622, var1623 = divmod(var1618, var1621);
+                                                  var1624 = 51;
+                                                  var1625 = var1624 - var1618;
+                                                  var1626 = MULCONST(x=var1625 | c=5);
+                                                  var1627 = 1 << var1626;
+                                                  var1628 = 0;
+                                                  var1633 = function (arg1, arg0) {
+                                                      var1629 = arg0 << 5;
+                                                      var1630 = SUBR(y=var1629, x=arg1);
+                                                      var1631 = arg1 << 5;
+                                                      var1632 = arg0 + var1631;
+                                                      return var1632, var1630
+                                                  };
+                                                  REPEAT(c=var1633, n=var1623);
+                                                  var1640 = function (arg3, arg2, arg1, arg0) {
+                                                      var1634 = arg1 * arg3;
+                                                      var1635 = arg0 * arg2;
+                                                      var1636 = var1634 - var1635;
+                                                      var1637 = arg1 * arg2;
+                                                      var1638 = arg0 * arg3;
+                                                      var1639 = var1637 + var1638;
+                                                      return arg3, arg2, var1636, var1639
+                                                  };
+                                                  REPEAT(c=var1640, n=var1622);
+                                                  var1641 = SGN(x=arg0);
+                                                  var1642 = var1641 * var1618;
+                                                  var1643 = var1641 * var1628;
+                                                  return var1642, var1627, var1643
+                                              }
+                                    );
+                                    var1647 = MULRSHIFTRMOD(y=arg0, x=var1645 | t=256);
+                                    var1648 = var1647 ~>> ;
+                                    var1649 = var1646 - var1645;
+                                    var1650 = var1649 << 6;
+                                    var1651 = var1648 + var1650;
+                                    var1652 = MULRSHIFTR(y=arg1, x=var1645 | t=256);
+                                    var1653 = var1644 + var1652;
+                                    var1654 = LSHIFTDIVR(y=var1653, x=var1651 | t=255);
+                                    var1655 = 18;
+                                    var1656 = MULRSHIFTR(y=var1654, x=var1654 | t=256);
+                                    var1657 = PUSHPOW2(x=254);
+                                    var1658 = DIVR(y=var1655, x=var1657);
+                                    var1659 = PUSHPOW2(x=255);
+                                    var1660 = var1658 + var1659;
+                                    var1661 = var1655 - 1;
+                                    var1667 = function (arg3, arg2, arg1, arg0) {
+                                        var1662 = LSHIFTDIVR(y=arg0, x=arg2 | t=242);
+                                        var1663 = arg1 + var1662;
+                                        var1664 = arg3 - 1;
+                                        var1665 = muldivr(var1663, arg3, var1664);
+                                        var1666 = var1665 + arg1;
+                                        return var1664, arg2, arg1, var1666
+                                    };
+                                    REPEAT(c=var1667, n=var1661);
+                                    var1668 = var1656 ~>> ;
+                                    var1669 = var1660 + var1668;
+                                    var1670 = muldivr(var1654, var1656, var1669);
+                                    var1671 = var1670 ~>> ;
+                                    var1672 = var1654 - var1671;
+                                    return arg0, var1672
+                                }
+                      );
+                      CALLREF(
+                          c=function () {
+                                    // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                                }
+                      );
+                      var1675 = MULRSHIFTRMOD(y=var1674, x=arg2 | t=5);
+                      var1676 = arg3 + var1675;
+                      var1677 = var1676 ~>> ;
+                      var1678 = var1673 + var1677;
+                      return var1678
+                  }
+        );
+        return var1679
+    }
+}
+
+/* methodId: 10024 */
+function (arg2, arg1, arg0) {
+    var1699 = CALLREF(
+        c_arg0=arg0, c_arg1=arg1, c_arg2=arg2 |
+        c=function (arg2, arg1, arg0) {
+                  var1682 = abs(arg0) - EQINT(x=var1680 | y=0);
+                  REPEAT(c=function (arg1, arg0) {
+                      var1688 = (arg0 * SGN(x=arg1) << 1) + 1;
+                      var1692 = PUSHNEGPOW2(x=255) - MULRSHIFTR(y=-arg1, x=arg1 | t=254);
+                      return var1692, var1688
+                  }, n=PUSHPOW2DEC(x=8));
+                  var1695 = MODPOW2(x=abs(1) | t=255);
+                  CALLREF(
+                      c=function () {
+                                // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                                // tail slice: [object Object]
+                            }
+                  );
+                  var1698 = MULRSHIFTR(y=arg0, x=arg1 | t=255) * SGN(x=arg2);
+                  return var1698
+              }
+    );
+    return var1699
+}
+
+/* methodId: 10025 */
+function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
+    return arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0
+    // decompilation error: StackUnderflowError: Stack underflow occured (depth = 1)
+    CALLREF c=function (arg12, arg11, arg10, arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
+        CALLREF(
+            c=function () {
+                      // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                      // tail slice: [object Object]
+                  }
+        );
+        var1700 = PUSHNEGPOW2(x=255);
+        var1701 = arg2 == var1700;
+        var1702 = function (arg1, arg0) {
+            return arg0
+        };
+        if (var1701) {
+            return
+        }
+        var1703 = arg3 >> 1;
+        var1704 = PUSHPOW2(x=255);
+        var1705 = MULRSHIFTR(y=arg4, x=arg4 | t=255);
+        var1706 = var1704 - var1705;
+        var1707 = PUSHPOW2(x=255);
+        var1731 = CALLREF(
+            c_arg0=var1707, c_arg1=var1706, c_arg2=var1703, c_arg3=arg4, c_arg4=arg5, c_arg5=arg6, c_arg6=arg7 |
+            c=function (arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
+                      var1708 = MIN(y=arg0, x=arg1);
+                      var1710 = function (arg1, arg0) {
+                          var1709 = 0;
+                          return var1709
+                      };
+                      if (!(var1708)) {
+                          var1709 = 0;
+                          return
+                      }
+                      var1711 = UBITSIZE(x=arg3);
+                      var1712 = UBITSIZE(x=arg2);
+                      var1713 = var1711 == var1712;
+                      var1717 = function (arg3, arg2, arg1, arg0) {
+                          var1714 = arg3 - arg2;
+                          var1715 = var1714 >> 1;
+                          var1716 = var1715 + arg2;
+                          return arg3, arg2, var1716
+                      };
+                      var1721 = function (arg1, arg0) {
+                          var1718 = arg1 + arg0;
+                          var1719 = var1718 >> 1;
+                          var1720 = 1 << var1719;
+                          return var1720
+                      };
+                      if (var1713) {
+                          var1714 = arg3 - arg2;
+                          var1715 = var1714 >> 1;
+                          var1716 = var1715 + arg2;
+                          var1722 = arg3;
+                          var1723 = arg2;
+                          var1724 = var1716;
+                      } else {
+                          var1718 = var1711 + var1712;
+                          var1719 = var1718 >> 1;
+                          var1720 = 1 << var1719;
+                          var1722 = var1720;
+                      }
+                      var1730 = function (arg2, arg1, arg0) {
+                          var1725 = muldivc(arg2, arg1, arg0);
+                          var1726 = var1725 - arg0;
+                          var1727 = var1726 >> 1;
+                          var1728 = arg0 + var1727;
+                          var1729 = EQINT(x=var1727 | y=0);
+                          return arg2, arg1, var1728, var1729
+                      };
+                      UNTIL(c=var1730, c_arg0=var1724, c_arg1=var1723, c_arg2=var1722);
+                      return arg4
+                  }
+        );
+        var1732 = PUSHNEGPOW2(x=255);
+        var1733 = var1732 - var1731;
+        var1734 = LSHIFTDIVR(y=var1733, x=arg9 | t=256);
+        var1811 = CALLREF(
+            c_arg0=var1734, c_arg1=arg8, c_arg2=arg10, c_arg3=arg11 |
+            c=function (arg3, arg2, arg1, arg0) {
+                      var1805, var1806 = CALLREF(
+                          c_arg0=arg0, c_arg1=arg1 |
+                          c=function (arg1, arg0) {
+                                    var1735 = arg0 ~>> ;
+                                    var1776, var1777, var1778 = CALLREF(
+                                        c_arg0=var1735 |
+                                        c=function (arg0) {
+                                                  var1736 = abs(arg0);
+                                                  var1737 = 0x6e1604;
+                                                  var1738 = var1736 - var1737;
+                                                  var1739 = var1736 * var1737;
+                                                  var1740 = PUSHPOW2(x=48);
+                                                  var1741 = var1739 + var1740;
+                                                  var1742 = LSHIFTDIVR(y=var1741, x=var1738 | t=88);
+                                                  var1743 = 0xc01;
+                                                  var1744 = var1742 * var1743;
+                                                  var1745 = var1742 * var1742;
+                                                  var1746 = 3;
+                                                  var1747 = var1746 << 128;
+                                                  var1748 = var1745 + var1747;
+                                                  var1749 = LSHIFTDIVR(y=var1748, x=var1744 | t=59);
+                                                  var1750 = ADDCONST(x=var1749 | c=13);
+                                                  var1751 = 0x1fb00a0;
+                                                  var1752 = 0x4fd801;
+                                                  var1753 = 5;
+                                                  var1754, var1755 = divmod(var1750, var1753);
+                                                  var1756 = 51;
+                                                  var1757 = var1756 - var1750;
+                                                  var1758 = MULCONST(x=var1757 | c=5);
+                                                  var1759 = 1 << var1758;
+                                                  var1760 = 0;
+                                                  var1765 = function (arg1, arg0) {
+                                                      var1761 = arg0 << 5;
+                                                      var1762 = SUBR(y=var1761, x=arg1);
+                                                      var1763 = arg1 << 5;
+                                                      var1764 = arg0 + var1763;
+                                                      return var1764, var1762
+                                                  };
+                                                  REPEAT(c=var1765, n=var1755);
+                                                  var1772 = function (arg3, arg2, arg1, arg0) {
+                                                      var1766 = arg1 * arg3;
+                                                      var1767 = arg0 * arg2;
+                                                      var1768 = var1766 - var1767;
+                                                      var1769 = arg1 * arg2;
+                                                      var1770 = arg0 * arg3;
+                                                      var1771 = var1769 + var1770;
+                                                      return arg3, arg2, var1768, var1771
+                                                  };
+                                                  REPEAT(c=var1772, n=var1754);
+                                                  var1773 = SGN(x=arg0);
+                                                  var1774 = var1773 * var1750;
+                                                  var1775 = var1773 * var1760;
+                                                  return var1774, var1759, var1775
+                                              }
+                                    );
+                                    var1779 = MULRSHIFTRMOD(y=arg0, x=var1777 | t=256);
+                                    var1780 = var1779 ~>> ;
+                                    var1781 = var1778 - var1777;
+                                    var1782 = var1781 << 6;
+                                    var1783 = var1780 + var1782;
+                                    var1784 = MULRSHIFTR(y=arg1, x=var1777 | t=256);
+                                    var1785 = var1776 + var1784;
+                                    var1786 = LSHIFTDIVR(y=var1785, x=var1783 | t=255);
+                                    var1787 = 18;
+                                    var1788 = MULRSHIFTR(y=var1786, x=var1786 | t=256);
+                                    var1789 = PUSHPOW2(x=254);
+                                    var1790 = DIVR(y=var1787, x=var1789);
+                                    var1791 = PUSHPOW2(x=255);
+                                    var1792 = var1790 + var1791;
+                                    var1793 = var1787 - 1;
+                                    var1799 = function (arg3, arg2, arg1, arg0) {
+                                        var1794 = LSHIFTDIVR(y=arg0, x=arg2 | t=242);
+                                        var1795 = arg1 + var1794;
+                                        var1796 = arg3 - 1;
+                                        var1797 = muldivr(var1795, arg3, var1796);
+                                        var1798 = var1797 + arg1;
+                                        return var1796, arg2, arg1, var1798
+                                    };
+                                    REPEAT(c=var1799, n=var1793);
+                                    var1800 = var1788 ~>> ;
+                                    var1801 = var1792 + var1800;
+                                    var1802 = muldivr(var1786, var1788, var1801);
+                                    var1803 = var1802 ~>> ;
+                                    var1804 = var1786 - var1803;
+                                    return arg0, var1804
+                                }
+                      );
+                      CALLREF(
+                          c=function () {
+                                    // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                                }
+                      );
+                      var1807 = MULRSHIFTRMOD(y=var1806, x=arg2 | t=5);
+                      var1808 = arg3 + var1807;
+                      var1809 = var1808 ~>> ;
+                      var1810 = var1805 + var1809;
+                      return var1810
+                  }
+        );
+        var1812 = var1811 ~>> ;
+        var1813 = arg12 + var1812;
+        return var1813
+    }
+}
+
+/* methodId: 10026 */
+function (arg2, arg1, arg0) {
+    var1832 = CALLREF(
+        c_arg0=arg0, c_arg1=arg1, c_arg2=arg2 |
+        c=function (arg2, arg1, arg0) {
+                  var1815 = arg0 - EQINT(x=arg0 | y=0);
+                  REPEAT(c=function (arg1, arg0) {
+                      var1821 = (arg0 * SGN(x=arg1) << 1) + 1;
+                      var1825 = PUSHNEGPOW2(x=255) - MULRSHIFTR(y=-arg1, x=arg1 | t=254);
+                      return var1825, var1821
+                  }, n=PUSHPOW2DEC(x=8));
+                  var1829 = abs(1) + PUSHNEGPOW2(x=256);
+                  CALLREF(
+                      c=function () {
+                                // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                                // tail slice: [object Object]
+                            }
+                  );
+                  var1831 = -MULRSHIFTR(y=arg1, x=arg2 | t=256);
+                  return var1831
+              }
+    );
+    return var1832
+}
+
+/* methodId: 10027 */
+function (arg4, arg3, arg2, arg1, arg0) {
+    var1920 = CALLREF(
+        c_arg0=arg0, c_arg1=arg1, c_arg2=arg2, c_arg3=arg3, c_arg4=arg4 |
+        c=function (arg4, arg3, arg2, arg1, arg0) {
+                  var1833 = arg0 ~>> ;
+                  if (var1833) {
+                      var1834 = SGN(x=var1833);
+                      var1836 = LSHIFTDIVR(y=arg0, x=PUSHNEGPOW2(x=248) | t=256);
+                      var1840 = var1834;
+                      var1841 = var1836;
+                  } else {
+                      var1838 = arg0 << 8;
+                      var1840 = var1833;
+                      var1841 = var1838;
+                  }
+                  var1912, var1913 = CALLREF(
+                      c_arg0=var1841, c_arg1=var1840 |
+                      c=function (arg1, arg0) {
+                                var1883, var1884, var1885 = CALLREF(
+                                    c_arg0=arg0 ~>>  |
+                                    c=function (arg0) {
+                                              var1857 = ADDCONST(x=LSHIFTDIVR(y=var1849 * var1849 + (3 << 128), x=LSHIFTDIVR(y=var1843 * 0x6e1604 + PUSHPOW2(x=48), x=abs(arg0) - 0x6e1604 | t=88) * 0xc01 | t=59) | c=13);
+                                              var1858 = 0x1fb00a0;
+                                              var1859 = 0x4fd801;
+                                              var1861, var1862 = divmod(var1857, 5);
+                                              var1866 = 1 << (MULCONST(x=51 - var1857 | c=5));
+                                              REPEAT(c=function (arg1, arg0) {
+                                                  var1869 = SUBR(y=arg0 << 5, x=arg1);
+                                                  var1871 = arg0 + (arg1 << 5);
+                                                  return var1871, var1869
+                                              }, n=var1862);
+                                              REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                                                  var1875 = arg1 * arg3 - arg0 * arg2;
+                                                  var1878 = arg1 * arg2 + arg0 * arg3;
+                                                  return arg3, arg2, var1875, var1878
+                                              }, n=var1861);
+                                              var1880 = SGN(x=arg0);
+                                              var1881 = var1880 * var1857;
+                                              var1882 = var1880 * 0;
+                                              return var1881, var1866, var1882
+                                          }
+                                );
+                                var1893 = LSHIFTDIVR(y=var1883 + MULRSHIFTR(y=arg1, x=var1884 | t=256), x=(MULRSHIFTRMOD(y=arg0, x=var1884 | t=256) ~>> ) + (var1885 - var1884 << 6) | t=255);
+                                var1895 = MULRSHIFTR(y=var1893, x=var1893 | t=256);
+                                var1899 = DIVR(y=18, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                                REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                                    var1902 = arg1 + LSHIFTDIVR(y=arg0, x=arg2 | t=242);
+                                    var1903 = arg3 - 1;
+                                    var1905 = muldivr(var1902, arg3, var1903) + arg1;
+                                    return var1903, arg2, arg1, var1905
+                                }, n=18 - 1);
+                                var1911 = var1893 - (muldivr(var1893, var1895, var1899 + (var1895 ~>> )) ~>> );
+                                return arg0, var1911
+                            }
+                  );
+                  var1914 = var1913 ~>> ;
+                  CALLREF(
+                      c=function () {
+                                // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                                // tail slice: [object Object]
+                            }
+                  );
+                  var1916 = arg1 + arg3 * var1912;
+                  CALLREF(
+                      c=function () {
+                                // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                            }
+                  );
+                  var1919 = arg2 + MULRSHIFTR(y=var1916, x=arg4 | t=6) ~>> ;
+                  return var1919
+              }
+    );
+    return var1920
+}
+
+/* methodId: 10028 */
+function (arg4, arg3, arg2, arg1, arg0) {
+    var2009 = CALLREF(
+        c_arg0=arg0, c_arg1=arg1, c_arg2=arg2, c_arg3=arg3, c_arg4=arg4 |
+        c=function (arg4, arg3, arg2, arg1, arg0) {
+                  if ((arg0 ~>> )) {
+                      var1923 = LSHIFTDIVR(y=arg0, x=PUSHNEGPOW2(x=248) | t=256);
+                      var1924 = 0;
+                      var1929 = var1923;
+                      var1930 = var1924;
+                  } else {
+                      var1926 = arg0 << 8;
+                      var1927 = SGN(x=var1926);
+                      var1929 = var1926;
+                      var1930 = var1927;
+                  }
+                  var2001, var2002 = CALLREF(
+                      c_arg0=var1929, c_arg1=var1930 |
+                      c=function (arg1, arg0) {
+                                var1972, var1973, var1974 = CALLREF(
+                                    c_arg0=arg0 ~>>  |
+                                    c=function (arg0) {
+                                              var1946 = ADDCONST(x=LSHIFTDIVR(y=var1938 * var1938 + (3 << 128), x=LSHIFTDIVR(y=var1932 * 0x6e1604 + PUSHPOW2(x=48), x=abs(arg0) - 0x6e1604 | t=88) * 0xc01 | t=59) | c=13);
+                                              var1947 = 0x1fb00a0;
+                                              var1948 = 0x4fd801;
+                                              var1950, var1951 = divmod(var1946, 5);
+                                              var1955 = 1 << (MULCONST(x=51 - var1946 | c=5));
+                                              REPEAT(c=function (arg1, arg0) {
+                                                  var1958 = SUBR(y=arg0 << 5, x=arg1);
+                                                  var1960 = arg0 + (arg1 << 5);
+                                                  return var1960, var1958
+                                              }, n=var1951);
+                                              REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                                                  var1964 = arg1 * arg3 - arg0 * arg2;
+                                                  var1967 = arg1 * arg2 + arg0 * arg3;
+                                                  return arg3, arg2, var1964, var1967
+                                              }, n=var1950);
+                                              var1969 = SGN(x=arg0);
+                                              var1970 = var1969 * var1946;
+                                              var1971 = var1969 * 0;
+                                              return var1970, var1955, var1971
+                                          }
+                                );
+                                var1982 = LSHIFTDIVR(y=var1972 + MULRSHIFTR(y=arg1, x=var1973 | t=256), x=(MULRSHIFTRMOD(y=arg0, x=var1973 | t=256) ~>> ) + (var1974 - var1973 << 6) | t=255);
+                                var1984 = MULRSHIFTR(y=var1982, x=var1982 | t=256);
+                                var1988 = DIVR(y=18, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                                REPEAT(c=function (arg3, arg2, arg1, arg0) {
+                                    var1991 = arg1 + LSHIFTDIVR(y=arg0, x=arg2 | t=242);
+                                    var1992 = arg3 - 1;
+                                    var1994 = muldivr(var1991, arg3, var1992) + arg1;
+                                    return var1992, arg2, arg1, var1994
+                                }, n=18 - 1);
+                                var2000 = var1982 - (muldivr(var1982, var1984, var1988 + (var1984 ~>> )) ~>> );
+                                return arg0, var2000
+                            }
+                  );
+                  CALLREF(
+                      c=function () {
+                                // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                                // tail slice: [object Object]
+                            }
+                  );
+                  var2005 = arg3 * var2001 - (arg1 ~>> );
+                  CALLREF(
+                      c=function () {
+                                // disassemble error: Error: OpcodeParser: bad operand x for instruction PUSHINT_LONG (Error: loaded value does not fit max/min safe integer value, use alternative BigInt methods)
+                            }
+                  );
+                  var2008 = arg2 - MULRSHIFTR(y=var2005, x=arg4 | t=6) ~>> ;
+                  return var2008
+              }
+    );
+    return var2009
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile try-func.fc: try-func.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal () {
+}
+
+/* methodId: 1 */
+function () {
+    SAVE(i=c2);
+    SAMEALTSAVE();
+    var2010 = PUSHCTR(i=c1);
+    var2011 = get_c3();
+    var2012 = get_data();
+    var2013 = PUSHCTR(i=c5);
+    var2014 = PUSHCTR(i=c7);
+    var2017 = SETCONTCTR(c=function (arg1, arg0) {
+        var2015 = 2;
+        RETALT();
+    }, x=var2014 | i=c7);
+    var2018 = SETCONTCTR(c=var2017, x=var2013 | i=c5);
+    var2019 = SETCONTCTR(c=var2018, x=var2012 | i=c4);
+    var2020 = SETCONTCTR(c=var2019, x=var2011 | i=c3);
+    var2021 = SETCONTCTR(c=var2020, x=var2010 | i=c1);
+    var2025 = PUSHCTR(i=c1);
+    var2026 = COMPOSALT(c2=var2025, c=function (arg0) {
+        if ((EQINT(x=arg0 | y=7))) {
+            throw(44);
+        }
+        RETALT();
+        return arg0
+    });
+    return var2026, var2021
+    // decompilation error: Error: continuation has no meta!
+    TRY 
+}
+
+/* methodId: 5 */
+function () {
+    SAVE(i=c2);
+    SAMEALTSAVE();
+    var2027 = PUSHCTR(i=c1);
+    var2028 = get_c3();
+    var2029 = get_data();
+    var2030 = PUSHCTR(i=c5);
+    var2031 = PUSHCTR(i=c7);
+    var2034 = SETCONTCTR(c=function (arg1, arg0) {
+        var2032 = 1;
+        RETALT();
+    }, x=var2031 | i=c7);
+    var2035 = SETCONTCTR(c=var2034, x=var2030 | i=c5);
+    var2036 = SETCONTCTR(c=var2035, x=var2029 | i=c4);
+    var2037 = SETCONTCTR(c=var2036, x=var2028 | i=c3);
+    var2038 = SETCONTCTR(c=var2037, x=var2027 | i=c1);
+    var2061 = PUSHCTR(i=c1);
+    var2062 = COMPOSALT(c2=var2061, c=function (arg19, arg18, arg17, arg16, arg15, arg14, arg13, arg12, arg11, arg10, arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
+        if ((EQINT(x=arg19 | y=7))) {
+            throw(44);
+        }
+        var2059 = ((((((((((((((((((arg19 + arg18) + arg17) + arg16) + arg15) + arg14) + arg13) + arg12) + arg11) + arg10) + arg9) + arg8) + arg7) + arg6) + arg5) + arg4) + arg3) + arg2) + arg1) + arg0;
+        RETALT();
+        return var2059
+    });
+    return var2062, var2038
+    // decompilation error: Error: continuation has no meta!
+    TRY 
+}
+
+/* methodId: 6 */
+function (arg1, arg0) {
+    SAVE(i=c2);
+    SAMEALTSAVE();
+    if ((EQINT(x=arg0 | y=1))) {
+        return
+    }
+    if ((EQINT(x=arg1 | y=2))) {
+        RETALT();
+        return
+    }
+    throw(1);
+}
+
+/* methodId: 101 */
+function (arg1, arg0) {
+    var2067, var2068 = PREPAREDICT(n=1);
+    return arg0, arg1, var2067, var2068
+    // decompilation error: Error: continuation has no meta!
+    CALLXARGS p=2, r=1
+    XCHG_0I i=s2
+    MULCONST c=100
+    XCHG_0I i=s2
+    MULCONST c=10
+    XCHG_1I i=s2
+    ADD 
+    XCHG_0I i=s1
+    ADD 
+}
+
+/* methodId: 102 */
+function (arg3, arg2, arg1, arg0) {
+    CALLXARGS_VAR(c=function () {
+        SAVE(i=c2);
+        SAMEALTSAVE();
+        var2069 = PUSHCTR(i=c1);
+        var2070 = get_c3();
+        var2071 = get_data();
+        var2072 = PUSHCTR(i=c5);
+        var2073 = PUSHCTR(i=c7);
+        var2076 = SETCONTCTR(c=function (arg1, arg0) {
+            var2074 = 2;
+            RETALT();
+        }, x=var2073 | i=c7);
+        var2077 = SETCONTCTR(c=var2076, x=var2072 | i=c5);
+        var2078 = SETCONTCTR(c=var2077, x=var2071 | i=c4);
+        var2079 = SETCONTCTR(c=var2078, x=var2070 | i=c3);
+        var2080 = SETCONTCTR(c=var2079, x=var2069 | i=c1);
+        var2084 = PUSHCTR(i=c1);
+        var2085 = COMPOSALT(c2=var2084, c=function (arg0) {
+            if ((EQINT(x=arg0 | y=7))) {
+                throw(44);
+            }
+            RETALT();
+            return arg0
+        });
+        return var2085, var2080
+        // decompilation error: Error: continuation has no meta!
+        TRY 
+    }, arg0=arg1 | p=1);
+    var2090 = (MULCONST(x=arg3 | c=100) + MULCONST(x=arg0 | c=10)) + arg2;
+    return var2090
+}
+
+/* methodId: 103 */
+function (arg3, arg2, arg1, arg0) {
+    CALLREF(
+        c_arg0=arg1 |
+        c=function (arg0) {
+                  CALLXARGS_VAR(c=function () {
+                      SAVE(i=c2);
+                      SAMEALTSAVE();
+                      var2091 = PUSHCTR(i=c1);
+                      var2092 = get_c3();
+                      var2093 = get_data();
+                      var2094 = PUSHCTR(i=c5);
+                      var2095 = PUSHCTR(i=c7);
+                      var2098 = SETCONTCTR(c=function (arg1, arg0) {
+                          var2096 = 2;
+                          RETALT();
+                      }, x=var2095 | i=c7);
+                      var2099 = SETCONTCTR(c=var2098, x=var2094 | i=c5);
+                      var2100 = SETCONTCTR(c=var2099, x=var2093 | i=c4);
+                      var2101 = SETCONTCTR(c=var2100, x=var2092 | i=c3);
+                      var2102 = SETCONTCTR(c=var2101, x=var2091 | i=c1);
+                      var2106 = PUSHCTR(i=c1);
+                      var2107 = COMPOSALT(c2=var2106, c=function (arg0) {
+                          if ((EQINT(x=arg0 | y=7))) {
+                              throw(44);
+                          }
+                          RETALT();
+                          return arg0
+                      });
+                      return var2107, var2102
+                      // decompilation error: Error: continuation has no meta!
+                      TRY 
+                  }, arg0=arg0 | p=1);
+              }
+    );
+    var2112 = (MULCONST(x=arg3 | c=100) + MULCONST(x=arg0 | c=10)) + arg2;
+    return var2112
+}
+
+/* methodId: 104 */
+function (arg1, arg0) {
+    var2113 = arg1 + 1;
+    var2114 = ADDCONST(x=arg1 | c=2);
+    var2115 = ADDCONST(x=arg1 | c=3);
+    var2116 = ADDCONST(x=arg1 | c=4);
+    var2117 = ADDCONST(x=arg1 | c=5);
+    var2118 = ADDCONST(x=arg1 | c=6);
+    var2119 = ADDCONST(x=arg1 | c=7);
+    var2120 = ADDCONST(x=arg1 | c=8);
+    var2121 = ADDCONST(x=arg1 | c=9);
+    var2122 = ADDCONST(x=arg1 | c=10);
+    var2123 = ADDCONST(x=arg1 | c=11);
+    var2124 = ADDCONST(x=arg1 | c=12);
+    var2125 = ADDCONST(x=arg1 | c=13);
+    var2126 = ADDCONST(x=arg1 | c=14);
+    var2127 = ADDCONST(x=arg1 | c=15);
+    var2128 = ADDCONST(x=arg1 | c=16);
+    var2129 = ADDCONST(x=arg1 | c=17);
+    var2130 = ADDCONST(x=arg1 | c=18);
+    var2131 = ADDCONST(x=arg1 | c=19);
+    var2168 = function () {
+        SAVE(i=c2);
+        SAMEALTSAVE();
+        var2132 = PUSHCTR(i=c1);
+        var2133 = get_c3();
+        var2134 = get_data();
+        var2135 = PUSHCTR(i=c5);
+        var2136 = PUSHCTR(i=c7);
+        var2139 = SETCONTCTR(c=function (arg1, arg0) {
+            var2137 = 1;
+            RETALT();
+        }, x=var2136 | i=c7);
+        var2140 = SETCONTCTR(c=var2139, x=var2135 | i=c5);
+        var2141 = SETCONTCTR(c=var2140, x=var2134 | i=c4);
+        var2142 = SETCONTCTR(c=var2141, x=var2133 | i=c3);
+        var2143 = SETCONTCTR(c=var2142, x=var2132 | i=c1);
+        var2166 = PUSHCTR(i=c1);
+        var2167 = COMPOSALT(c2=var2166, c=function (arg19, arg18, arg17, arg16, arg15, arg14, arg13, arg12, arg11, arg10, arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
+            if ((EQINT(x=arg19 | y=7))) {
+                throw(44);
+            }
+            var2164 = ((((((((((((((((((arg19 + arg18) + arg17) + arg16) + arg15) + arg14) + arg13) + arg12) + arg11) + arg10) + arg9) + arg8) + arg7) + arg6) + arg5) + arg4) + arg3) + arg2) + arg1) + arg0;
+            RETALT();
+            return var2164
+        });
+        return var2167, var2143
+        // decompilation error: Error: continuation has no meta!
+        TRY 
+    };
+    var2169 = 20;
+    var2170 = -1;
+    return arg0, arg1, var2113, var2114, var2115, var2116, var2117, var2118, var2119, var2120, var2121, var2122, var2123, var2124, var2125, var2126, var2127, var2128, var2129, var2130, var2131, var2168, var2169, var2170
+    // decompilation error: Error: not supported dynamic array length 'p' while parsing CALLXVARARGS
+    CALLXVARARGS 
+    XCHG_0I i=s2
+    PUSHINT_LONG x=1000000
+    MUL 
+    XCHG_0I i=s2
+    PUSHINT_16 x=1000
+    MUL 
+    XCHG_1I i=s2
+    ADD 
+    XCHG_0I i=s1
+    ADD 
+}
+
+/* methodId: 105 */
+function (arg1, arg0) {
+    var2171 = arg1 + 1;
+    var2172 = ADDCONST(x=arg1 | c=2);
+    var2173 = ADDCONST(x=arg1 | c=3);
+    var2174 = ADDCONST(x=arg1 | c=4);
+    var2175 = ADDCONST(x=arg1 | c=5);
+    var2176 = ADDCONST(x=arg1 | c=6);
+    var2177 = ADDCONST(x=arg1 | c=7);
+    var2178 = ADDCONST(x=arg1 | c=8);
+    var2179 = ADDCONST(x=arg1 | c=9);
+    var2180 = ADDCONST(x=arg1 | c=10);
+    var2181 = ADDCONST(x=arg1 | c=11);
+    var2182 = ADDCONST(x=arg1 | c=12);
+    var2183 = ADDCONST(x=arg1 | c=13);
+    var2184 = ADDCONST(x=arg1 | c=14);
+    var2185 = ADDCONST(x=arg1 | c=15);
+    var2186 = ADDCONST(x=arg1 | c=16);
+    var2187 = ADDCONST(x=arg1 | c=17);
+    var2188 = ADDCONST(x=arg1 | c=18);
+    var2189 = ADDCONST(x=arg1 | c=19);
+    var2190, var2191 = PREPAREDICT(n=5);
+    var2192 = 21;
+    var2193 = 1;
+    return arg0, arg1, var2171, var2172, var2173, var2174, var2175, var2176, var2177, var2178, var2179, var2180, var2181, var2182, var2183, var2184, var2185, var2186, var2187, var2188, var2189, var2190, var2191, var2192, var2193
+    // decompilation error: Error: not supported dynamic array length 'p' while parsing CALLXVARARGS
+    CALLXVARARGS 
+    XCHG_0I i=s2
+    PUSHINT_LONG x=1000000
+    MUL 
+    XCHG_0I i=s2
+    PUSHINT_16 x=1000
+    MUL 
+    XCHG_1I i=s2
+    ADD 
+    XCHG_0I i=s1
+    ADD 
+}
+
+/* methodId: 106 */
+function () {
+    SAVE(i=c2);
+    SAMEALTSAVE();
+    var2194 = PUSHCTR(i=c1);
+    var2195 = get_c3();
+    var2196 = get_data();
+    var2197 = PUSHCTR(i=c5);
+    var2198 = PUSHCTR(i=c7);
+    var2200 = SETCONTCTR(c=function (arg1, arg0) {
+        RETALT();
+    }, x=var2198 | i=c7);
+    var2201 = SETCONTCTR(c=var2200, x=var2197 | i=c5);
+    var2202 = SETCONTCTR(c=var2201, x=var2196 | i=c4);
+    var2203 = SETCONTCTR(c=var2202, x=var2195 | i=c3);
+    var2204 = SETCONTCTR(c=var2203, x=var2194 | i=c1);
+    var2209 = PUSHCTR(i=c1);
+    var2210 = COMPOSALT(c2=var2209, c=function () {
+        var2205 = 0x539;
+        var2206 = CALLDICT(n=6);
+        var2207 = 0x539;
+        RETALT();
+        return var2205, var2206, var2207
+    });
+    return var2210, var2204
+    // decompilation error: Error: continuation has no meta!
+    TRY 
+}
+
+/* methodId: 107 */
+function () {
+    var2211 = 10;
+    SETGLOB(x=10 | k=1);
+    var2212 = PUSHCTR(i=c1);
+    var2213 = get_c3();
+    var2214 = get_data();
+    var2215 = PUSHCTR(i=c5);
+    var2216 = PUSHCTR(i=c7);
+    var2218 = SETCONTCTR(c=function (arg1, arg0) {
+    }, x=var2216 | i=c7);
+    var2219 = SETCONTCTR(c=var2218, x=var2215 | i=c5);
+    var2220 = SETCONTCTR(c=var2219, x=var2214 | i=c4);
+    var2221 = SETCONTCTR(c=var2220, x=var2213 | i=c3);
+    var2222 = SETCONTCTR(c=var2221, x=var2212 | i=c1);
+    var2223 = 1;
+    var2224 = -1;
+    return var2211, var2222, var2223, var2224
+    // decompilation error: Error: not supported dynamic array length 'r' while parsing SETCONTVARARGS
+    SETCONTVARARGS 
+    PUSHCONT_SHORT s=function () {
+        var2225 = 0x3e7;
+        SETGLOB(x=var2225 | k=1);
+        var2226 = 0x3e7;
+        var2227 = CALLDICT(n=6);
+        return var2226, var2226, var2227
+    }
+    PUSHCTR i=c1
+    COMPOSALT 
+    XCHG_0I i=s1
+    TRY 
+    GETGLOB k=1
+    XCHG_0I i=s1
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile unbalanced_ret.fc: unbalanced_ret.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal (arg0) {
+    SAVE(i=c2);
+    SAMEALTSAVE();
+    var2228 = 5;
+    var2229 = LESSINT(x=arg0 | y=0);
+    var2236 = function (arg1, arg0) {
+        if ((EQINT(x=var2230 | y=-10))) {
+            var2233 = 111;
+            var2234 = 0;
+            RETALT();
+            return
+        }
+    };
+    return arg0, var2228, var2229, var2236
+    // decompilation error: Error: for nobranch, args=2 must be same as rets=0
+    IF 
+    XCHG_0I i=s1
+    INC 
+    XCHG_0I i=s1
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile unbalanced_ret_inline.fc: unbalanced_ret_inline.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal (arg0) {
+    var2244, var2245, var2246 = EXECUTE(c=function (arg0) {
+        SAVE(i=c2);
+        SAMEALTSAVE();
+        var2237 = LESSINT(x=arg0 | y=0);
+        var2242 = function (arg0) {
+            if ((EQINT(x=var2238 | y=-10))) {
+                var2240 = 111;
+                RETALT();
+                return
+            }
+        };
+        return arg0, var2237, var2242
+        // decompilation error: Error: for nobranch, args=1 must be same as rets=0
+        IF 
+        INC 
+    }, c_arg0=arg0);
+    var2247 = MULCONST(x=var2246 | c=10);
+    return var2244, var2245, var2247
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile unbalanced_ret_loops.fc: unbalanced_ret_loops.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal () {
+}
+
+/* methodId: 1 */
+function (arg0) {
+    SAVE(i=c2);
+    SAMEALTSAVE();
+    REPEAT(c=function (arg0) {
+        var2249 = ADDCONST(x=arg0 | c=10);
+        if ((GTINT(x=var2249 | y=99))) {
+            RETALT();
+            return
+        }
+        return var2249
+    }, n=10);
+    var2253 = -1;
+    return var2253
+}
+
+/* methodId: 2 */
+function (arg1, arg0) {
+    SAVE(i=c2);
+    SAMEALTSAVE();
+    WHILE(c=function (arg3, arg2, arg1, arg0) {
+        if ((GTINT(x=var2257 | y=99))) {
+            RETALT();
+            return
+        }
+        var2260 = arg3 + 1;
+        return arg2, var2260
+    }, c2=function (arg0) {
+        var2255 = LESSINT(x=arg0 | y=10);
+        return arg0, var2255
+    }, c2_arg0=0);
+    var2262 = -1;
+    return var2262
+}
+
+/* methodId: 3 */
+function (arg4, arg3, arg2, arg1, arg0) {
+    SAVE(i=c2);
+    SAMEALTSAVE();
+    UNTIL(c=function (arg3, arg2, arg1, arg0) {
+        if ((GTINT(x=var2264 | y=99))) {
+            RETALT();
+            return
+        }
+        var2267 = arg3 + 1;
+        var2268 = GTINT(x=var2267 | y=9);
+        return arg2, var2267, var2268
+    }, c_arg0=0, c_arg1=arg0, c_arg2=arg1, c_arg3=arg2);
+    var2270 = -1;
+    return var2270
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile unbalanced_ret_nested.fc: unbalanced_ret_nested.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal () {
+    var2271 = CALLDICT(n=2);
+    var2272 = MULCONST(x=var2271 | c=10);
+    return var2272
+}
+
+/* methodId: 1 */
+function (arg0) {
+    SAVE(i=c2);
+    SAMEALTSAVE();
+    var2273 = LESSINT(x=arg0 | y=0);
+    var2278 = function (arg0) {
+        if ((EQINT(x=var2274 | y=-10))) {
+            var2276 = 111;
+            RETALT();
+            return
+        }
+    };
+    return arg0, var2273, var2278
+    // decompilation error: Error: for nobranch, args=1 must be same as rets=0
+    IF 
+    INC 
+}
+
+/* methodId: 2 */
+function (arg2, arg1, arg0) {
+    SAVE(i=c2);
+    SAMEALTSAVE();
+    var2279 = LESSINT(x=arg1 | y=0);
+    var2285 = function (arg2, arg1, arg0) {
+        var2280 = CALLDICT(n=1);
+        if ((EQINT(x=var2281 | y=-10))) {
+            var2283 = 111;
+            RETALT();
+            return
+        }
+        return arg1, arg2
+    };
+    return arg2, arg1, arg0, var2279, var2285
+    // decompilation error: Error: for nobranch, args=3 must be same as rets=2
+    IF 
+    XCHG_0I i=s1
+    INC 
+    XCHG_0I i=s1
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile var-apply.fc: var-apply.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal () {
+}
+
+/* methodId: 1 */
+function () {
+    var2287 = function () {
+        var2286 = begin_cell();
+        return var2286
+    };
+    return var2287
+}
+
+/* methodId: 2 */
+function () {
+    var2289 = function (arg0) {
+        var2288 = arg0.begin_parse();
+        return var2288
+    };
+    return var2289
+}
+
+/* methodId: 3 */
+function () {
+    throw(1000);
+}
+
+/* methodId: 5 */
+function (arg1, arg0) {
+    throw_unless(1000, LESSINT(x=arg1 + arg0 | y=24));
+    var2292 = arg1 + arg0;
+    return var2292
+}
+
+/* methodId: 6 */
+function (arg1, arg0) {
+    throw_unless(0x3e9, LESSINT(x=arg1 * arg0 | y=24));
+    var2295 = arg1 * arg0;
+    return var2295
+}
+
+/* methodId: 7 */
+function (arg1, arg0) {
+    throw_unless(1000, LESSINT(x=arg1 + arg0 | y=24));
+    var2298 = arg1 + arg0;
+    return var2298
+}
+
+/* methodId: 8 */
+function (arg1, arg0) {
+    throw_unless(0x3e9, LESSINT(x=arg1 * arg0 | y=24));
+    var2301 = arg1 * arg0;
+    return var2301
+}
+
+/* methodId: 9 */
+function (arg17, arg16, arg15, arg14, arg13, arg12, arg11, arg10, arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
+    if ((arg3 == 242)) {
+        if ((EQINT(x=MODPOW2(x=arg2 | t=1) | y=0))) {
+            var2307 = function () {
+                var2306 = CALLDICT(n=5);
+            };
+        } else {
+            var2310 = function () {
+                var2309 = CALLDICT(n=6);
+            };
+        }
+        // decompilation error: Error: continuation has no meta!
+        CALLXARGS p=2, r=1
+        POP i=s0
+        PUSHINT_4 i=0
+        return
+    }
+    if ((arg8 == 243)) {
+        if ((EQINT(x=MODPOW2(x=arg7 | t=1) | y=0))) {
+            var2318 = function () {
+                var2317 = CALLDICT(n=7);
+            };
+        } else {
+            var2321 = function () {
+                var2320 = CALLDICT(n=8);
+            };
+        }
+        // decompilation error: Error: continuation has no meta!
+        CALLXARGS p=2, r=1
+        POP i=s0
+        PUSHINT_4 i=0
+        return
+    }
+    if ((arg13 == 244)) {
+        if ((EQINT(x=MODPOW2(x=arg12 | t=1) | y=0))) {
+            var2329 = function () {
+                var2328 = CALLDICT(n=5);
+            };
+        } else {
+            var2332 = function () {
+                var2331 = CALLDICT(n=6);
+            };
+        }
+        // decompilation error: Error: continuation has no meta!
+        CALLXARGS p=2, r=1
+        return
+    }
+    var2335 = -1;
+    return var2335
+}
+
+/* methodId: 10 */
+function (arg0) {
+    throw(239 + arg0);
+}
+
+/* methodId: 101 */
+function () {
+    var2339 = function (arg0) {
+        var2338 = arg0.end_cell();
+        return var2338
+    };
+    var2340 = 1;
+    var2341 = CALLDICT(n=1);
+    return var2339, var2340, var2341
+    // decompilation error: Error: continuation has no meta!
+    CALLXARGS p=0, r=1
+    STI c=32
+    PUSHINT_4 i=2
+    XCHG_0I i=s1
+    STI c=32
+    XCHG_0I i=s1
+    CALLXARGS p=1, r=1
+    CALLDICT n=2
+    CALLXARGS p=1, r=1
+    LDI c=32
+    LDI c=32
+    POP i=s0
+}
+
+/* methodId: 102 */
+function () {
+    SAVE(i=c2);
+    SAMEALTSAVE();
+    var2342 = PUSHCTR(i=c1);
+    var2343 = get_c3();
+    var2344 = get_data();
+    var2345 = PUSHCTR(i=c5);
+    var2346 = PUSHCTR(i=c7);
+    var2348 = SETCONTCTR(c=function (arg1, arg0) {
+        RETALT();
+    }, x=var2346 | i=c7);
+    var2349 = SETCONTCTR(c=var2348, x=var2345 | i=c5);
+    var2350 = SETCONTCTR(c=var2349, x=var2344 | i=c4);
+    var2351 = SETCONTCTR(c=var2350, x=var2343 | i=c3);
+    var2352 = SETCONTCTR(c=var2351, x=var2342 | i=c1);
+    var2357 = PUSHCTR(i=c1);
+    var2358 = COMPOSALT(c2=var2357, c=function () {
+        CALLXARGS(c=function () {
+            var2353 = CALLDICT(n=3);
+            return var2353
+        } | p=0, r=0);
+        var2355 = 0;
+        RETALT();
+        return var2355
+    });
+    return var2358, var2352
+    // decompilation error: Error: continuation has no meta!
+    TRY 
+}
+
+/* methodId: 103 */
+function () {
+    var2359 = empty_tuple();
+    var2360 = PUSHCTR(i=c1);
+    var2361 = get_c3();
+    var2362 = get_data();
+    var2363 = PUSHCTR(i=c5);
+    var2364 = PUSHCTR(i=c7);
+    var2367 = SETCONTCTR(c=function (arg2, arg1, arg0) {
+        var2365 = TPUSH(x=arg0, t=arg2);
+        return var2365
+    }, x=var2364 | i=c7);
+    var2368 = SETCONTCTR(c=var2367, x=var2363 | i=c5);
+    var2369 = SETCONTCTR(c=var2368, x=var2362 | i=c4);
+    var2370 = SETCONTCTR(c=var2369, x=var2361 | i=c3);
+    var2371 = SETCONTCTR(c=var2370, x=var2360 | i=c1);
+    var2372 = 1;
+    var2373 = -1;
+    return var2359, var2359, var2371, var2372, var2373
+    // decompilation error: Error: not supported dynamic array length 'r' while parsing SETCONTVARARGS
+    SETCONTVARARGS 
+    PUSHCONT_SHORT s=function () {
+        var2374 = 242;
+        var2375 = 122;
+        var2376 = 100;
+        var2377 = 200;
+        var2378 = CALLDICT(n=9);
+        var2379 = TPUSH(x=var2378, t=var2377);
+        return var2374, var2375, var2376, var2379
+    }
+    PUSHCTR i=c1
+    COMPOSALT 
+    XCHG_0I i=s1
+    TRY 
+    PUSH i=s0
+    PUSHCTR i=c1
+    PUSHCTR i=c3
+    PUSHCTR i=c4
+    PUSHCTR i=c5
+    PUSHCTR i=c7
+    PUSHCONT_SHORT s=function (arg2, arg1, arg0) {
+        var2380 = TPUSH(x=arg0, t=arg2);
+        return var2380
+    }
+    SETCONTCTR i=c7
+    SETCONTCTR i=c5
+    SETCONTCTR i=c4
+    SETCONTCTR i=c3
+    SETCONTCTR i=c1
+    PUSHINT_4 i=1
+    PUSHINT_4 i=-1
+    SETCONTVARARGS 
+    PUSHCONT_SHORT s=function () {
+        var2381 = 244;
+        var2382 = 122;
+        var2383 = 100;
+        var2384 = 200;
+        var2385 = CALLDICT(n=9);
+        var2386 = TPUSH(x=var2385, t=var2384);
+        return var2381, var2382, var2383, var2386
+    }
+    PUSHCTR i=c1
+    COMPOSALT 
+    XCHG_0I i=s1
+    TRY 
+    PUSH i=s0
+    PUSHCTR i=c1
+    PUSHCTR i=c3
+    PUSHCTR i=c4
+    PUSHCTR i=c5
+    PUSHCTR i=c7
+    PUSHCONT_SHORT s=function (arg2, arg1, arg0) {
+        var2387 = TPUSH(x=arg0, t=arg2);
+        return var2387
+    }
+    SETCONTCTR i=c7
+    SETCONTCTR i=c5
+    SETCONTCTR i=c4
+    SETCONTCTR i=c3
+    SETCONTCTR i=c1
+    PUSHINT_4 i=1
+    PUSHINT_4 i=-1
+    SETCONTVARARGS 
+    PUSHCONT_SHORT s=function () {
+        var2388 = 243;
+        var2389 = 122;
+        var2390 = 10;
+        var2391 = CALLDICT(n=9);
+        var2392 = TPUSH(x=var2391, t=var2390);
+        return var2388, var2389, var2390, var2392
+    }
+    PUSHCTR i=c1
+    COMPOSALT 
+    XCHG_0I i=s1
+    TRY 
+    PUSH i=s0
+    PUSHCTR i=c1
+    PUSHCTR i=c3
+    PUSHCTR i=c4
+    PUSHCTR i=c5
+    PUSHCTR i=c7
+    PUSHCONT_SHORT s=function (arg2, arg1, arg0) {
+        var2393 = TPUSH(x=arg0, t=arg2);
+        return var2393
+    }
+    SETCONTCTR i=c7
+    SETCONTCTR i=c5
+    SETCONTCTR i=c4
+    SETCONTCTR i=c3
+    SETCONTCTR i=c1
+    PUSHINT_4 i=1
+    PUSHINT_4 i=-1
+    SETCONTVARARGS 
+    PUSHCONT_SHORT s=function () {
+        var2394 = 243;
+        var2395 = 123;
+        var2396 = 10;
+        var2397 = CALLDICT(n=9);
+        var2398 = TPUSH(x=var2397, t=var2396);
+        return var2394, var2395, var2396, var2398
+    }
+    PUSHCTR i=c1
+    COMPOSALT 
+    XCHG_0I i=s1
+    TRY 
+}
+
+/* methodId: 104 */
+function () {
+    SAVE(i=c2);
+    SAMEALTSAVE();
+    var2399 = PUSHCTR(i=c1);
+    var2400 = get_c3();
+    var2401 = get_data();
+    var2402 = PUSHCTR(i=c5);
+    var2403 = PUSHCTR(i=c7);
+    var2405 = SETCONTCTR(c=function (arg1, arg0) {
+        RETALT();
+    }, x=var2403 | i=c7);
+    var2406 = SETCONTCTR(c=var2405, x=var2402 | i=c5);
+    var2407 = SETCONTCTR(c=var2406, x=var2401 | i=c4);
+    var2408 = SETCONTCTR(c=var2407, x=var2400 | i=c3);
+    var2409 = SETCONTCTR(c=var2408, x=var2399 | i=c1);
+    var2415 = PUSHCTR(i=c1);
+    var2416 = COMPOSALT(c2=var2415, c=function () {
+        SETGLOB(x=function () {
+            var2410 = CALLDICT(n=10);
+            return var2410
+        } | k=1);
+        var2412 = 1;
+        var2413 = GETGLOB(k=1);
+        return var2412, var2413
+        // decompilation error: Error: continuation has no meta!
+        CALLXARGS p=1, r=0
+        PUSHINT_4 i=0
+        RETALT 
+    });
+    return var2416, var2409
+    // decompilation error: Error: continuation has no meta!
+    TRY 
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile w1.fc: w1.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal (arg1, arg0) {
+    SAVE(i=c2);
+    SAMEALTSAVE();
+    var2417 = GTINT(x=arg0 | y=0);
+    var2422 = function (arg1, arg0) {
+        if ((GTINT(x=arg0 | y=10))) {
+            var2419 = arg0 << 1;
+            var2420 = MULCONST(x=arg0 | c=3);
+            RETALT();
+            return
+        }
+    };
+    var2423 = function (arg0) {
+    };
+    return arg1, arg0, var2417, var2422, var2423
+    // decompilation error: Error: bad branch c2 with 1 args and 0
+    IFELSE 
+    PUSHINT_4 i=5
+    PUSHINT_4 i=6
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile w2.fc: w2.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal (arg18, arg17, arg16, arg15, arg14, arg13, arg12, arg11, arg10, arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
+    var2424 = CALLDICT(n=1);
+    var2443 = ((((((((((((((((((arg18 + arg17) + arg16) + arg15) + arg14) + arg13) + arg12) + arg11) + arg10) + arg9) + arg8) + arg7) + arg6) + arg5) + arg4) + arg3) + arg2) + arg1) + arg0) + var2424;
+    return var2443
+}
+
+/* methodId: 1 */
+function (arg0) {
+    var2444 = arg0~load_uint(8);
+    var2446 = arg0~load_uint(8);
+    var2448 = arg0~load_uint(8);
+    var2450 = arg0~load_uint(8);
+    var2452 = arg0~load_uint(8);
+    var2454 = arg0~load_uint(8);
+    var2456 = arg0~load_uint(8);
+    var2458 = arg0~load_uint(8);
+    var2460 = arg0~load_uint(8);
+    var2462 = arg0~load_uint(8);
+    var2464 = arg0~load_uint(8);
+    var2466 = arg0~load_uint(8);
+    var2468 = arg0~load_uint(8);
+    var2470 = arg0~load_uint(8);
+    var2472 = arg0~load_uint(8);
+    var2474 = arg0~load_uint(8);
+    var2476 = arg0~load_uint(8);
+    var2478 = arg0~load_uint(8);
+    var2480 = arg0~load_uint(8);
+    var2482 = arg0~load_uint(8);
+    return var2444, var2446, var2448, var2450, var2452, var2454, var2456, var2458, var2460, var2462, var2464, var2466, var2468, var2470, var2472, var2474, var2476, var2478, var2480, var2482
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile w6.fc: w6.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal (arg2, arg1, arg0) {
+    SAVE(i=c2);
+    SAMEALTSAVE();
+    UNTIL(c=function (arg1, arg0) {
+        if ((GTINT(x=var2485 | y=5))) {
+            var2487 = 1;
+            RETALT();
+            return
+        }
+        var2490 = EQINT(x=arg1 * arg1 | y=64);
+        return arg1, var2490
+    }, c_arg0=0, c_arg1=arg1);
+    var2492 = -1;
+    return var2492
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile w7.fc: w7.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal () {
+}
+
+/* methodId: 1 */
+function (arg0) {
+    if ((GTINT(x=arg0 | y=0))) {
+        var2494 = 1;
+        return
+    }
+    var2496 = -1;
+    return var2496
+}
+
+/* methodId: 2 */
+function (arg0) {
+    if ((GTINT(x=arg0 | y=0))) {
+        var2498 = 1;
+        return
+    }
+    var2500 = 2;
+    return var2500
+}
+"
+`;
+
+exports[`Func → Decompiler → testdata snapshots decompile w9.fc: w9.fc 1`] = `
+"/* methodId: 0 */
+function recv_internal (arg2, arg1, arg0) {
+    WHILE(c=function (arg2, arg1, arg0) {
+        var2504 = arg1 - 1;
+        return arg2, var2504, arg2
+    }, c2=function (arg1, arg0) {
+        var2502 = GTINT(x=arg1 | y=0);
+        return arg1, arg0, var2502
+    }, c2_arg0=arg0, c2_arg1=17);
+    var2506 = ~arg0;
+    return var2506
+}
+"
+`;
