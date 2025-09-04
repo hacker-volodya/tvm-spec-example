@@ -45,7 +45,7 @@ export class OpcodeParser {
         } else if (operand.type == "ref") {
             return slice.loadRef().slice();
         } else if (operand.type == "pushint_long") {
-            return slice.loadInt(8 * slice.loadUint(5) + 19);
+            return slice.loadBigInt(8 * slice.loadUint(5) + 19);
         } else if (operand.type == "subslice") {
             let refLength = (operand.refs_add ?? 0) + (operand.refs_length_var_size ? slice.loadUint(operand.refs_length_var_size) : 0);
             let bitLength = (operand.bits_padding ?? 0) + (operand.bits_length_var_size ? slice.loadUint(operand.bits_length_var_size) * 8 : 0);
