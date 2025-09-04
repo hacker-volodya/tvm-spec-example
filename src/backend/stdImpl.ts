@@ -47,8 +47,8 @@ export function registerPrinters() {
   // Shifts: immediate and variable
   registerInlinePrinter('LSHIFT', (_st, ctx) => `${ctx.inP('x', 'left')} << ${ctx.op('c')}`);
   registerInlinePrinter('RSHIFT', (_st, ctx) => `${ctx.inP('x', 'left')} >> ${ctx.op('c')}`);
-  registerInlinePrinter('RSHIFTR', (_st, ctx) => `${ctx.inP('x', 'left')} ~>> ${ctx.op('c')}`);
-  registerInlinePrinter('RSHIFTC', (_st, ctx) => `${ctx.inP('x', 'left')} ^>> ${ctx.op('c')}`);
+  registerInlinePrinter('RSHIFTR', (_st, ctx) => `${ctx.inP('x', 'left')} ~>> ${ctx.op('t')}`);
+  registerInlinePrinter('RSHIFTC', (_st, ctx) => `${ctx.inP('x', 'left')} ^>> ${ctx.op('t')}`);
   registerInlinePrinter('LSHIFT_VAR', (_st, ctx) => `${ctx.inP('x', 'left')} << ${ctx.inP('y', 'right')}`);
   registerInlinePrinter('RSHIFT_VAR', (_st, ctx) => `${ctx.inP('x', 'left')} >> ${ctx.inP('y', 'right')}`);
   registerInlinePrinter('RSHIFTR_VAR', (_st, ctx) => `${ctx.inP('x', 'left')} ~>> ${ctx.inP('y', 'right')}`);
