@@ -10,7 +10,7 @@ describe('Func → Decompiler → Pseudocode snapshot', () => {
     `);
 
     const d = new Decompiler();
-    await expect(d.format(d.decompileSlice(code))).toMatchSnapshot();
+    expect(d.format(d.decompileSlice(code))).toMatchSnapshot();
   });
 
   test('dicts', async () => {
@@ -24,7 +24,7 @@ describe('Func → Decompiler → Pseudocode snapshot', () => {
     `);
 
     const d = new Decompiler();
-    await expect(d.format(d.decompileSlice(code))).toMatchSnapshot();
+    expect(d.format(d.decompileSlice(code))).toMatchSnapshot();
   });
 
   test('multi arg use', async () => {
@@ -35,7 +35,7 @@ describe('Func → Decompiler → Pseudocode snapshot', () => {
     `);
 
     const d = new Decompiler();
-    await expect(d.format(d.decompileSlice(code))).toMatchSnapshot();
+    expect(d.format(d.decompileSlice(code))).toMatchSnapshot();
   });
 
   test('ifs', async () => {
@@ -54,6 +54,6 @@ describe('Func → Decompiler → Pseudocode snapshot', () => {
     `);
 
     const d = new Decompiler();
-    await expect(d.format(d.decompileSlice(code))).toMatchSnapshot();
+    expect(d.format(d.decompileSlice(code))).toMatchSnapshot();
   });
 });
