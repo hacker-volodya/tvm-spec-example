@@ -405,7 +405,15 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
     if (stmtHook) {
       const lines = stmtHook(st, stmtCtx);
       if (lines && lines.length) {
-        for (const l of lines) out += `    ${l};\n`;
+        for (const l of lines) {
+          // Allow statement printers to emit multi-line blocks without forced semicolons
+          if (l.includes('\n')) {
+            const indented = l.split('\n').map(part => `    ${part}`).join('\n');
+            out += `${indented}\n`;
+          } else {
+            out += `    ${l};\n`;
+          }
+        }
         continue;
       }
     }

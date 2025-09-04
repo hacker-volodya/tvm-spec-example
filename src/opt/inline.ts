@@ -97,6 +97,11 @@ export function inlinePrevSingleUse(fn: IRFunction): IRFunction {
       const curr = body[i];
       const outs = prev.outputs.map(o => o.value);
       if (outs.length !== 1) continue;
+      // Do not inline control-flow or continuation-related instructions (e.g., IF/IFELSE/IFREF*, CALL*, JMP*)
+      const prevCat: string | undefined = (prev as any)?.spec?.doc?.category;
+      if (prevCat && (prevCat.startsWith('cont_') || prevCat.startsWith('call_') || prevCat.startsWith('jump_'))) {
+        continue;
+      }
       const id = outs[0].id;
       if (resultIds.has(id)) continue; // don't remove a producer contributing to result
       const totalUses = uses.get(id) ?? 0;

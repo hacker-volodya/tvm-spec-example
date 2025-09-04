@@ -1,7 +1,9 @@
 // Stdlib-friendly printers for TVM instructions.
 // Registers inline and statement printers to render IR closer to FunC stdlib API.
 
+import { printIR } from "./printer";
 import { registerInlinePrinter, registerInlinePrinterPrefix, registerStmtPrinter } from "./printer";
+import type { IRFunction, IRInputArg, IRValueRef, IROpPrim } from "../core/ir";
 
 // Helpers
 const comma = (xs: string[]) => xs.join(", ");
@@ -284,4 +286,208 @@ export function registerPrinters() {
 
   // Constants
   registerInlinePrinter('NIL', () => `Nil`);
+
+  // Conditional continuation execution (IF/IFELSE family)
+  // Utilities to render inline IRFunction blocks with argument renaming
+  const getContinuationFromInputOrOperand = (st: IROpPrim, which: string): IRFunction | undefined => {
+    // Try operand first (IFREF*, IF*REF variants)
+    const op = st.operands.find(o => o.name === which)?.value as any;
+    if (op && op.kind === 'cont') return op.value as IRFunction;
+    // Fallback to stack input (IF/IFNOT/IFELSE)
+    const inp = st.inputs.find(i => i.name === which)?.value as IRInputArg;
+    if (inp && (inp as any).kind !== 'inline') {
+      const ref = inp as IRValueRef;
+      return ref.continuationMeta?.continuation;
+    }
+    // Inline input might be something like PUSHCONT(...) inlined; try to resolve continuation if present
+    if (inp && (inp as any).kind === 'inline') {
+      const child = (inp as any).op as IROpPrim;
+      if (child && child.mnemonic && child.mnemonic.startsWith('PUSHCONT')) {
+        const sOp = child.operands.find(o => o.name === 's')?.value as any;
+        if (sOp && sOp.kind === 'cont') return sOp.value as IRFunction;
+      }
+    }
+    return undefined;
+  };
+
+  const buildArgRenameMap = (st: IROpPrim, label: string, cont: IRFunction): Map<string, string> => {
+    const map = new Map<string, string>();
+    for (const a of cont.args) {
+      const key = `${label}_${a.id}`;
+      const m = st.inputs.find(i => i.name === key)?.value as IRInputArg | undefined;
+      if (!m) continue;
+      if ((m as any).kind === 'inline') continue;
+      const ref = m as IRValueRef;
+      map.set(a.id, ref.id);
+    }
+    return map;
+  };
+
+  const cloneWithIdRemap = (fn: IRFunction, remap: Map<string, string>): IRFunction => {
+    const mapId = (id: string) => remap.get(id) ?? id;
+
+    const cloneOp = (op: IROpPrim): IROpPrim => {
+      return {
+        ...op,
+        inputs: op.inputs.map(({ name, value }) => {
+          if ((value as any).kind === 'inline') {
+            const child = (value as any).op as IROpPrim;
+            return { name, value: { kind: 'inline', op: cloneOp(child) } as any };
+          } else {
+            const ref = value as IRValueRef;
+            return { name, value: { ...ref, id: mapId(ref.id) } };
+          }
+        }),
+        outputs: op.outputs.map(o => ({ name: o.name, value: { ...o.value } })),
+        operands: op.operands.slice(),
+      };
+    };
+
+    const args = fn.args.map(a => ({ ...a, id: mapId(a.id) }));
+    const body = fn.body.map(st => cloneOp(st));
+    const result = fn.result.map(r => ({ ...r, id: mapId(r.id) }));
+    return { ...fn, args, body, result };
+  };
+
+  const renderContAsBlock = (cont: IRFunction, assignTo: string[] | null): string => {
+    const full = printIR(cont);
+    const lines = full.split('\n');
+    const fnIdx = lines.findIndex(l => l.startsWith('function '));
+    if (fnIdx === -1) return '/* <invalid continuation> */';
+    const endIdx = (() => {
+      for (let i = lines.length - 1; i >= 0; i--) {
+        if (lines[i].trim() === '}') return i;
+      }
+      return lines.length - 1;
+    })();
+    const body = lines.slice(fnIdx + 1, endIdx);
+    // Drop leading 4 spaces from statements
+    const norm = body.map(l => (l.startsWith('    ') ? l.slice(4) : l));
+    // Remove trailing return line from normalized body
+    const outLines: string[] = [];
+    for (const l of norm) {
+      const t = l.trim();
+      if (!t) continue; // skip no-op/blank lines
+      if (t.startsWith('return ')) continue; // drop inner returns
+      outLines.push(l);
+    }
+    // Append assignments for results, if requested
+    if (assignTo && assignTo.length && cont.result.length) {
+      for (let i = 0; i < Math.min(assignTo.length, cont.result.length); i++) {
+        const rhs = cont.result[i].id;
+        outLines.push(`${assignTo[i]} = ${rhs};`);
+      }
+    }
+    // Indent inside block by 4 spaces; keep semicolons where present, add to plaintext assigns
+    return outLines.map(l => `    ${l.trimEnd()}`).join('\n');
+  };
+
+  const emitIfBlock = (st: IROpPrim, cond: string, thenCont: { label: string; fn?: IRFunction }, elseCont?: { label: string; fn?: IRFunction }, opts?: { terminate?: boolean }) => {
+    const outNames = st.outputs.map(o => o.value.id);
+    // THEN branch
+    let thenBlock = '/* missing continuation */';
+    if (thenCont.fn) {
+      const rename = buildArgRenameMap(st, thenCont.label, thenCont.fn);
+      const renamed = cloneWithIdRemap(thenCont.fn, rename);
+      thenBlock = renderContAsBlock(renamed, outNames);
+    }
+    if (opts?.terminate) {
+      thenBlock = thenBlock ? `${thenBlock}\n    return` : '    return';
+    }
+    // ELSE branch
+    let elseBlock: string | null = null;
+    if (elseCont) {
+      if (elseCont.fn) {
+        const rename2 = buildArgRenameMap(st, elseCont.label, elseCont.fn);
+        const renamed2 = cloneWithIdRemap(elseCont.fn, rename2);
+        elseBlock = renderContAsBlock(renamed2, outNames);
+      } else {
+        elseBlock = '/* missing continuation */';
+      }
+    }
+    if (elseBlock != null) {
+      return [`if (${cond}) {\n${thenBlock}\n} else {\n${elseBlock}\n}`];
+    } else {
+      return [`if (${cond}) {\n${thenBlock}\n}`];
+    }
+  };
+
+  // IFELSE: stack f,c,c2; REF variants handled below
+  registerStmtPrinter('IFELSE', (st, ctx) => {
+    const f = ctx.inP('f', 'left');
+    const c = getContinuationFromInputOrOperand(st, 'c');
+    const c2 = getContinuationFromInputOrOperand(st, 'c2');
+    return emitIfBlock(st, f, { label: 'c', fn: c }, { label: 'c2', fn: c2 });
+  });
+
+  registerStmtPrinter('IF', (st, ctx) => {
+    const f = ctx.inP('f', 'left');
+    const c = getContinuationFromInputOrOperand(st, 'c');
+    return emitIfBlock(st, f, { label: 'c', fn: c });
+  });
+
+  registerStmtPrinter('IFNOT', (st, ctx) => {
+    const f = ctx.inP('f', 'right');
+    const c = getContinuationFromInputOrOperand(st, 'c');
+    return emitIfBlock(st, `!(${f})`, { label: 'c', fn: c });
+  });
+
+  // Reference variants
+  registerStmtPrinter('IFREF', (st, ctx) => {
+    const f = ctx.inP('f', 'left');
+    const c = getContinuationFromInputOrOperand(st, 'c');
+    return emitIfBlock(st, f, { label: 'c', fn: c });
+  });
+
+  registerStmtPrinter('IFNOTREF', (st, ctx) => {
+    const f = ctx.inP('f', 'right');
+    const c = getContinuationFromInputOrOperand(st, 'c');
+    return emitIfBlock(st, `!(${f})`, { label: 'c', fn: c });
+  });
+
+  registerStmtPrinter('IFELSEREF', (st, ctx) => {
+    const f = ctx.inP('f', 'left');
+    const c = getContinuationFromInputOrOperand(st, 'c');
+    const c2 = getContinuationFromInputOrOperand(st, 'c2');
+    return emitIfBlock(st, f, { label: 'c', fn: c }, { label: 'c2', fn: c2 });
+  });
+
+  registerStmtPrinter('IFREFELSE', (st, ctx) => {
+    const f = ctx.inP('f', 'left');
+    const c = getContinuationFromInputOrOperand(st, 'c');
+    const c2 = getContinuationFromInputOrOperand(st, 'c2');
+    return emitIfBlock(st, f, { label: 'c', fn: c }, { label: 'c2', fn: c2 });
+  });
+
+  registerStmtPrinter('IFREFELSEREF', (st, ctx) => {
+    const f = ctx.inP('f', 'left');
+    const c1 = getContinuationFromInputOrOperand(st, 'c1');
+    const c2 = getContinuationFromInputOrOperand(st, 'c2');
+    return emitIfBlock(st, f, { label: 'c1', fn: c1 }, { label: 'c2', fn: c2 });
+  });
+
+  // Jump variants (no merge of results; only then-branch present)
+  registerStmtPrinter('IFJMP', (st, ctx) => {
+    const f = ctx.inP('f', 'left');
+    const c = getContinuationFromInputOrOperand(st, 'c');
+    return emitIfBlock(st, f, { label: 'c', fn: c }, undefined, { terminate: true });
+  });
+
+  registerStmtPrinter('IFNOTJMP', (st, ctx) => {
+    const f = ctx.inP('f', 'right');
+    const c = getContinuationFromInputOrOperand(st, 'c');
+    return emitIfBlock(st, `!(${f})`, { label: 'c', fn: c }, undefined, { terminate: true });
+  });
+
+  registerStmtPrinter('IFJMPREF', (st, ctx) => {
+    const f = ctx.inP('f', 'left');
+    const c = getContinuationFromInputOrOperand(st, 'c');
+    return emitIfBlock(st, f, { label: 'c', fn: c }, undefined, { terminate: true });
+  });
+
+  registerStmtPrinter('IFNOTJMPREF', (st, ctx) => {
+    const f = ctx.inP('f', 'right');
+    const c = getContinuationFromInputOrOperand(st, 'c');
+    return emitIfBlock(st, `!(${f})`, { label: 'c', fn: c }, undefined, { terminate: true });
+  });
 }
