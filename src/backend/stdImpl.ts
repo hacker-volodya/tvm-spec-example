@@ -83,6 +83,9 @@ export function registerPrinters() {
   registerInlinePrinter('ENDC', (_st, ctx) => `${ctx.in('b')}.end_cell()`);
   registerInlinePrinter('CTOS', (_st, ctx) => `${ctx.in('c')}.begin_parse()`);
   registerInlinePrinter('ENDS', (_st, ctx) => `${ctx.in('s')}.end_parse()`);
+  // Dictionaries: creation and checks
+  registerInlinePrinter('NEWDICT', () => `new_dict()`);
+  registerInlinePrinter('DICTEMPTY', (_st, ctx) => `dict_empty?(${ctx.in('c')})`);
 
   // Slice preloaders
   registerInlinePrinter('PLDU', (_st, ctx) => `${ctx.in('s')}.preload_uint(${ctx.op('c')})`);
@@ -116,6 +119,100 @@ export function registerPrinters() {
     return `${ctx.in('b')}.store_grams(${ctx.in('x')})`;
   });
   registerInlinePrinter('STBR', (_st, ctx) => `${ctx.in('to') || ctx.in('b')}.store_builder(${ctx.in('from') || ctx.in('b2')})`);
+
+  // --- Dictionary primitives (stdlib-style) ---
+  // Basic set ops (slice keys)
+  registerInlinePrinter('DICTSET', (_st, ctx) => `dict_set(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('k')}, ${ctx.in('x')})`);
+  registerInlinePrinter('DICTSETREF', (_st, ctx) => `dict_set_ref(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('k')}, ${ctx.in('c')})`);
+  registerInlinePrinter('DICTSETB', (_st, ctx) => `dict_set_builder(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('k')}, ${ctx.in('b')})`);
+  // Basic set ops (int keys)
+  registerInlinePrinter('DICTISET', (_st, ctx) => `idict_set(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('i')}, ${ctx.in('x')})`);
+  registerInlinePrinter('DICTUSET', (_st, ctx) => `udict_set(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('i')}, ${ctx.in('x')})`);
+  registerInlinePrinter('DICTISETREF', (_st, ctx) => `idict_set_ref(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('i')}, ${ctx.in('c')})`);
+  registerInlinePrinter('DICTUSETREF', (_st, ctx) => `udict_set_ref(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('i')}, ${ctx.in('c')})`);
+  registerInlinePrinter('DICTISETB', (_st, ctx) => `idict_set_builder(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('i')}, ${ctx.in('b')})`);
+  registerInlinePrinter('DICTUSETB', (_st, ctx) => `udict_set_builder(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('i')}, ${ctx.in('b')})`);
+  // Add/replace variants (int keys)
+  registerInlinePrinter('DICTIADD', (_st, ctx) => `idict_add?(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('i')}, ${ctx.in('x')})`);
+  registerInlinePrinter('DICTUADD', (_st, ctx) => `udict_add?(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('i')}, ${ctx.in('x')})`);
+  registerInlinePrinter('DICTIREPLACE', (_st, ctx) => `idict_replace?(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('i')}, ${ctx.in('x')})`);
+  registerInlinePrinter('DICTUREPLACE', (_st, ctx) => `udict_replace?(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('i')}, ${ctx.in('x')})`);
+  // Add/replace builder variants (int keys)
+  registerInlinePrinter('DICTIADDB', (_st, ctx) => `idict_add_builder?(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('i')}, ${ctx.in('b')})`);
+  registerInlinePrinter('DICTUADDB', (_st, ctx) => `udict_add_builder?(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('i')}, ${ctx.in('b')})`);
+  registerInlinePrinter('DICTIREPLACEB', (_st, ctx) => `idict_replace_builder?(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('i')}, ${ctx.in('b')})`);
+  registerInlinePrinter('DICTUREPLACEB', (_st, ctx) => `udict_replace_builder?(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('i')}, ${ctx.in('b')})`);
+  // Delete ops
+  registerInlinePrinter('DICTIDEL', (_st, ctx) => `idict_delete?(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('i')})`);
+  registerInlinePrinter('DICTUDEL', (_st, ctx) => `udict_delete?(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('i')})`);
+  registerInlinePrinter('DICTDEL', (_st, ctx) => `dict_delete?(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('k')})`);
+  // Delete + get value
+  registerInlinePrinter('DICTIDELGET', (_st, ctx) => `idict_delete_get?(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('i')})`);
+  registerInlinePrinter('DICTUDELGET', (_st, ctx) => `udict_delete_get?(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('i')})`);
+  registerInlinePrinter('DICTDELGET', (_st, ctx) => `dict_delete_get?(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('k')})`);
+  // Get value (opt ref forms)
+  registerInlinePrinter('DICTGETOPTREF', (_st, ctx) => `dict_get_ref(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('k')})`);
+  registerInlinePrinter('DICTIGETOPTREF', (_st, ctx) => `idict_get_ref(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('i')})`);
+  registerInlinePrinter('DICTUGETOPTREF', (_st, ctx) => `udict_get_ref(${ctx.in('D')}, ${ctx.in('n')}, ${ctx.in('i')})`);
+
+  // Collapsers for quiet forms: NULLSWAPIFNOT + DICT*GET/GETREF/DELGET → stdlib "?" helpers
+  registerInlinePrinter('NULLSWAPIFNOT', (_st, ctx) => {
+    const x = ctx.inRaw('x');
+    if (!x || (x as any).kind !== 'inline') return undefined;
+    const child = (x as any).op as IROpPrim;
+    const fmt = (n: string) => {
+      const ent = child.inputs.find(i => i.name === n);
+      return ent ? ctx.formatInputArg(ent.value) : '';
+    };
+    switch (child.mnemonic) {
+      case 'DICTGET': return `dict_get?(${fmt('D')}, ${fmt('n')}, ${fmt('k')})`;
+      case 'DICTIGET': return `idict_get?(${fmt('D')}, ${fmt('n')}, ${fmt('i')})`;
+      case 'DICTUGET': return `udict_get?(${fmt('D')}, ${fmt('n')}, ${fmt('i')})`;
+      case 'DICTGETREF': return `dict_get_ref?(${fmt('D')}, ${fmt('n')}, ${fmt('k')})`;
+      case 'DICTIGETREF': return `idict_get_ref?(${fmt('D')}, ${fmt('n')}, ${fmt('i')})`;
+      case 'DICTUGETREF': return `udict_get_ref?(${fmt('D')}, ${fmt('n')}, ${fmt('i')})`;
+      case 'DICTIDELGET': return `idict_delete_get?(${fmt('D')}, ${fmt('n')}, ${fmt('i')})`;
+      case 'DICTUDELGET': return `udict_delete_get?(${fmt('D')}, ${fmt('n')}, ${fmt('i')})`;
+      case 'DICTDELGET': return `dict_delete_get?(${fmt('D')}, ${fmt('n')}, ${fmt('k')})`;
+      default: return undefined;
+    }
+  });
+  // Some dict ops use two null swaps when quiet (min/max/prefix variants). Try to collapse common ones.
+  registerInlinePrinter('NULLSWAPIFNOT2', (_st, ctx) => {
+    const x = ctx.inRaw('x');
+    if (!x || (x as any).kind !== 'inline') return undefined;
+    const child = (x as any).op as IROpPrim;
+    const fmt = (n: string) => {
+      const ent = child.inputs.find(i => i.name === n);
+      return ent ? ctx.formatInputArg(ent.value) : '';
+    };
+    switch (child.mnemonic) {
+      case 'DICTREMMIN': return `dict_delete_get_min(${fmt('D')}, ${fmt('n')})`;
+      case 'DICTREMMAX': return `dict_delete_get_max(${fmt('D')}, ${fmt('n')})`;
+      case 'DICTIREMMIN': return `idict::delete_get_min(${fmt('D')}, ${fmt('n')})`;
+      case 'DICTIREMMAX': return `idict::delete_get_max(${fmt('D')}, ${fmt('n')})`;
+      case 'DICTUREMMIN': return `udict::delete_get_min(${fmt('D')}, ${fmt('n')})`;
+      case 'DICTUREMMAX': return `udict::delete_get_max(${fmt('D')}, ${fmt('n')})`;
+      case 'DICTUMIN': return `udict_get_min?(${fmt('D')}, ${fmt('n')})`;
+      case 'DICTUMAX': return `udict_get_max?(${fmt('D')}, ${fmt('n')})`;
+      case 'DICTIMIN': return `idict_get_min?(${fmt('D')}, ${fmt('n')})`;
+      case 'DICTIMAX': return `idict_get_max?(${fmt('D')}, ${fmt('n')})`;
+      case 'DICTUMINREF': return `udict_get_min_ref?(${fmt('D')}, ${fmt('n')})`;
+      case 'DICTUMAXREF': return `udict_get_max_ref?(${fmt('D')}, ${fmt('n')})`;
+      case 'DICTIMINREF': return `idict_get_min_ref?(${fmt('D')}, ${fmt('n')})`;
+      case 'DICTIMAXREF': return `idict_get_max_ref?(${fmt('D')}, ${fmt('n')})`;
+      case 'DICTUGETNEXT': return `udict_get_next?(${fmt('D')}, ${fmt('n')}, ${fmt('i') || fmt('pivot')})`;
+      case 'DICTUGETNEXTEQ': return `udict_get_nexteq?(${fmt('D')}, ${fmt('n')}, ${fmt('i') || fmt('pivot')})`;
+      case 'DICTUGETPREV': return `udict_get_prev?(${fmt('D')}, ${fmt('n')}, ${fmt('i') || fmt('pivot')})`;
+      case 'DICTUGETPREVEQ': return `udict_get_preveq?(${fmt('D')}, ${fmt('n')}, ${fmt('i') || fmt('pivot')})`;
+      case 'DICTIGETNEXT': return `idict_get_next?(${fmt('D')}, ${fmt('n')}, ${fmt('i') || fmt('pivot')})`;
+      case 'DICTIGETNEXTEQ': return `idict_get_nexteq?(${fmt('D')}, ${fmt('n')}, ${fmt('i') || fmt('pivot')})`;
+      case 'DICTIGETPREV': return `idict_get_prev?(${fmt('D')}, ${fmt('n')}, ${fmt('i') || fmt('pivot')})`;
+      case 'DICTIGETPREVEQ': return `idict_get_preveq?(${fmt('D')}, ${fmt('n')}, ${fmt('i') || fmt('pivot')})`;
+      case 'PFXDICTGETQ': return `pfxdict_get?(${fmt('D')}, ${fmt('n')}, ${fmt('k') || fmt('key')})`;
+      default: return undefined;
+    }
+  });
 
   // Slice cuts/skips
   registerInlinePrinter('SDSKIPFIRST', (_st, ctx) => `${ctx.in('s')}.skip_bits(${ctx.in('l')})`);
