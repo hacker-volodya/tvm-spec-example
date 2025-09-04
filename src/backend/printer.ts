@@ -72,16 +72,16 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
     if (m === 'XOR') return 2;
     if (m === 'AND') return 3;
     // Equality
-    if (m === 'EQUAL' || m === 'NEQ') return 4;
+    if (m === 'EQUAL' || m === 'NEQ' || m === 'EQINT' || m === 'NEQINT') return 4;
     // Relational
-    if (m === 'LESS' || m === 'LEQ' || m === 'GREATER' || m === 'GEQ') return 5;
+    if (m === 'LESS' || m === 'LEQ' || m === 'GREATER' || m === 'GEQ' || m === 'LESSINT' || m === 'GTINT') return 5;
     // Shifts
     if (m === 'LSHIFT' || m === 'RSHIFT' || m === 'RSHIFTR' || m === 'RSHIFTC' ||
         m === 'LSHIFT_VAR' || m === 'RSHIFT_VAR' || m === 'RSHIFTR_VAR' || m === 'RSHIFTC_VAR') return 6;
     // Additive
-    if (m === 'ADD' || m === 'SUB' || m === 'INC' || m === 'DEC') return 7;
+    if (m === 'ADD' || m === 'SUB' || m === 'INC' || m === 'DEC' || m === 'ADDCONST') return 7;
     // Multiplicative
-    if (m === 'MUL' || m === 'DIV' || m === 'MOD') return 8;
+    if (m === 'MUL' || m === 'DIV' || m === 'MOD' || m === 'MULCONST') return 8;
     // Unary
     if (m === 'NEGATE' || m === 'NOT') return 9;
     return 100; // default: very high, i.e., usually no extra parens

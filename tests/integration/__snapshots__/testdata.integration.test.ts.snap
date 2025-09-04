@@ -12,8 +12,8 @@ function (arg5, arg4, arg3, arg2, arg1, arg0) {
     UNTIL(c=function (arg3, arg2, arg1, arg0) {
         var14 = arg1 + DIVR(y=arg0, x=arg3);
         var15 = DIVR(y=arg2, x=arg3);
-        var16 = ADDCONST(x=arg0 | c=2);
-        var17 = EQINT(x=var15 | y=0);
+        var16 = arg0 + 2;
+        var17 = var15 == 0;
         return var15, arg2, var14, var16, var17
     }, c_arg0=1, c_arg1=0, c_arg2=arg0 * -arg0, c_arg3=DIVR(y=arg0, x=arg1));
     return arg3
@@ -23,7 +23,7 @@ function (arg5, arg4, arg3, arg2, arg1, arg0) {
 function () {
     var19 = 64;
     REPEAT(c=function (arg0) {
-        var21 = MULCONST(x=arg0 | c=10);
+        var21 = arg0 * 10;
         return var21
     }, n=70);
     var23 = 64 << 2;
@@ -102,7 +102,7 @@ function (arg2, arg1, arg0) {
     WHILE(c=function (arg1, arg0) {
         var53 = arg0 + 1;
         if ((arg1 & 1)) {
-            var57 = MULCONST(x=arg1 | c=3) + 1;
+            var57 = arg1 * 3 + 1;
             var61 = var53;
             var62 = var57;
         } else {
@@ -112,7 +112,7 @@ function (arg2, arg1, arg0) {
         }
         return var62, var61
     }, c2=function (arg1, arg0) {
-        var51 = GTINT(x=arg1 | y=1);
+        var51 = arg1 > 1;
         return arg1, arg0, var51
     }, c2_arg0=0, c2_arg1=arg0);
     return arg1
@@ -145,7 +145,7 @@ function recv_internal () {
 /* methodId: 1 */
 function (arg1, arg0) {
     var64 = arg1 + arg0;
-    var65 = MULCONST(x=arg0 | c=10);
+    var65 = arg0 * 10;
     return var64, var65
 }
 
@@ -260,7 +260,7 @@ function recv_internal () {
 /* methodId: 1 */
 function (arg0) {
     SETGLOB(x=TPUSH(x=arg0, t=GETGLOB(k=1)) | k=1);
-    var124 = MULCONST(x=arg0 | c=10);
+    var124 = arg0 * 10;
     return var124
 }
 
@@ -429,25 +429,25 @@ function () {
 exports[`Func → Decompiler → testdata snapshots decompile bit-operators.fc: bit-operators.fc 1`] = `
 "/* methodId: 0 */
 function recv_internal (arg4, arg3, arg2, arg1, arg0) {
-    if ((EQINT(x=arg0 | y=0))) {
+    if ((arg0 == 0)) {
         var242 = CALLDICT(n=1);
         return
     }
-    if ((EQINT(x=arg1 | y=1))) {
+    if ((arg1 == 1)) {
         var245 = CALLDICT(n=2);
         return
     }
-    if ((EQINT(x=arg2 | y=2))) {
+    if ((arg2 == 2)) {
         var248 = 0;
         var249 = CALLDICT(n=3);
         return
     }
-    if ((EQINT(x=arg3 | y=3))) {
+    if ((arg3 == 3)) {
         var252 = 0;
         var253 = CALLDICT(n=4);
         return
     }
-    if ((EQINT(x=arg4 | y=4))) {
+    if ((arg4 == 4)) {
         var256 = 1;
         var257 = CALLDICT(n=3);
         return
@@ -471,13 +471,13 @@ function () {
 
 /* methodId: 3 */
 function (arg0) {
-    var264 = EQINT(x=1 << arg0 | y=1);
+    var264 = 1 << arg0 == 1;
     return var264
 }
 
 /* methodId: 4 */
 function (arg0) {
-    var267 = EQINT(x=1 >> arg0 | y=1);
+    var267 = 1 >> arg0 == 1;
     return var267
 }
 
@@ -522,9 +522,9 @@ function recv_internal () {
     var280 = CALLDICT(n=1);
     var281 = CALLDICT(n=2);
     var282 = CALLDICT(n=3);
-    throw_unless(101, EQINT(x=var280 | y=1));
-    throw_unless(102, EQINT(x=var281 | y=2));
-    throw_unless(103, EQINT(x=var282 | y=3));
+    throw_unless(101, var280 == 1);
+    throw_unless(102, var281 == 2);
+    throw_unless(103, var282 == 3);
     var286 = CALLDICT(n=5);
     var287 = CALLDICT(n=6);
     var294 = begin_cell().store_slice(PUSHSLICE(s=[object Object])).store_slice(PUSHSLICE(s=[object Object])).end_cell().begin_parse();
@@ -578,7 +578,7 @@ function () {
 exports[`Func → Decompiler → testdata snapshots decompile code_after_ifelse.fc: code_after_ifelse.fc 1`] = `
 "/* methodId: 0 */
 function recv_internal (arg0) {
-    if ((EQINT(x=arg0 | y=1))) {
+    if ((arg0 == 1)) {
         var324 = 111;
         var329 = var324;
     } else {
@@ -591,7 +591,7 @@ function recv_internal (arg0) {
 
 /* methodId: 1 */
 function (arg0) {
-    if ((EQINT(x=arg0 | y=1))) {
+    if ((arg0 == 1)) {
         var332 = 111;
         var337 = var332;
     } else {
@@ -609,11 +609,11 @@ function recv_internal (arg0) {
     var438 = CALLREF(
         c_arg0=arg0 |
         c=function (arg0) {
-                  var437 = MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=MULCONST(x=arg0 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1 | c=10) + 1;
+                  var437 = (((((((((((((((((((((((((((((((((((((((((((((((((arg0 * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1) * 10 + 1;
                   return var437
               }
     );
-    var440 = ADDCONST(x=MULCONST(x=var438 | c=10) | c=5);
+    var440 = var438 * 10 + 5;
     return var440
 }
 "
@@ -624,7 +624,7 @@ exports[`Func → Decompiler → testdata snapshots decompile inline_if.fc: inli
 function recv_internal (arg0) {
     var441 = CALLDICT(n=1);
     var442 = var441 + 1;
-    if ((EQINT(x=arg0 | y=1))) {
+    if ((arg0 == 1)) {
         var444 = 11;
     } else {
         var446 = 22;
@@ -633,7 +633,7 @@ function recv_internal (arg0) {
     var453 = CALLREF(
         c_arg0=arg0 |
         c=function (arg0) {
-                  if ((EQINT(x=arg0 | y=1))) {
+                  if ((arg0 == 1)) {
                       var450 = 111;
                       return
                   }
@@ -647,7 +647,7 @@ function recv_internal (arg0) {
 
 /* methodId: 1 */
 function (arg0) {
-    if ((EQINT(x=arg0 | y=1))) {
+    if ((arg0 == 1)) {
         var456 = 1;
         return
     }
@@ -669,7 +669,7 @@ function recv_internal () {
     UNTIL(c=function (arg0) {
         SETGLOB(x=GETGLOB(k=1) << 1 | k=1);
         var469 = arg0 + 1;
-        var470 = GTINT(x=var469 | y=7);
+        var470 = var469 > 7;
         return var469, var470
     }, c_arg0=0);
     var472 = GETGLOB(k=1);
@@ -679,7 +679,7 @@ function recv_internal () {
         var479 = arg0 + 1;
         return var479
     }, c2=function (arg0) {
-        var475 = LESSINT(x=arg0 | y=10);
+        var475 = arg0 < 10;
         return arg0, var475
     }, c2_arg0=0);
     var481 = GETGLOB(k=1);
@@ -856,7 +856,7 @@ function (arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                   UNTIL(c=function (arg2, arg1, arg0) {
                       var514 = muldivc(arg2, arg1, arg0) - arg0 >> 1;
                       var515 = arg0 + var514;
-                      var516 = EQINT(x=var514 | y=0);
+                      var516 = var514 == 0;
                       return arg2, arg1, var515, var516
                   }, c_arg0=var511, c_arg1=var510, c_arg2=var509);
                   return arg4
@@ -939,9 +939,9 @@ function (arg5, arg4, arg3, arg2, arg1, arg0) {
                             }
                   );
                   REPEAT(c=function (arg4, arg3, arg2, arg1, arg0) {
-                      var615 = MULCONST(x=arg1 | c=63) - (arg0 << 4);
-                      var618 = (arg1 << 4) + MULCONST(x=arg0 | c=63);
-                      var619 = MULCONST(x=arg4 | c=65);
+                      var615 = arg1 * 63 - (arg0 << 4);
+                      var618 = (arg1 << 4) + arg0 * 63;
+                      var619 = arg4 * 65;
                       return var619, arg3, arg2, var615, var618
                   }, n=arg1);
                   var622 = LSHIFTDIVR(y=arg3, x=LSHIFTDIVMODR(y=1, x=0 | t=256) | t=7);
@@ -975,7 +975,7 @@ function (arg0) {
                   REPEAT(c=function (arg2, arg1, arg0) {
                       var676 = MULRSHIFTR(y=arg2, x=arg2 | t=256);
                       var679 = arg2 - (MULRSHIFTR(y=arg1, x=arg2 | t=256) ~>> arg0);
-                      var680 = ADDCONST(x=arg0 | c=-2);
+                      var680 = arg0 + -2;
                       return var679, var676, var680
                   }, n=3);
                   return var665, var673
@@ -1096,17 +1096,17 @@ function (arg2, arg1, arg0) {
                                 var800 = UBITSIZE(x=arg0) - 1;
                                 var803 = arg0 << PUSHPOW2DEC(x=8) - var800;
                                 var805 = 0xb39 << 244;
-                                var811 = ADDCONST(x=muldivr(var803 - var805 >> 1, 65, var807 + var805) | c=11);
+                                var811 = muldivr(var803 - var805 >> 1, 65, var807 + var805) + 11;
                                 var813, var814 = divmod(var811, 5);
                                 REPEAT(c=function (arg0) {
-                                    var816 = MULCONST(x=arg0 | c=33);
+                                    var816 = arg0 * 33;
                                     return var816
                                 }, n=var814);
                                 REPEAT(c=function (arg0) {
                                     var819 = arg0 * 0x25528a1;
                                     return var819
                                 }, n=var813);
-                                var824 = 1 << MULCONST(x=51 - var811 | c=5);
+                                var824 = 1 << (51 - var811) * 5;
                                 var848 = CALLREF(
                                     c_arg0=18, c_arg1=LSHIFTDIVR(y=(var825 >> 1) + var824, x=var803 - var824 << 4 | t=256) |
                                     c=function (arg1, arg0) {
@@ -1150,17 +1150,17 @@ function (arg0) {
                                 var862 = UBITSIZE(x=arg0) - 1;
                                 var865 = arg0 << PUSHPOW2DEC(x=8) - var862;
                                 var867 = 0xb39 << 244;
-                                var873 = ADDCONST(x=muldivr(var865 - var867 >> 1, 65, var869 + var867) | c=11);
+                                var873 = muldivr(var865 - var867 >> 1, 65, var869 + var867) + 11;
                                 var875, var876 = divmod(var873, 5);
                                 REPEAT(c=function (arg0) {
-                                    var878 = MULCONST(x=arg0 | c=33);
+                                    var878 = arg0 * 33;
                                     return var878
                                 }, n=var876);
                                 REPEAT(c=function (arg0) {
                                     var881 = arg0 * 0x25528a1;
                                     return var881
                                 }, n=var875);
-                                var886 = 1 << MULCONST(x=51 - var873 | c=5);
+                                var886 = 1 << (51 - var873) * 5;
                                 var910 = CALLREF(
                                     c_arg0=18, c_arg1=LSHIFTDIVR(y=(var887 >> 1) + var886, x=var865 - var886 << 4 | t=256) |
                                     c=function (arg1, arg0) {
@@ -1200,17 +1200,17 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
             var927 = PUSHPOW2(x=248);
             return
         }
-        var929 = LESSINT(x=arg3 | y=1);
+        var929 = arg3 < 1;
         var934 = function (arg1, arg0) {
             var930 = arg1 | arg0;
-            var931 = LESSINT(x=var930 | y=0);
+            var931 = var930 < 0;
             var932 = 0;
             var933 = var932 >> var931;
             return var933
         };
         if (var929) {
             var930 = arg3 | arg2;
-            var931 = LESSINT(x=var930 | y=0);
+            var931 = var930 < 0;
             var932 = 0;
             var933 = var932 >> var931;
             return
@@ -1233,12 +1233,12 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                                     var944 = 65;
                                     var945 = var943 + var941;
                                     var946 = muldivr(var943, var944, var945);
-                                    var947 = ADDCONST(x=var946 | c=11);
+                                    var947 = var946 + 11;
                                     var948 = 5;
                                     var949, var950 = divmod(var947, var948);
                                     var951 = 1;
                                     var953 = function (arg0) {
-                                        var952 = MULCONST(x=arg0 | c=33);
+                                        var952 = arg0 * 33;
                                         return var952
                                     };
                                     REPEAT(c=var953, n=var950);
@@ -1250,7 +1250,7 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                                     REPEAT(c=var956, n=var949);
                                     var957 = 51;
                                     var958 = var957 - var947;
-                                    var959 = MULCONST(x=var958 | c=5);
+                                    var959 = var958 * 5;
                                     var960 = var951 << var959;
                                     var961 = var939 - var960;
                                     var962 = var961 << 4;
@@ -1316,14 +1316,14 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
         var1010 = var1005 + var1009;
         var1011 = 248;
         var1012 = var1010 + var1011;
-        var1013 = LESSINT(x=var1012 | y=1);
+        var1013 = var1012 < 1;
         var1016 = function (arg2, arg1, arg0) {
-            var1014 = EQINT(x=arg0 | y=0);
+            var1014 = arg0 == 0;
             var1015 = -var1014;
             return var1015
         };
         if (var1013) {
-            var1014 = EQINT(x=var1012 | y=0);
+            var1014 = var1012 == 0;
             var1015 = -var1014;
             return
         }
@@ -1390,17 +1390,17 @@ function (arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                                               var1051 = UBITSIZE(x=arg0) - 1;
                                               var1054 = arg0 << PUSHPOW2DEC(x=8) - var1051;
                                               var1056 = 0xb39 << 244;
-                                              var1062 = ADDCONST(x=muldivr(var1054 - var1056 >> 1, 65, var1058 + var1056) | c=11);
+                                              var1062 = muldivr(var1054 - var1056 >> 1, 65, var1058 + var1056) + 11;
                                               var1064, var1065 = divmod(var1062, 5);
                                               REPEAT(c=function (arg0) {
-                                                  var1067 = MULCONST(x=arg0 | c=33);
+                                                  var1067 = arg0 * 33;
                                                   return var1067
                                               }, n=var1065);
                                               REPEAT(c=function (arg0) {
                                                   var1070 = arg0 * 0x25528a1;
                                                   return var1070
                                               }, n=var1064);
-                                              var1075 = 1 << MULCONST(x=51 - var1062 | c=5);
+                                              var1075 = 1 << (51 - var1062) * 5;
                                               var1099 = CALLREF(
                                                   c_arg0=18, c_arg1=LSHIFTDIVR(y=(var1076 >> 1) + var1075, x=var1054 - var1075 << 4 | t=256) |
                                                   c=function (arg1, arg0) {
@@ -1482,17 +1482,17 @@ function (arg2, arg1, arg0) {
                                               var1165 = UBITSIZE(x=arg0) - 1;
                                               var1168 = arg0 << PUSHPOW2DEC(x=8) - var1165;
                                               var1170 = 0xb39 << 244;
-                                              var1176 = ADDCONST(x=muldivr(var1168 - var1170 >> 1, 65, var1172 + var1170) | c=11);
+                                              var1176 = muldivr(var1168 - var1170 >> 1, 65, var1172 + var1170) + 11;
                                               var1178, var1179 = divmod(var1176, 5);
                                               REPEAT(c=function (arg0) {
-                                                  var1181 = MULCONST(x=arg0 | c=33);
+                                                  var1181 = arg0 * 33;
                                                   return var1181
                                               }, n=var1179);
                                               REPEAT(c=function (arg0) {
                                                   var1184 = arg0 * 0x25528a1;
                                                   return var1184
                                               }, n=var1178);
-                                              var1189 = 1 << MULCONST(x=51 - var1176 | c=5);
+                                              var1189 = 1 << (51 - var1176) * 5;
                                               var1213 = CALLREF(
                                                   c_arg0=18, c_arg1=LSHIFTDIVR(y=(var1190 >> 1) + var1189, x=var1168 - var1189 << 4 | t=256) |
                                                   c=function (arg1, arg0) {
@@ -1536,7 +1536,7 @@ function (arg0) {
     var1276, var1277 = CALLREF(
         c_arg0=arg0 |
         c=function (arg0) {
-                  if ((LESSINT(x=var1241 >> 249 | y=91))) {
+                  if ((var1241 >> 249 < 91)) {
                       var1245 = arg0 >> 1;
                       var1246 = arg2 - 1;
                       var1248 = var1246;
@@ -1595,7 +1595,7 @@ function (arg3, arg2, arg1, arg0) {
                                 REPEAT(c=function (arg2, arg1, arg0) {
                                     var1317 = MULRSHIFTR(y=arg2, x=arg2 | t=256);
                                     var1320 = arg2 - (MULRSHIFTR(y=arg1, x=arg2 | t=256) ~>> arg0);
-                                    var1321 = ADDCONST(x=arg0 | c=-2);
+                                    var1321 = arg0 + -2;
                                     return var1320, var1317, var1321
                                 }, n=3);
                                 return var1306, var1314
@@ -1723,11 +1723,11 @@ function (arg5, arg4, arg3, arg2, arg1, arg0) {
                                 var1483, var1484, var1485 = CALLREF(
                                     c_arg0=arg0 ~>> 232 |
                                     c=function (arg0) {
-                                              var1457 = ADDCONST(x=LSHIFTDIVR(y=var1449 * var1449 + (3 << 128), x=LSHIFTDIVR(y=var1443 * 0x6e1604 + PUSHPOW2(x=48), x=abs(arg0) - 0x6e1604 | t=88) * 0xc01 | t=59) | c=13);
+                                              var1457 = LSHIFTDIVR(y=var1449 * var1449 + (3 << 128), x=LSHIFTDIVR(y=var1443 * 0x6e1604 + PUSHPOW2(x=48), x=abs(arg0) - 0x6e1604 | t=88) * 0xc01 | t=59) + 13;
                                               var1458 = 0x1fb00a0;
                                               var1459 = 0x4fd801;
                                               var1461, var1462 = divmod(var1457, 5);
-                                              var1466 = 1 << (MULCONST(x=51 - var1457 | c=5));
+                                              var1466 = 1 << ((51 - var1457) * 5);
                                               REPEAT(c=function (arg1, arg0) {
                                                   var1469 = SUBR(y=arg0 << 5, x=arg1);
                                                   var1471 = arg0 + (arg1 << 5);
@@ -1806,11 +1806,11 @@ function (arg1, arg0) {
                   var1585, var1586, var1587 = CALLREF(
                       c_arg0=arg0 ~>> 232 |
                       c=function (arg0) {
-                                var1559 = ADDCONST(x=LSHIFTDIVR(y=var1551 * var1551 + (3 << 128), x=LSHIFTDIVR(y=var1545 * 0x6e1604 + PUSHPOW2(x=48), x=abs(arg0) - 0x6e1604 | t=88) * 0xc01 | t=59) | c=13);
+                                var1559 = LSHIFTDIVR(y=var1551 * var1551 + (3 << 128), x=LSHIFTDIVR(y=var1545 * 0x6e1604 + PUSHPOW2(x=48), x=abs(arg0) - 0x6e1604 | t=88) * 0xc01 | t=59) + 13;
                                 var1560 = 0x1fb00a0;
                                 var1561 = 0x4fd801;
                                 var1563, var1564 = divmod(var1559, 5);
-                                var1568 = 1 << (MULCONST(x=51 - var1559 | c=5));
+                                var1568 = 1 << ((51 - var1559) * 5);
                                 REPEAT(c=function (arg1, arg0) {
                                     var1571 = SUBR(y=arg0 << 5, x=arg1);
                                     var1573 = arg0 + (arg1 << 5);
@@ -1920,7 +1920,7 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                           var1643 = var1642 - arg0;
                           var1644 = var1643 >> 1;
                           var1645 = arg0 + var1644;
-                          var1646 = EQINT(x=var1644 | y=0);
+                          var1646 = var1644 == 0;
                           return arg2, arg1, var1645, var1646
                       };
                       UNTIL(c=var1647, c_arg0=var1641, c_arg1=var1640, c_arg2=var1639);
@@ -1955,14 +1955,14 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                                                   var1665 = var1664 << 128;
                                                   var1666 = var1663 + var1665;
                                                   var1667 = LSHIFTDIVR(y=var1666, x=var1662 | t=59);
-                                                  var1668 = ADDCONST(x=var1667 | c=13);
+                                                  var1668 = var1667 + 13;
                                                   var1669 = 0x1fb00a0;
                                                   var1670 = 0x4fd801;
                                                   var1671 = 5;
                                                   var1672, var1673 = divmod(var1668, var1671);
                                                   var1674 = 51;
                                                   var1675 = var1674 - var1668;
-                                                  var1676 = MULCONST(x=var1675 | c=5);
+                                                  var1676 = var1675 * 5;
                                                   var1677 = 1 << var1676;
                                                   var1678 = 0;
                                                   var1683 = function (arg1, arg0) {
@@ -2043,7 +2043,7 @@ function (arg2, arg1, arg0) {
     var1752 = CALLREF(
         c_arg0=arg0, c_arg1=arg1, c_arg2=arg2 |
         c=function (arg2, arg1, arg0) {
-                  var1733 = abs(arg0) - EQINT(x=var1731 | y=0);
+                  var1733 = abs(arg0) - (var1731 == 0);
                   REPEAT(c=function (arg1, arg0) {
                       var1739 = (arg0 * SGN(x=arg1) << 1) + 1;
                       var1743 = PUSHNEGPOW2(x=255) - MULRSHIFTR(y=-arg1, x=arg1 | t=254);
@@ -2134,7 +2134,7 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                           var1781 = var1780 - arg0;
                           var1782 = var1781 >> 1;
                           var1783 = arg0 + var1782;
-                          var1784 = EQINT(x=var1782 | y=0);
+                          var1784 = var1782 == 0;
                           return arg2, arg1, var1783, var1784
                       };
                       UNTIL(c=var1785, c_arg0=var1779, c_arg1=var1778, c_arg2=var1777);
@@ -2168,14 +2168,14 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                                                   var1802 = var1801 << 128;
                                                   var1803 = var1800 + var1802;
                                                   var1804 = LSHIFTDIVR(y=var1803, x=var1799 | t=59);
-                                                  var1805 = ADDCONST(x=var1804 | c=13);
+                                                  var1805 = var1804 + 13;
                                                   var1806 = 0x1fb00a0;
                                                   var1807 = 0x4fd801;
                                                   var1808 = 5;
                                                   var1809, var1810 = divmod(var1805, var1808);
                                                   var1811 = 51;
                                                   var1812 = var1811 - var1805;
-                                                  var1813 = MULCONST(x=var1812 | c=5);
+                                                  var1813 = var1812 * 5;
                                                   var1814 = 1 << var1813;
                                                   var1815 = 0;
                                                   var1820 = function (arg1, arg0) {
@@ -2258,7 +2258,7 @@ function (arg2, arg1, arg0) {
     var1890 = CALLREF(
         c_arg0=arg0, c_arg1=arg1, c_arg2=arg2 |
         c=function (arg2, arg1, arg0) {
-                  var1871 = arg0 - EQINT(x=arg0 | y=0);
+                  var1871 = arg0 - (arg0 == 0);
                   REPEAT(c=function (arg1, arg0) {
                       var1877 = (arg0 * SGN(x=arg1) << 1) + 1;
                       var1881 = PUSHNEGPOW2(x=255) - MULRSHIFTR(y=-arg1, x=arg1 | t=254);
@@ -2301,11 +2301,11 @@ function (arg4, arg3, arg2, arg1, arg0) {
                                 var1941, var1942, var1943 = CALLREF(
                                     c_arg0=arg0 ~>> 232 |
                                     c=function (arg0) {
-                                              var1915 = ADDCONST(x=LSHIFTDIVR(y=var1907 * var1907 + (3 << 128), x=LSHIFTDIVR(y=var1901 * 0x6e1604 + PUSHPOW2(x=48), x=abs(arg0) - 0x6e1604 | t=88) * 0xc01 | t=59) | c=13);
+                                              var1915 = LSHIFTDIVR(y=var1907 * var1907 + (3 << 128), x=LSHIFTDIVR(y=var1901 * 0x6e1604 + PUSHPOW2(x=48), x=abs(arg0) - 0x6e1604 | t=88) * 0xc01 | t=59) + 13;
                                               var1916 = 0x1fb00a0;
                                               var1917 = 0x4fd801;
                                               var1919, var1920 = divmod(var1915, 5);
-                                              var1924 = 1 << (MULCONST(x=51 - var1915 | c=5));
+                                              var1924 = 1 << ((51 - var1915) * 5);
                                               REPEAT(c=function (arg1, arg0) {
                                                   var1927 = SUBR(y=arg0 << 5, x=arg1);
                                                   var1929 = arg0 + (arg1 << 5);
@@ -2379,11 +2379,11 @@ function (arg4, arg3, arg2, arg1, arg0) {
                                 var2033, var2034, var2035 = CALLREF(
                                     c_arg0=arg0 ~>> 232 |
                                     c=function (arg0) {
-                                              var2007 = ADDCONST(x=LSHIFTDIVR(y=var1999 * var1999 + (3 << 128), x=LSHIFTDIVR(y=var1993 * 0x6e1604 + PUSHPOW2(x=48), x=abs(arg0) - 0x6e1604 | t=88) * 0xc01 | t=59) | c=13);
+                                              var2007 = LSHIFTDIVR(y=var1999 * var1999 + (3 << 128), x=LSHIFTDIVR(y=var1993 * 0x6e1604 + PUSHPOW2(x=48), x=abs(arg0) - 0x6e1604 | t=88) * 0xc01 | t=59) + 13;
                                               var2008 = 0x1fb00a0;
                                               var2009 = 0x4fd801;
                                               var2011, var2012 = divmod(var2007, 5);
-                                              var2016 = 1 << (MULCONST(x=51 - var2007 | c=5));
+                                              var2016 = 1 << ((51 - var2007) * 5);
                                               REPEAT(c=function (arg1, arg0) {
                                                   var2019 = SUBR(y=arg0 << 5, x=arg1);
                                                   var2021 = arg0 + (arg1 << 5);
@@ -2460,7 +2460,7 @@ function () {
     var2085 = SETCONTCTR(c=var2084, x=var2074 | i=c1);
     var2089 = PUSHCTR(i=c1);
     var2090 = COMPOSALT(c2=var2089, c=function (arg0) {
-        if ((EQINT(x=arg0 | y=7))) {
+        if ((arg0 == 7)) {
             throw(44);
         }
         RETALT();
@@ -2490,7 +2490,7 @@ function () {
     var2102 = SETCONTCTR(c=var2101, x=var2091 | i=c1);
     var2125 = PUSHCTR(i=c1);
     var2126 = COMPOSALT(c2=var2125, c=function (arg19, arg18, arg17, arg16, arg15, arg14, arg13, arg12, arg11, arg10, arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
-        if ((EQINT(x=arg19 | y=7))) {
+        if ((arg19 == 7)) {
             throw(44);
         }
         var2123 = ((((((((((((((((((arg19 + arg18) + arg17) + arg16) + arg15) + arg14) + arg13) + arg12) + arg11) + arg10) + arg9) + arg8) + arg7) + arg6) + arg5) + arg4) + arg3) + arg2) + arg1) + arg0;
@@ -2506,10 +2506,10 @@ function () {
 function (arg1, arg0) {
     SAVE(i=c2);
     SAMEALTSAVE();
-    if ((EQINT(x=arg0 | y=1))) {
+    if ((arg0 == 1)) {
         return
     }
-    if ((EQINT(x=arg1 | y=2))) {
+    if ((arg1 == 2)) {
         RETALT();
         return
     }
@@ -2552,7 +2552,7 @@ function (arg3, arg2, arg1, arg0) {
         var2144 = SETCONTCTR(c=var2143, x=var2133 | i=c1);
         var2148 = PUSHCTR(i=c1);
         var2149 = COMPOSALT(c2=var2148, c=function (arg0) {
-            if ((EQINT(x=arg0 | y=7))) {
+            if ((arg0 == 7)) {
                 throw(44);
             }
             RETALT();
@@ -2562,7 +2562,7 @@ function (arg3, arg2, arg1, arg0) {
         // decompilation error: Error: continuation has no meta!
         TRY 
     }, arg0=arg1 | p=1);
-    var2154 = (MULCONST(x=arg3 | c=100) + MULCONST(x=arg0 | c=10)) + arg2;
+    var2154 = (arg3 * 100 + arg0 * 10) + arg2;
     return var2154
 }
 
@@ -2589,7 +2589,7 @@ function (arg3, arg2, arg1, arg0) {
                       var2166 = SETCONTCTR(c=var2165, x=var2155 | i=c1);
                       var2170 = PUSHCTR(i=c1);
                       var2171 = COMPOSALT(c2=var2170, c=function (arg0) {
-                          if ((EQINT(x=arg0 | y=7))) {
+                          if ((arg0 == 7)) {
                               throw(44);
                           }
                           RETALT();
@@ -2601,31 +2601,31 @@ function (arg3, arg2, arg1, arg0) {
                   }, arg0=arg0 | p=1);
               }
     );
-    var2176 = (MULCONST(x=arg3 | c=100) + MULCONST(x=arg0 | c=10)) + arg2;
+    var2176 = (arg3 * 100 + arg0 * 10) + arg2;
     return var2176
 }
 
 /* methodId: 104 */
 function (arg1, arg0) {
     var2177 = arg1 + 1;
-    var2178 = ADDCONST(x=arg1 | c=2);
-    var2179 = ADDCONST(x=arg1 | c=3);
-    var2180 = ADDCONST(x=arg1 | c=4);
-    var2181 = ADDCONST(x=arg1 | c=5);
-    var2182 = ADDCONST(x=arg1 | c=6);
-    var2183 = ADDCONST(x=arg1 | c=7);
-    var2184 = ADDCONST(x=arg1 | c=8);
-    var2185 = ADDCONST(x=arg1 | c=9);
-    var2186 = ADDCONST(x=arg1 | c=10);
-    var2187 = ADDCONST(x=arg1 | c=11);
-    var2188 = ADDCONST(x=arg1 | c=12);
-    var2189 = ADDCONST(x=arg1 | c=13);
-    var2190 = ADDCONST(x=arg1 | c=14);
-    var2191 = ADDCONST(x=arg1 | c=15);
-    var2192 = ADDCONST(x=arg1 | c=16);
-    var2193 = ADDCONST(x=arg1 | c=17);
-    var2194 = ADDCONST(x=arg1 | c=18);
-    var2195 = ADDCONST(x=arg1 | c=19);
+    var2178 = arg1 + 2;
+    var2179 = arg1 + 3;
+    var2180 = arg1 + 4;
+    var2181 = arg1 + 5;
+    var2182 = arg1 + 6;
+    var2183 = arg1 + 7;
+    var2184 = arg1 + 8;
+    var2185 = arg1 + 9;
+    var2186 = arg1 + 10;
+    var2187 = arg1 + 11;
+    var2188 = arg1 + 12;
+    var2189 = arg1 + 13;
+    var2190 = arg1 + 14;
+    var2191 = arg1 + 15;
+    var2192 = arg1 + 16;
+    var2193 = arg1 + 17;
+    var2194 = arg1 + 18;
+    var2195 = arg1 + 19;
     var2232 = function () {
         SAVE(i=c2);
         SAMEALTSAVE();
@@ -2644,7 +2644,7 @@ function (arg1, arg0) {
         var2207 = SETCONTCTR(c=var2206, x=var2196 | i=c1);
         var2230 = PUSHCTR(i=c1);
         var2231 = COMPOSALT(c2=var2230, c=function (arg19, arg18, arg17, arg16, arg15, arg14, arg13, arg12, arg11, arg10, arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
-            if ((EQINT(x=arg19 | y=7))) {
+            if ((arg19 == 7)) {
                 throw(44);
             }
             var2228 = ((((((((((((((((((arg19 + arg18) + arg17) + arg16) + arg15) + arg14) + arg13) + arg12) + arg11) + arg10) + arg9) + arg8) + arg7) + arg6) + arg5) + arg4) + arg3) + arg2) + arg1) + arg0;
@@ -2675,24 +2675,24 @@ function (arg1, arg0) {
 /* methodId: 105 */
 function (arg1, arg0) {
     var2235 = arg1 + 1;
-    var2236 = ADDCONST(x=arg1 | c=2);
-    var2237 = ADDCONST(x=arg1 | c=3);
-    var2238 = ADDCONST(x=arg1 | c=4);
-    var2239 = ADDCONST(x=arg1 | c=5);
-    var2240 = ADDCONST(x=arg1 | c=6);
-    var2241 = ADDCONST(x=arg1 | c=7);
-    var2242 = ADDCONST(x=arg1 | c=8);
-    var2243 = ADDCONST(x=arg1 | c=9);
-    var2244 = ADDCONST(x=arg1 | c=10);
-    var2245 = ADDCONST(x=arg1 | c=11);
-    var2246 = ADDCONST(x=arg1 | c=12);
-    var2247 = ADDCONST(x=arg1 | c=13);
-    var2248 = ADDCONST(x=arg1 | c=14);
-    var2249 = ADDCONST(x=arg1 | c=15);
-    var2250 = ADDCONST(x=arg1 | c=16);
-    var2251 = ADDCONST(x=arg1 | c=17);
-    var2252 = ADDCONST(x=arg1 | c=18);
-    var2253 = ADDCONST(x=arg1 | c=19);
+    var2236 = arg1 + 2;
+    var2237 = arg1 + 3;
+    var2238 = arg1 + 4;
+    var2239 = arg1 + 5;
+    var2240 = arg1 + 6;
+    var2241 = arg1 + 7;
+    var2242 = arg1 + 8;
+    var2243 = arg1 + 9;
+    var2244 = arg1 + 10;
+    var2245 = arg1 + 11;
+    var2246 = arg1 + 12;
+    var2247 = arg1 + 13;
+    var2248 = arg1 + 14;
+    var2249 = arg1 + 15;
+    var2250 = arg1 + 16;
+    var2251 = arg1 + 17;
+    var2252 = arg1 + 18;
+    var2253 = arg1 + 19;
     var2254, var2255 = PREPAREDICT(n=5);
     var2256 = 21;
     var2257 = 1;
@@ -2783,9 +2783,9 @@ function recv_internal (arg0) {
     SAVE(i=c2);
     SAMEALTSAVE();
     var2292 = 5;
-    var2293 = LESSINT(x=arg0 | y=0);
+    var2293 = arg0 < 0;
     var2300 = function (arg1, arg0) {
-        if ((EQINT(x=var2294 | y=-10))) {
+        if ((var2294 == -10)) {
             var2297 = 111;
             var2298 = 0;
             RETALT();
@@ -2808,9 +2808,9 @@ function recv_internal (arg0) {
     var2308, var2309, var2310 = EXECUTE(c=function (arg0) {
         SAVE(i=c2);
         SAMEALTSAVE();
-        var2301 = LESSINT(x=arg0 | y=0);
+        var2301 = arg0 < 0;
         var2306 = function (arg0) {
-            if ((EQINT(x=var2302 | y=-10))) {
+            if ((var2302 == -10)) {
                 var2304 = 111;
                 RETALT();
                 return
@@ -2821,7 +2821,7 @@ function recv_internal (arg0) {
         IF 
         INC 
     }, c_arg0=arg0);
-    var2311 = MULCONST(x=var2310 | c=10);
+    var2311 = var2310 * 10;
     return var2308, var2309, var2311
 }
 "
@@ -2837,8 +2837,8 @@ function (arg0) {
     SAVE(i=c2);
     SAMEALTSAVE();
     REPEAT(c=function (arg0) {
-        var2313 = ADDCONST(x=arg0 | c=10);
-        if ((GTINT(x=var2313 | y=99))) {
+        var2313 = arg0 + 10;
+        if ((var2313 > 99)) {
             RETALT();
             return
         }
@@ -2853,14 +2853,14 @@ function (arg1, arg0) {
     SAVE(i=c2);
     SAMEALTSAVE();
     WHILE(c=function (arg3, arg2, arg1, arg0) {
-        if ((GTINT(x=var2321 | y=99))) {
+        if ((var2321 > 99)) {
             RETALT();
             return
         }
         var2324 = arg3 + 1;
         return arg2, var2324
     }, c2=function (arg0) {
-        var2319 = LESSINT(x=arg0 | y=10);
+        var2319 = arg0 < 10;
         return arg0, var2319
     }, c2_arg0=0);
     var2326 = -1;
@@ -2872,12 +2872,12 @@ function (arg4, arg3, arg2, arg1, arg0) {
     SAVE(i=c2);
     SAMEALTSAVE();
     UNTIL(c=function (arg3, arg2, arg1, arg0) {
-        if ((GTINT(x=var2328 | y=99))) {
+        if ((var2328 > 99)) {
             RETALT();
             return
         }
         var2331 = arg3 + 1;
-        var2332 = GTINT(x=var2331 | y=9);
+        var2332 = var2331 > 9;
         return arg2, var2331, var2332
     }, c_arg0=0, c_arg1=arg0, c_arg2=arg1, c_arg3=arg2);
     var2334 = -1;
@@ -2890,7 +2890,7 @@ exports[`Func → Decompiler → testdata snapshots decompile unbalanced_ret_nes
 "/* methodId: 0 */
 function recv_internal () {
     var2335 = CALLDICT(n=2);
-    var2336 = MULCONST(x=var2335 | c=10);
+    var2336 = var2335 * 10;
     return var2336
 }
 
@@ -2898,9 +2898,9 @@ function recv_internal () {
 function (arg0) {
     SAVE(i=c2);
     SAMEALTSAVE();
-    var2337 = LESSINT(x=arg0 | y=0);
+    var2337 = arg0 < 0;
     var2342 = function (arg0) {
-        if ((EQINT(x=var2338 | y=-10))) {
+        if ((var2338 == -10)) {
             var2340 = 111;
             RETALT();
             return
@@ -2916,10 +2916,10 @@ function (arg0) {
 function (arg2, arg1, arg0) {
     SAVE(i=c2);
     SAMEALTSAVE();
-    var2343 = LESSINT(x=arg1 | y=0);
+    var2343 = arg1 < 0;
     var2349 = function (arg2, arg1, arg0) {
         var2344 = CALLDICT(n=1);
-        if ((EQINT(x=var2345 | y=-10))) {
+        if ((var2345 == -10)) {
             var2347 = 111;
             RETALT();
             return
@@ -2966,28 +2966,28 @@ function () {
 
 /* methodId: 5 */
 function (arg1, arg0) {
-    throw_unless(1000, LESSINT(x=arg1 + arg0 | y=24));
+    throw_unless(1000, arg1 + arg0 < 24);
     var2356 = arg1 + arg0;
     return var2356
 }
 
 /* methodId: 6 */
 function (arg1, arg0) {
-    throw_unless(0x3e9, LESSINT(x=arg1 * arg0 | y=24));
+    throw_unless(0x3e9, arg1 * arg0 < 24);
     var2359 = arg1 * arg0;
     return var2359
 }
 
 /* methodId: 7 */
 function (arg1, arg0) {
-    throw_unless(1000, LESSINT(x=arg1 + arg0 | y=24));
+    throw_unless(1000, arg1 + arg0 < 24);
     var2362 = arg1 + arg0;
     return var2362
 }
 
 /* methodId: 8 */
 function (arg1, arg0) {
-    throw_unless(0x3e9, LESSINT(x=arg1 * arg0 | y=24));
+    throw_unless(0x3e9, arg1 * arg0 < 24);
     var2365 = arg1 * arg0;
     return var2365
 }
@@ -2995,7 +2995,7 @@ function (arg1, arg0) {
 /* methodId: 9 */
 function (arg17, arg16, arg15, arg14, arg13, arg12, arg11, arg10, arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
     if ((arg3 == 242)) {
-        if ((EQINT(x=MODPOW2(x=arg2 | t=1) | y=0))) {
+        if ((MODPOW2(x=arg2 | t=1) == 0)) {
             var2371 = function () {
                 var2370 = CALLDICT(n=5);
             };
@@ -3011,7 +3011,7 @@ function (arg17, arg16, arg15, arg14, arg13, arg12, arg11, arg10, arg9, arg8, ar
         return
     }
     if ((arg8 == 243)) {
-        if ((EQINT(x=MODPOW2(x=arg7 | t=1) | y=0))) {
+        if ((MODPOW2(x=arg7 | t=1) == 0)) {
             var2382 = function () {
                 var2381 = CALLDICT(n=7);
             };
@@ -3027,7 +3027,7 @@ function (arg17, arg16, arg15, arg14, arg13, arg12, arg11, arg10, arg9, arg8, ar
         return
     }
     if ((arg13 == 244)) {
-        if ((EQINT(x=MODPOW2(x=arg12 | t=1) | y=0))) {
+        if ((MODPOW2(x=arg12 | t=1) == 0)) {
             var2393 = function () {
                 var2392 = CALLDICT(n=5);
             };
@@ -3273,11 +3273,11 @@ exports[`Func → Decompiler → testdata snapshots decompile w1.fc: w1.fc 1`] =
 function recv_internal (arg1, arg0) {
     SAVE(i=c2);
     SAMEALTSAVE();
-    var2481 = GTINT(x=arg0 | y=0);
+    var2481 = arg0 > 0;
     var2486 = function (arg1, arg0) {
-        if ((GTINT(x=arg0 | y=10))) {
+        if ((arg0 > 10)) {
             var2483 = arg0 << 1;
-            var2484 = MULCONST(x=arg0 | c=3);
+            var2484 = arg0 * 3;
             RETALT();
             return
         }
@@ -3334,12 +3334,12 @@ function recv_internal (arg2, arg1, arg0) {
     SAVE(i=c2);
     SAMEALTSAVE();
     UNTIL(c=function (arg1, arg0) {
-        if ((GTINT(x=var2549 | y=5))) {
+        if ((var2549 > 5)) {
             var2551 = 1;
             RETALT();
             return
         }
-        var2554 = EQINT(x=arg1 * arg1 | y=64);
+        var2554 = arg1 * arg1 == 64;
         return arg1, var2554
     }, c_arg0=0, c_arg1=arg1);
     var2556 = -1;
@@ -3355,7 +3355,7 @@ function recv_internal () {
 
 /* methodId: 1 */
 function (arg0) {
-    if ((GTINT(x=arg0 | y=0))) {
+    if ((arg0 > 0)) {
         var2558 = 1;
         return
     }
@@ -3365,7 +3365,7 @@ function (arg0) {
 
 /* methodId: 2 */
 function (arg0) {
-    if ((GTINT(x=arg0 | y=0))) {
+    if ((arg0 > 0)) {
         var2562 = 1;
         return
     }
@@ -3382,7 +3382,7 @@ function recv_internal (arg2, arg1, arg0) {
         var2568 = arg1 - 1;
         return arg2, var2568, arg2
     }, c2=function (arg1, arg0) {
-        var2566 = GTINT(x=arg1 | y=0);
+        var2566 = arg1 > 0;
         return arg1, arg0, var2566
     }, c2_arg0=arg0, c2_arg1=17);
     var2570 = ~arg0;

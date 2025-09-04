@@ -37,6 +37,9 @@ export function registerPrinters() {
   registerInlinePrinter('DIV', (_st, ctx) => `${ctx.inP('x', 'left')} / ${ctx.inP('y', 'right')}`);
   registerInlinePrinter('MOD', (_st, ctx) => `${ctx.inP('x', 'left')} % ${ctx.inP('y', 'right')}`);
   registerInlinePrinter('NEGATE', (_st, ctx) => `-${ctx.inP('x', 'right')}`);
+  // Arithmetic with immediates
+  registerInlinePrinter('ADDCONST', (_st, ctx) => `${ctx.inP('x', 'left')} + ${ctx.op('c')}`);
+  registerInlinePrinter('MULCONST', (_st, ctx) => `${ctx.inP('x', 'left')} * ${ctx.op('c')}`);
 
   // Bitwise operations
   registerInlinePrinter('AND', (_st, ctx) => `${ctx.inP('x', 'left')} & ${ctx.inP('y', 'right')}`);
@@ -67,6 +70,11 @@ export function registerPrinters() {
   registerInlinePrinter('LEQ', (_st, ctx) => `${ctx.inP('x', 'left')} <= ${ctx.inP('y', 'right')}`);
   registerInlinePrinter('GEQ', (_st, ctx) => `${ctx.inP('x', 'left')} >= ${ctx.inP('y', 'right')}`);
   registerInlinePrinter('NEQ', (_st, ctx) => `${ctx.inP('x', 'left')} != ${ctx.inP('y', 'right')}`);
+  // Comparisons with immediate right operand
+  registerInlinePrinter('EQINT', (_st, ctx) => `${ctx.inP('x', 'left')} == ${ctx.op('y')}`);
+  registerInlinePrinter('LESSINT', (_st, ctx) => `${ctx.inP('x', 'left')} < ${ctx.op('y')}`);
+  registerInlinePrinter('GTINT', (_st, ctx) => `${ctx.inP('x', 'left')} > ${ctx.op('y')}`);
+  registerInlinePrinter('NEQINT', (_st, ctx) => `${ctx.inP('x', 'left')} != ${ctx.op('y')}`);
   // Generic: collapse PUSHINT_* wrappers used as inline operands into bare literals
   registerInlinePrinterPrefix('PUSHINT_', (_st, ctx) => {
     const v = ctx.opRaw('x') ?? ctx.opRaw('i');
