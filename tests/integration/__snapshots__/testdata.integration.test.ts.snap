@@ -101,7 +101,7 @@ function recv_internal () {
 function (arg2, arg1, arg0) {
     WHILE(c=function (arg1, arg0) {
         var53 = arg0 + 1;
-        if ((arg1 & 1)) {
+        if (arg1 & 1) {
             var57 = arg1 * 3 + 1;
             var61 = var53;
             var62 = var57;
@@ -181,7 +181,7 @@ function (arg0) {
     var78 = CALLDICT(n=1);
     var79 = var77 << 1;
     var80 = var79 + 1;
-    var81 = tuple(var80, var80, var79, var79, var77, var78, arg0);
+    var81 = (var80, var80, var79, var79, var77, var78, arg0);
     return arg0, var81
 }
 
@@ -234,19 +234,19 @@ function (arg0) {
 
 /* methodId: 19 */
 function (arg0) {
-    SETGLOB(x=arg0 | k=1);
-    var109 = GETGLOB(k=1);
-    var110 = GETGLOB(k=1);
-    var113 = GETGLOB(k=1) / 20;
+    global_1 = arg0;
+    var109 = global_1;
+    var110 = global_1;
+    var113 = global_1 / 20;
     var114 = CALLDICT(n=1);
-    SETGLOB(x=var113 | k=1);
-    var115 = GETGLOB(k=1);
-    var117 = GETGLOB(k=1) << 1;
-    SETGLOB(x=var117 | k=1);
-    var118 = GETGLOB(k=1);
-    var120 = GETGLOB(k=1) + 1;
-    SETGLOB(x=var120 | k=1);
-    var121 = GETGLOB(k=1);
+    global_1 = var113;
+    var115 = global_1;
+    var117 = global_1 << 1;
+    global_1 = var117;
+    var118 = global_1;
+    var120 = global_1 + 1;
+    global_1 = var120;
+    var121 = global_1;
     return var109, var110, var114, var115, var117, var118, var120, var121
 }
 "
@@ -259,53 +259,53 @@ function recv_internal () {
 
 /* methodId: 1 */
 function (arg0) {
-    SETGLOB(x=TPUSH(x=arg0, t=GETGLOB(k=1)) | k=1);
+    global_1 = TPUSH(x=arg0, t=global_1);
     var124 = arg0 * 10;
     return var124
 }
 
 /* methodId: 11 */
 function () {
-    SETGLOB(x=empty_tuple() | k=1);
+    global_1 = ();
     var126 = 11;
     var127 = CALLDICT(n=1);
     var128 = 22;
     var129 = CALLDICT(n=1);
     var131 = CALLDICT(n=1);
-    var132 = triple(var131, 33, var129);
-    var133 = GETGLOB(k=1);
+    var132 = (var131, 33, var129);
+    var133 = global_1;
     return var126, var127, var128, var133, var132
 }
 
 /* methodId: 12 */
 function () {
-    SETGLOB(x=empty_tuple() | k=1);
+    global_1 = ();
     var135 = 33;
     var136 = CALLDICT(n=1);
     var137 = 22;
     var138 = CALLDICT(n=1);
     var140 = CALLDICT(n=1);
-    var141 = triple(var140, 11, var138);
-    var142 = GETGLOB(k=1);
+    var141 = (var140, 11, var138);
+    var142 = global_1;
     return var135, var136, var137, var142, var141
 }
 
 /* methodId: 13 */
 function () {
-    SETGLOB(x=empty_tuple() | k=1);
+    global_1 = ();
     var144 = 22;
     var145 = CALLDICT(n=1);
     var146 = 33;
     var147 = CALLDICT(n=1);
     var149 = CALLDICT(n=1);
-    var150 = triple(var149, 11, var147);
-    var151 = GETGLOB(k=1);
+    var150 = (var149, 11, var147);
+    var151 = global_1;
     return var144, var145, var146, var151, var150
 }
 
 /* methodId: 14 */
 function () {
-    SETGLOB(x=empty_tuple() | k=1);
+    global_1 = ();
     var153 = 11;
     var154 = CALLDICT(n=1);
     var155 = 22;
@@ -314,78 +314,78 @@ function () {
     var158 = CALLDICT(n=1);
     var160 = CALLDICT(n=1);
     var162 = CALLDICT(n=1);
-    var163 = tuple(var162, var158, 55, var160, 44);
-    var164 = GETGLOB(k=1);
+    var163 = (var162, var158, 55, var160, 44);
+    var164 = global_1;
     return var153, var154, var155, var156, var157, var164, var163
 }
 
 /* methodId: 15 */
 function () {
-    SETGLOB(x=empty_tuple() | k=1);
-    var166 = empty_tuple();
+    global_1 = ();
+    var166 = ();
     var167 = 33;
     var168 = CALLDICT(n=1);
     var170 = CALLDICT(n=1);
     var172 = TPUSH(x=22, t=TPUSH(x=var170, t=var168));
-    var173 = GETGLOB(k=1);
+    var173 = global_1;
     return var166, var167, var173, var172
 }
 
 /* methodId: 16 */
 function () {
-    SETGLOB(x=empty_tuple() | k=1);
+    global_1 = ();
     var175 = 22;
     var176 = CALLDICT(n=1);
     var177 = 33;
     var178 = CALLDICT(n=1);
     var180 = CALLDICT(n=1);
-    var181 = triple(var180, 11, var178);
-    var182 = GETGLOB(k=1);
+    var181 = (var180, 11, var178);
+    var182 = global_1;
     return var175, var176, var177, var182, var181
 }
 
 /* methodId: 21 */
 function () {
-    SETGLOB(x=empty_tuple() | k=1);
+    global_1 = ();
     var184 = 11;
     var185 = CALLDICT(n=1);
     var186 = 22;
     var187 = CALLDICT(n=1);
     var189 = CALLDICT(n=1);
-    var190 = triple(var189, 33, var187);
-    var191 = GETGLOB(k=1);
+    var190 = (var189, 33, var187);
+    var191 = global_1;
     return var184, var185, var186, var191, var190
 }
 
 /* methodId: 22 */
 function () {
-    SETGLOB(x=empty_tuple() | k=1);
+    global_1 = ();
     var193 = 11;
     var194 = CALLDICT(n=1);
     var195 = 22;
     var196 = CALLDICT(n=1);
     var198 = CALLDICT(n=1);
-    var199 = triple(var196, 33, var198);
-    var200 = GETGLOB(k=1);
+    var199 = (var196, 33, var198);
+    var200 = global_1;
     return var193, var194, var195, var200, var199
 }
 
 /* methodId: 23 */
 function () {
-    SETGLOB(x=empty_tuple() | k=1);
+    global_1 = ();
     var202 = 11;
     var203 = CALLDICT(n=1);
     var204 = 22;
     var205 = CALLDICT(n=1);
     var207 = CALLDICT(n=1);
-    var208 = triple(var205, var207, 33);
-    var209 = GETGLOB(k=1);
+    var208 = (var205, var207, 33);
+    var209 = global_1;
     return var202, var203, var204, var209, var208
 }
 
 /* methodId: 24 */
 function () {
-    SETGLOB(x=empty_tuple() | k=1);
+    global_1 = ();
     var211 = 11;
     var212 = CALLDICT(n=1);
     var213 = 22;
@@ -394,33 +394,33 @@ function () {
     var216 = CALLDICT(n=1);
     var218 = CALLDICT(n=1);
     var220 = CALLDICT(n=1);
-    var221 = tuple(var220, var216, 55, var218, 44);
-    var222 = GETGLOB(k=1);
+    var221 = (var220, var216, 55, var218, 44);
+    var222 = global_1;
     return var211, var212, var213, var214, var215, var222, var221
 }
 
 /* methodId: 25 */
 function () {
-    SETGLOB(x=empty_tuple() | k=1);
-    var224 = empty_tuple();
+    global_1 = ();
+    var224 = ();
     var225 = 22;
     var226 = CALLDICT(n=1);
     var228 = CALLDICT(n=1);
     var230 = TPUSH(x=var228, t=TPUSH(x=33, t=var226));
-    var231 = GETGLOB(k=1);
+    var231 = global_1;
     return var224, var225, var231, var230
 }
 
 /* methodId: 26 */
 function () {
-    SETGLOB(x=empty_tuple() | k=1);
+    global_1 = ();
     var233 = 11;
     var234 = CALLDICT(n=1);
     var235 = 22;
     var236 = CALLDICT(n=1);
     var238 = CALLDICT(n=1);
-    var239 = triple(var236, var238, 33);
-    var240 = GETGLOB(k=1);
+    var239 = (var236, var238, 33);
+    var240 = global_1;
     return var233, var234, var235, var240, var239
 }
 "
@@ -429,25 +429,25 @@ function () {
 exports[`Func → Decompiler → testdata snapshots decompile bit-operators.fc: bit-operators.fc 1`] = `
 "/* methodId: 0 */
 function recv_internal (arg4, arg3, arg2, arg1, arg0) {
-    if ((arg0 == 0)) {
+    if (arg0 == 0) {
         var242 = CALLDICT(n=1);
         return
     }
-    if ((arg1 == 1)) {
+    if (arg1 == 1) {
         var245 = CALLDICT(n=2);
         return
     }
-    if ((arg2 == 2)) {
+    if (arg2 == 2) {
         var248 = 0;
         var249 = CALLDICT(n=3);
         return
     }
-    if ((arg3 == 3)) {
+    if (arg3 == 3) {
         var252 = 0;
         var253 = CALLDICT(n=4);
         return
     }
-    if ((arg4 == 4)) {
+    if (arg4 == 4) {
         var256 = 1;
         var257 = CALLDICT(n=3);
         return
@@ -471,7 +471,7 @@ function () {
 
 /* methodId: 3 */
 function (arg0) {
-    var264 = 1 << arg0 == 1;
+    var264 = (1 << arg0) == 1;
     return var264
 }
 
@@ -483,7 +483,7 @@ function (arg0) {
 
 /* methodId: 11 */
 function (arg0) {
-    var272 = (PUSHPOW2DEC(x=8) & var269) == 1 << (MODPOW2(x=arg0 | t=8));
+    var272 = (255 & var269) == (1 << (arg0 & 255));
     return var272
 }
 "
@@ -527,7 +527,7 @@ function recv_internal () {
     throw_unless(103, var282 == 3);
     var286 = CALLDICT(n=5);
     var287 = CALLDICT(n=6);
-    var294 = begin_cell().store_slice(PUSHSLICE(s=[object Object])).store_slice(PUSHSLICE(s=[object Object])).end_cell().begin_parse();
+    var294 = begin_cell().store_slice(PUSHSLICE(s=x{636F6E737431})).store_slice(PUSHSLICE(s=x{AABBCC})).end_cell().begin_parse();
     throw_unless(111, var286.equal_slice_bits());
     throw_unless(112, var287.equal_slice_bits());
     throw_unless(113, var294.equal_slice_bits());
@@ -557,13 +557,13 @@ function () {
 
 /* methodId: 5 */
 function () {
-    var320 = PUSHSLICE(s=[object Object]);
+    var320 = PUSHSLICE(s=x{636F6E737431});
     return var320
 }
 
 /* methodId: 6 */
 function () {
-    var321 = PUSHSLICE(s=[object Object]);
+    var321 = PUSHSLICE(s=x{AABBCC});
     return var321
 }
 
@@ -578,7 +578,7 @@ function () {
 exports[`Func → Decompiler → testdata snapshots decompile code_after_ifelse.fc: code_after_ifelse.fc 1`] = `
 "/* methodId: 0 */
 function recv_internal (arg0) {
-    if ((arg0 == 1)) {
+    if (arg0 == 1) {
         var324 = 111;
         var329 = var324;
     } else {
@@ -591,7 +591,7 @@ function recv_internal (arg0) {
 
 /* methodId: 1 */
 function (arg0) {
-    if ((arg0 == 1)) {
+    if (arg0 == 1) {
         var332 = 111;
         var337 = var332;
     } else {
@@ -624,7 +624,7 @@ exports[`Func → Decompiler → testdata snapshots decompile inline_if.fc: inli
 function recv_internal (arg0) {
     var441 = CALLDICT(n=1);
     var442 = var441 + 1;
-    if ((arg0 == 1)) {
+    if (arg0 == 1) {
         var444 = 11;
     } else {
         var446 = 22;
@@ -633,7 +633,7 @@ function recv_internal (arg0) {
     var453 = CALLREF(
         c_arg0=arg0 |
         c=function (arg0) {
-                  if ((arg0 == 1)) {
+                  if (arg0 == 1) {
                       var450 = 111;
                       return
                   }
@@ -647,7 +647,7 @@ function recv_internal (arg0) {
 
 /* methodId: 1 */
 function (arg0) {
-    if ((arg0 == 1)) {
+    if (arg0 == 1) {
         var456 = 1;
         return
     }
@@ -660,29 +660,29 @@ function (arg0) {
 exports[`Func → Decompiler → testdata snapshots decompile inline_loops.fc: inline_loops.fc 1`] = `
 "/* methodId: 0 */
 function recv_internal () {
-    SETGLOB(x=1 | k=1);
+    global_1 = 1;
     REPEAT(c=function () {
-        SETGLOB(x=GETGLOB(k=1) << 1 | k=1);
+        global_1 = global_1 << 1;
     }, n=5);
-    var464 = GETGLOB(k=1);
-    SETGLOB(x=1 | k=1);
+    var464 = global_1;
+    global_1 = 1;
     UNTIL(c=function (arg0) {
-        SETGLOB(x=GETGLOB(k=1) << 1 | k=1);
+        global_1 = global_1 << 1;
         var469 = arg0 + 1;
         var470 = var469 > 7;
         return var469, var470
     }, c_arg0=0);
-    var472 = GETGLOB(k=1);
-    SETGLOB(x=1 | k=1);
+    var472 = global_1;
+    global_1 = 1;
     WHILE(c=function (arg0) {
-        SETGLOB(x=GETGLOB(k=1) << 1 | k=1);
+        global_1 = global_1 << 1;
         var479 = arg0 + 1;
         return var479
     }, c2=function (arg0) {
         var475 = arg0 < 10;
         return arg0, var475
     }, c2_arg0=0);
-    var481 = GETGLOB(k=1);
+    var481 = global_1;
     return var481
 }
 "
@@ -786,13 +786,13 @@ function recv_internal () {
 
 /* methodId: 68945 */
 function () {
-    var488 = PUSHSLICE(s=[object Object]);
+    var488 = PUSHSLICE(s=x{ABCDEF});
     return var488
 }
 
 /* methodId: 69996 */
 function () {
-    var489 = PUSHSLICE_LONG(slice=[object Object]);
+    var489 = PUSHSLICE_LONG(slice=x{9FE6666666666666666666666666666666666666666666666666666666666666667_});
     return var489
 }
 
@@ -822,7 +822,7 @@ function () {
 
 /* methodId: 128525 */
 function () {
-    var494 = PUSHSLICE(s=[object Object]);
+    var494 = PUSHSLICE(s=x{737472696E67});
     return var494
 }
 "
@@ -838,19 +838,19 @@ function (arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
     var518 = CALLREF(
         c_arg0=arg0, c_arg1=arg1, c_arg2=arg2, c_arg3=arg3, c_arg4=arg4, c_arg5=arg5, c_arg6=arg6 |
         c=function (arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
-                  if (!((MIN(y=arg0, x=arg1)))) {
+                  if (!(MIN(y=arg0, x=arg1))) {
                       var496 = 0;
                       return
                   }
                   var498 = UBITSIZE(x=arg3);
                   var499 = UBITSIZE(x=arg2);
-                  if ((var498 == var499)) {
+                  if (var498 == var499) {
                       var503 = (arg3 - arg2 >> 1) + arg2;
                       var509 = arg3;
                       var510 = arg2;
                       var511 = var503;
                   } else {
-                      var507 = 1 << (var498 + var499 >> 1);
+                      var507 = (1 << (var498 + var499 >> 1));
                       var509 = var507;
                   }
                   UNTIL(c=function (arg2, arg1, arg0) {
@@ -871,7 +871,7 @@ function (arg0) {
         c_arg0=arg0 |
         c=function (arg0) {
                   var519 = MULRSHIFTR(y=arg0, x=arg0 | t=256);
-                  var520 = PUSHPOW2(x=251);
+                  var520 = (1 << 251);
                   var522 = 33 << 250;
                   REPEAT(c=function (arg3, arg2, arg1, arg0) {
                       var526 = (arg1 - arg2) - LSHIFTDIVR(y=var524, x=arg3 | t=236);
@@ -891,7 +891,7 @@ function (arg0) {
         c_arg0=arg0 |
         c=function (arg0) {
                   var539 = MULRSHIFTR(y=arg0, x=arg0 | t=256);
-                  var540 = PUSHPOW2(x=251);
+                  var540 = (1 << 251);
                   var542 = 33 << 250;
                   REPEAT(c=function (arg3, arg2, arg1, arg0) {
                       var546 = (arg1 - arg2) - LSHIFTDIVR(y=var544, x=arg3 | t=236);
@@ -900,7 +900,7 @@ function (arg0) {
                   var551 = (3 << 254) - LSHIFTDIVR(y=var542, x=var539 | t=240);
                   var557 = arg0 + (muldivr(arg0 >> 1, var539, var551 - (var539 ~>> 10)) ~>> 9);
                   var558 = MULRSHIFTR(y=var557, x=var557 | t=256);
-                  var561 = (var558 ~>> 9) + PUSHPOW2(x=255);
+                  var561 = (var558 ~>> 9) + (1 << 255);
                   var569 = (var557 - (muldivr(var557 >> 1, var558, var561) ~>> 8)) - (muldivr(var558 >> 1, var558, var558) ~>> 8);
                   return var561, var569
               }
@@ -924,7 +924,7 @@ function (arg5, arg4, arg3, arg2, arg1, arg0) {
                       c_arg0=(LSHIFTDIVMODR(y=var572, x=arg0 | t=2) << 1) + arg2 |
                       c=function (arg0) {
                                 var577 = MULRSHIFTR(y=arg0, x=arg0 | t=256);
-                                var578 = PUSHPOW2(x=251);
+                                var578 = (1 << 251);
                                 var580 = 33 << 250;
                                 REPEAT(c=function (arg3, arg2, arg1, arg0) {
                                     var584 = (arg1 - arg2) - LSHIFTDIVR(y=var582, x=arg3 | t=236);
@@ -933,7 +933,7 @@ function (arg5, arg4, arg3, arg2, arg1, arg0) {
                                 var589 = (3 << 254) - LSHIFTDIVR(y=var580, x=var577 | t=240);
                                 var595 = arg0 + (muldivr(arg0 >> 1, var577, var589 - (var577 ~>> 10)) ~>> 9);
                                 var596 = MULRSHIFTR(y=var595, x=var595 | t=256);
-                                var599 = (var596 ~>> 9) + PUSHPOW2(x=255);
+                                var599 = (var596 ~>> 9) + (1 << 255);
                                 var607 = (var595 - (muldivr(var595 >> 1, var596, var599) ~>> 8)) - (muldivr(var596 >> 1, var596, var596) ~>> 8);
                                 return var599, var607
                             }
@@ -960,7 +960,7 @@ function (arg0) {
         c_arg0=arg0 |
         c=function (arg0) {
                   var643 = MULRSHIFTR(y=arg0, x=arg0 | t=256);
-                  var644 = PUSHPOW2(x=251);
+                  var644 = (1 << 251);
                   var646 = 33 << 250;
                   REPEAT(c=function (arg3, arg2, arg1, arg0) {
                       var650 = (arg1 - arg2) - LSHIFTDIVR(y=var648, x=arg3 | t=236);
@@ -969,13 +969,13 @@ function (arg0) {
                   var655 = (3 << 254) - LSHIFTDIVR(y=var646, x=var643 | t=240);
                   var661 = arg0 + (muldivr(arg0 >> 1, var643, var655 - (var643 ~>> 10)) ~>> 9);
                   var662 = MULRSHIFTR(y=var661, x=var661 | t=256);
-                  var665 = (var662 ~>> 9) + PUSHPOW2(x=255);
+                  var665 = (var662 ~>> 9) + (1 << 255);
                   var673 = (var661 - (muldivr(var661 >> 1, var662, var665) ~>> 8)) - (muldivr(var662 >> 1, var662, var662) ~>> 8);
                   var674 = 7;
                   REPEAT(c=function (arg2, arg1, arg0) {
                       var676 = MULRSHIFTR(y=arg2, x=arg2 | t=256);
                       var679 = arg2 - (MULRSHIFTR(y=arg1, x=arg2 | t=256) ~>> arg0);
-                      var680 = arg0 + -2;
+                      var680 = arg0 - 2;
                       return var679, var676, var680
                   }, n=3);
                   return var665, var673
@@ -990,15 +990,15 @@ function (arg0) {
         c_arg0=arg0 |
         c=function (arg0) {
                   var684 = MULRSHIFTR(y=arg0, x=arg0 | t=256);
-                  var685 = PUSHPOW2(x=251);
+                  var685 = (1 << 251);
                   var687 = 41 << 250;
                   REPEAT(c=function (arg3, arg2, arg1, arg0) {
                       var691 = (arg1 - arg2) - LSHIFTDIVR(y=var689, x=arg3 | t=240);
                       return arg3, arg2, arg0, var691
                   }, n=18);
                   var696 = (3 << 254) - LSHIFTDIVR(y=var687, x=var684 | t=244);
-                  var709 = (muldivr(var702, MULRSHIFTR(y=var702, x=var702 | t=256), (var703 ~>> 4) + PUSHNEGPOW2(x=256)) ~>> 4) - (arg0 + (muldivr(arg0 >> 1, var684, var696 - (var684 ~>> 6)) ~>> 5));
-                  var713 = (MULRSHIFTR(y=var709, x=var709 | t=256) ~>> 2) + PUSHNEGPOW2(x=256);
+                  var709 = (muldivr(var702, MULRSHIFTR(y=var702, x=var702 | t=256), (var703 ~>> 4) + -(1 << 256)) ~>> 4) - (arg0 + (muldivr(arg0 >> 1, var684, var696 - (var684 ~>> 6)) ~>> 5));
+                  var713 = (MULRSHIFTR(y=var709, x=var709 | t=256) ~>> 2) + -(1 << 256);
                   return var709, var713
               }
     );
@@ -1021,19 +1021,19 @@ function (arg3, arg2, arg1, arg0) {
                       c_arg0=(LSHIFTDIVMODR(y=arg1, x=arg2 | t=7) << 1) - MULRSHIFTR(y=arg3, x=arg0 | t=127) |
                       c=function (arg0) {
                                 var722 = MULRSHIFTR(y=arg0, x=arg0 | t=256);
-                                var723 = PUSHPOW2(x=251);
+                                var723 = (1 << 251);
                                 var725 = 41 << 250;
                                 REPEAT(c=function (arg3, arg2, arg1, arg0) {
                                     var729 = (arg1 - arg2) - LSHIFTDIVR(y=var727, x=arg3 | t=240);
                                     return arg3, arg2, arg0, var729
                                 }, n=18);
                                 var734 = (3 << 254) - LSHIFTDIVR(y=var725, x=var722 | t=244);
-                                var747 = (muldivr(var740, MULRSHIFTR(y=var740, x=var740 | t=256), (var741 ~>> 4) + PUSHNEGPOW2(x=256)) ~>> 4) - (arg0 + (muldivr(arg0 >> 1, var722, var734 - (var722 ~>> 6)) ~>> 5));
-                                var751 = (MULRSHIFTR(y=var747, x=var747 | t=256) ~>> 2) + PUSHNEGPOW2(x=256);
+                                var747 = (muldivr(var740, MULRSHIFTR(y=var740, x=var740 | t=256), (var741 ~>> 4) + -(1 << 256)) ~>> 4) - (arg0 + (muldivr(arg0 >> 1, var722, var734 - (var722 ~>> 6)) ~>> 5));
+                                var751 = (MULRSHIFTR(y=var747, x=var747 | t=256) ~>> 2) + -(1 << 256);
                                 return var747, var751
                             }
                   );
-                  if ((arg0 & 1)) {
+                  if (arg0 & 1) {
                       var756 = -var752;
                       var758 = var756;
                       var759 = var753;
@@ -1051,7 +1051,7 @@ function (arg1, arg0) {
         c_arg0=arg0, c_arg1=arg1 |
         c=function (arg1, arg0) {
                   var762 = MULRSHIFTR(y=arg1, x=arg1 | t=256);
-                  var766 = DIVR(y=arg0, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                  var766 = DIVR(y=arg0, x=(1 << 254)) + (1 << 255);
                   REPEAT(c=function (arg3, arg2, arg1, arg0) {
                       var769 = arg1 - LSHIFTDIVR(y=arg0, x=arg2 | t=248);
                       var770 = arg3 - 1;
@@ -1071,7 +1071,7 @@ function (arg1, arg0) {
         c_arg0=arg0, c_arg1=arg1 |
         c=function (arg1, arg0) {
                   var781 = MULRSHIFTR(y=arg1, x=arg1 | t=256);
-                  var785 = DIVR(y=arg0, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                  var785 = DIVR(y=arg0, x=(1 << 254)) + (1 << 255);
                   REPEAT(c=function (arg3, arg2, arg1, arg0) {
                       var788 = arg1 - LSHIFTDIVR(y=arg0, x=arg2 | t=242);
                       var789 = arg3 - 1;
@@ -1094,7 +1094,7 @@ function (arg2, arg1, arg0) {
                       c_arg0=arg0 |
                       c=function (arg0) {
                                 var800 = UBITSIZE(x=arg0) - 1;
-                                var803 = arg0 << PUSHPOW2DEC(x=8) - var800;
+                                var803 = arg0 << 255 - var800;
                                 var805 = 0xb39 << 244;
                                 var811 = muldivr(var803 - var805 >> 1, 65, var807 + var805) + 11;
                                 var813, var814 = divmod(var811, 5);
@@ -1111,7 +1111,7 @@ function (arg2, arg1, arg0) {
                                     c_arg0=18, c_arg1=LSHIFTDIVR(y=(var825 >> 1) + var824, x=var803 - var824 << 4 | t=256) |
                                     c=function (arg1, arg0) {
                                               var831 = MULRSHIFTR(y=arg1, x=arg1 | t=256);
-                                              var835 = DIVR(y=arg0, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                                              var835 = DIVR(y=arg0, x=(1 << 254)) + (1 << 255);
                                               REPEAT(c=function (arg3, arg2, arg1, arg0) {
                                                   var838 = arg1 - LSHIFTDIVR(y=arg0, x=arg2 | t=242);
                                                   var839 = arg3 - 1;
@@ -1148,7 +1148,7 @@ function (arg0) {
                       c_arg0=arg0 |
                       c=function (arg0) {
                                 var862 = UBITSIZE(x=arg0) - 1;
-                                var865 = arg0 << PUSHPOW2DEC(x=8) - var862;
+                                var865 = arg0 << 255 - var862;
                                 var867 = 0xb39 << 244;
                                 var873 = muldivr(var865 - var867 >> 1, 65, var869 + var867) + 11;
                                 var875, var876 = divmod(var873, 5);
@@ -1165,7 +1165,7 @@ function (arg0) {
                                     c_arg0=18, c_arg1=LSHIFTDIVR(y=(var887 >> 1) + var886, x=var865 - var886 << 4 | t=256) |
                                     c=function (arg1, arg0) {
                                               var893 = MULRSHIFTR(y=arg1, x=arg1 | t=256);
-                                              var897 = DIVR(y=arg0, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                                              var897 = DIVR(y=arg0, x=(1 << 254)) + (1 << 255);
                                               REPEAT(c=function (arg3, arg2, arg1, arg0) {
                                                   var900 = arg1 - LSHIFTDIVR(y=arg0, x=arg2 | t=242);
                                                   var901 = arg3 - 1;
@@ -1193,11 +1193,11 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
     // decompilation error: StackUnderflowError: Stack underflow occured (depth = 1)
     CALLREF c=function (arg14, arg13, arg12, arg11, arg10, arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
         var928 = function (arg1, arg0) {
-            var927 = PUSHPOW2(x=248);
+            var927 = (1 << 248);
             return var927
         };
         if (!(arg0)) {
-            var927 = PUSHPOW2(x=248);
+            var927 = (1 << 248);
             return
         }
         var929 = arg3 < 1;
@@ -1223,7 +1223,7 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                           c=function (arg0) {
                                     var935 = UBITSIZE(x=arg0);
                                     var936 = var935 - 1;
-                                    var937 = PUSHPOW2DEC(x=8);
+                                    var937 = 255;
                                     var938 = var937 - var936;
                                     var939 = arg0 << var938;
                                     var940 = 0xb39;
@@ -1262,9 +1262,9 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                                         c_arg0=var966, c_arg1=var965 |
                                         c=function (arg1, arg0) {
                                                   var967 = MULRSHIFTR(y=arg1, x=arg1 | t=256);
-                                                  var968 = PUSHPOW2(x=254);
+                                                  var968 = (1 << 254);
                                                   var969 = DIVR(y=arg0, x=var968);
-                                                  var970 = PUSHPOW2(x=255);
+                                                  var970 = (1 << 255);
                                                   var971 = var969 + var970;
                                                   var972 = arg0 - 1;
                                                   var978 = function (arg3, arg2, arg1, arg0) {
@@ -1339,7 +1339,7 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
             c_arg0=var1019 |
             c=function (arg0) {
                       var1020 = MULRSHIFTR(y=arg0, x=arg0 | t=255);
-                      var1021 = PUSHPOW2(x=251);
+                      var1021 = (1 << 251);
                       var1022 = 39;
                       var1023 = var1022 << 250;
                       var1024 = 17;
@@ -1388,7 +1388,7 @@ function (arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                                     c_arg0=arg0 |
                                     c=function (arg0) {
                                               var1051 = UBITSIZE(x=arg0) - 1;
-                                              var1054 = arg0 << PUSHPOW2DEC(x=8) - var1051;
+                                              var1054 = arg0 << 255 - var1051;
                                               var1056 = 0xb39 << 244;
                                               var1062 = muldivr(var1054 - var1056 >> 1, 65, var1058 + var1056) + 11;
                                               var1064, var1065 = divmod(var1062, 5);
@@ -1405,7 +1405,7 @@ function (arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                                                   c_arg0=18, c_arg1=LSHIFTDIVR(y=(var1076 >> 1) + var1075, x=var1054 - var1075 << 4 | t=256) |
                                                   c=function (arg1, arg0) {
                                                             var1082 = MULRSHIFTR(y=arg1, x=arg1 | t=256);
-                                                            var1086 = DIVR(y=arg0, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                                                            var1086 = DIVR(y=arg0, x=(1 << 254)) + (1 << 255);
                                                             REPEAT(c=function (arg3, arg2, arg1, arg0) {
                                                                 var1089 = arg1 - LSHIFTDIVR(y=arg0, x=arg2 | t=242);
                                                                 var1090 = arg3 - 1;
@@ -1450,7 +1450,7 @@ function (arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                       c_arg0=(LSHIFTDIVMODR_VAR(z=8, y=arg1, x=arg2) << 1) - MULRSHIFTR(y=arg3, x=arg0 | t=127) |
                       c=function (arg0) {
                                 var1132 = MULRSHIFTR(y=arg0, x=arg0 | t=255);
-                                var1133 = PUSHPOW2(x=251);
+                                var1133 = (1 << 251);
                                 var1135 = 39 << 250;
                                 REPEAT(c=function (arg3, arg2, arg1, arg0) {
                                     var1139 = (arg1 - arg2) + LSHIFTDIVR(y=var1137, x=arg3 | t=239);
@@ -1480,7 +1480,7 @@ function (arg2, arg1, arg0) {
                                     c_arg0=arg0 |
                                     c=function (arg0) {
                                               var1165 = UBITSIZE(x=arg0) - 1;
-                                              var1168 = arg0 << PUSHPOW2DEC(x=8) - var1165;
+                                              var1168 = arg0 << 255 - var1165;
                                               var1170 = 0xb39 << 244;
                                               var1176 = muldivr(var1168 - var1170 >> 1, 65, var1172 + var1170) + 11;
                                               var1178, var1179 = divmod(var1176, 5);
@@ -1497,7 +1497,7 @@ function (arg2, arg1, arg0) {
                                                   c_arg0=18, c_arg1=LSHIFTDIVR(y=(var1190 >> 1) + var1189, x=var1168 - var1189 << 4 | t=256) |
                                                   c=function (arg1, arg0) {
                                                             var1196 = MULRSHIFTR(y=arg1, x=arg1 | t=256);
-                                                            var1200 = DIVR(y=arg0, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                                                            var1200 = DIVR(y=arg0, x=(1 << 254)) + (1 << 255);
                                                             REPEAT(c=function (arg3, arg2, arg1, arg0) {
                                                                 var1203 = arg1 - LSHIFTDIVR(y=arg0, x=arg2 | t=242);
                                                                 var1204 = arg3 - 1;
@@ -1536,7 +1536,7 @@ function (arg0) {
     var1276, var1277 = CALLREF(
         c_arg0=arg0 |
         c=function (arg0) {
-                  if ((var1241 >> 249 < 91)) {
+                  if (var1241 >> 249 < 91) {
                       var1245 = arg0 >> 1;
                       var1246 = arg2 - 1;
                       var1248 = var1246;
@@ -1547,7 +1547,7 @@ function (arg0) {
                       c_arg0=36, c_arg1=LSHIFTDIVR(y=(var1251 >> 1) - var1250, x=var1249 + var1250 << 1 | t=256) |
                       c=function (arg1, arg0) {
                                 var1257 = MULRSHIFTR(y=arg1, x=arg1 | t=256);
-                                var1261 = DIVR(y=arg0, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                                var1261 = DIVR(y=arg0, x=(1 << 254)) + (1 << 255);
                                 REPEAT(c=function (arg3, arg2, arg1, arg0) {
                                     var1264 = arg1 - LSHIFTDIVR(y=arg0, x=arg2 | t=248);
                                     var1265 = arg3 - 1;
@@ -1580,7 +1580,7 @@ function (arg3, arg2, arg1, arg0) {
                       c_arg0=(LSHIFTDIVMODR(y=arg1, x=arg2 | t=7) << 1) - MULRSHIFTR(y=arg3, x=arg0 | t=127) |
                       c=function (arg0) {
                                 var1284 = MULRSHIFTR(y=arg0, x=arg0 | t=256);
-                                var1285 = PUSHPOW2(x=251);
+                                var1285 = (1 << 251);
                                 var1287 = 33 << 250;
                                 REPEAT(c=function (arg3, arg2, arg1, arg0) {
                                     var1291 = (arg1 - arg2) - LSHIFTDIVR(y=var1289, x=arg3 | t=236);
@@ -1589,19 +1589,19 @@ function (arg3, arg2, arg1, arg0) {
                                 var1296 = (3 << 254) - LSHIFTDIVR(y=var1287, x=var1284 | t=240);
                                 var1302 = arg0 + (muldivr(arg0 >> 1, var1284, var1296 - (var1284 ~>> 10)) ~>> 9);
                                 var1303 = MULRSHIFTR(y=var1302, x=var1302 | t=256);
-                                var1306 = (var1303 ~>> 9) + PUSHPOW2(x=255);
+                                var1306 = (var1303 ~>> 9) + (1 << 255);
                                 var1314 = (var1302 - (muldivr(var1302 >> 1, var1303, var1306) ~>> 8)) - (muldivr(var1303 >> 1, var1303, var1303) ~>> 8);
                                 var1315 = 7;
                                 REPEAT(c=function (arg2, arg1, arg0) {
                                     var1317 = MULRSHIFTR(y=arg2, x=arg2 | t=256);
                                     var1320 = arg2 - (MULRSHIFTR(y=arg1, x=arg2 | t=256) ~>> arg0);
-                                    var1321 = arg0 + -2;
+                                    var1321 = arg0 - 2;
                                     return var1320, var1317, var1321
                                 }, n=3);
                                 return var1306, var1314
                             }
                   );
-                  var1327 = PUSHPOW2(x=248) - (var1324 ~>> 9);
+                  var1327 = (1 << 248) - (var1324 ~>> 9);
                   var1328 = var1323 ~>> 8;
                   REPEAT(c=function (arg1, arg0) {
                       var1331 = -arg1;
@@ -1629,7 +1629,7 @@ function (arg3, arg2, arg1, arg0) {
                       c_arg0=(LSHIFTDIVMODR_VAR(z=8, y=arg1, x=arg2) << 1) - MULRSHIFTR(y=arg3, x=arg0 | t=127) |
                       c=function (arg0) {
                                 var1342 = MULRSHIFTR(y=arg0, x=arg0 | t=255);
-                                var1343 = PUSHPOW2(x=251);
+                                var1343 = (1 << 251);
                                 var1345 = 39 << 250;
                                 REPEAT(c=function (arg3, arg2, arg1, arg0) {
                                     var1349 = (arg1 - arg2) + LSHIFTDIVR(y=var1347, x=arg3 | t=239);
@@ -1664,7 +1664,7 @@ function (arg2, arg1, arg0) {
                       c_arg0=MULRSHIFTR(y=var1374, x=arg1 | t=247) |
                       c=function (arg0) {
                                 var1379 = MULRSHIFTR(y=arg0, x=arg0 | t=255);
-                                var1380 = PUSHPOW2(x=251);
+                                var1380 = (1 << 251);
                                 var1382 = 39 << 250;
                                 REPEAT(c=function (arg3, arg2, arg1, arg0) {
                                     var1386 = (arg1 - arg2) + LSHIFTDIVR(y=var1384, x=arg3 | t=239);
@@ -1688,7 +1688,7 @@ function (arg0) {
         c_arg0=arg0 |
         c=function (arg0) {
                   var1411 = MULRSHIFTR(y=arg0, x=arg0 | t=255);
-                  var1412 = PUSHPOW2(x=251);
+                  var1412 = (1 << 251);
                   var1414 = 39 << 250;
                   REPEAT(c=function (arg3, arg2, arg1, arg0) {
                       var1418 = (arg1 - arg2) + LSHIFTDIVR(y=var1416, x=arg3 | t=239);
@@ -1709,7 +1709,7 @@ function (arg5, arg4, arg3, arg2, arg1, arg0) {
         c=function (arg5, arg4, arg3, arg2, arg1, arg0) {
                   var1434 = arg0 ~>> 256;
                   if (var1434) {
-                      var1436 = LSHIFTDIVR(y=arg0, x=PUSHNEGPOW2(x=255) | t=256);
+                      var1436 = LSHIFTDIVR(y=arg0, x=-(1 << 255) | t=256);
                       var1440 = var1434;
                       var1441 = var1436;
                   } else {
@@ -1723,11 +1723,11 @@ function (arg5, arg4, arg3, arg2, arg1, arg0) {
                                 var1483, var1484, var1485 = CALLREF(
                                     c_arg0=arg0 ~>> 232 |
                                     c=function (arg0) {
-                                              var1457 = LSHIFTDIVR(y=var1449 * var1449 + (3 << 128), x=LSHIFTDIVR(y=var1443 * 0x6e1604 + PUSHPOW2(x=48), x=abs(arg0) - 0x6e1604 | t=88) * 0xc01 | t=59) + 13;
+                                              var1457 = LSHIFTDIVR(y=var1449 * var1449 + (3 << 128), x=LSHIFTDIVR(y=var1443 * 0x6e1604 + 0x1000000000000, x=abs(arg0) - 0x6e1604 | t=88) * 0xc01 | t=59) + 13;
                                               var1458 = 0x1fb00a0;
                                               var1459 = 0x4fd801;
                                               var1461, var1462 = divmod(var1457, 5);
-                                              var1466 = 1 << ((51 - var1457) * 5);
+                                              var1466 = (1 << ((51 - var1457) * 5));
                                               REPEAT(c=function (arg1, arg0) {
                                                   var1469 = SUBR(y=arg0 << 5, x=arg1);
                                                   var1471 = arg0 + (arg1 << 5);
@@ -1746,7 +1746,7 @@ function (arg5, arg4, arg3, arg2, arg1, arg0) {
                                 );
                                 var1493 = LSHIFTDIVR(y=var1483 + MULRSHIFTR(y=arg1, x=var1484 | t=256), x=(MULRSHIFTRMOD(y=arg0, x=var1484 | t=256) ~>> 250) + (var1485 - var1484 << 6) | t=255);
                                 var1495 = MULRSHIFTR(y=var1493, x=var1493 | t=256);
-                                var1499 = DIVR(y=18, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                                var1499 = DIVR(y=18, x=(1 << 254)) + (1 << 255);
                                 REPEAT(c=function (arg3, arg2, arg1, arg0) {
                                     var1502 = arg1 + LSHIFTDIVR(y=arg0, x=arg2 | t=242);
                                     var1503 = arg3 - 1;
@@ -1784,7 +1784,7 @@ function (arg1, arg0) {
         c_arg0=arg0, c_arg1=arg1 |
         c=function (arg1, arg0) {
                   var1526 = MULRSHIFTR(y=arg1, x=arg1 | t=256);
-                  var1530 = DIVR(y=arg0, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                  var1530 = DIVR(y=arg0, x=(1 << 254)) + (1 << 255);
                   REPEAT(c=function (arg3, arg2, arg1, arg0) {
                       var1533 = arg1 + LSHIFTDIVR(y=arg0, x=arg2 | t=246);
                       var1534 = arg3 - 1;
@@ -1806,11 +1806,11 @@ function (arg1, arg0) {
                   var1585, var1586, var1587 = CALLREF(
                       c_arg0=arg0 ~>> 232 |
                       c=function (arg0) {
-                                var1559 = LSHIFTDIVR(y=var1551 * var1551 + (3 << 128), x=LSHIFTDIVR(y=var1545 * 0x6e1604 + PUSHPOW2(x=48), x=abs(arg0) - 0x6e1604 | t=88) * 0xc01 | t=59) + 13;
+                                var1559 = LSHIFTDIVR(y=var1551 * var1551 + (3 << 128), x=LSHIFTDIVR(y=var1545 * 0x6e1604 + 0x1000000000000, x=abs(arg0) - 0x6e1604 | t=88) * 0xc01 | t=59) + 13;
                                 var1560 = 0x1fb00a0;
                                 var1561 = 0x4fd801;
                                 var1563, var1564 = divmod(var1559, 5);
-                                var1568 = 1 << ((51 - var1559) * 5);
+                                var1568 = (1 << ((51 - var1559) * 5));
                                 REPEAT(c=function (arg1, arg0) {
                                     var1571 = SUBR(y=arg0 << 5, x=arg1);
                                     var1573 = arg0 + (arg1 << 5);
@@ -1829,7 +1829,7 @@ function (arg1, arg0) {
                   );
                   var1595 = LSHIFTDIVR(y=var1585 + MULRSHIFTR(y=arg1, x=var1586 | t=256), x=(MULRSHIFTRMOD(y=arg0, x=var1586 | t=256) ~>> 250) + (var1587 - var1586 << 6) | t=255);
                   var1597 = MULRSHIFTR(y=var1595, x=var1595 | t=256);
-                  var1601 = DIVR(y=18, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                  var1601 = DIVR(y=18, x=(1 << 254)) + (1 << 255);
                   REPEAT(c=function (arg3, arg2, arg1, arg0) {
                       var1604 = arg1 + LSHIFTDIVR(y=arg0, x=arg2 | t=242);
                       var1605 = arg3 - 1;
@@ -1848,7 +1848,7 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
     return arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0
     // decompilation error: StackUnderflowError: Stack underflow occured (depth = 1)
     CALLREF c=function (arg12, arg11, arg10, arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
-        var1616 = PUSHPOW2(x=255);
+        var1616 = (1 << 255);
         var1617 = MULRSHIFTR(y=arg0, x=arg0 | t=255);
         var1618 = var1616 - var1617;
         var1623 = function (arg3, arg2, arg1, arg0) {
@@ -1874,7 +1874,7 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
             var1622 = arg2 * arg1;
             return
         }
-        var1624 = PUSHPOW2(x=255);
+        var1624 = (1 << 255);
         var1648 = CALLREF(
             c_arg0=var1624, c_arg1=arg3, c_arg2=arg4, c_arg3=arg5, c_arg4=arg6, c_arg5=arg7, c_arg6=arg8 |
             c=function (arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
@@ -1899,7 +1899,7 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                       var1638 = function (arg1, arg0) {
                           var1635 = arg1 + arg0;
                           var1636 = var1635 >> 1;
-                          var1637 = 1 << var1636;
+                          var1637 = (1 << var1636);
                           return var1637
                       };
                       if (var1630) {
@@ -1912,7 +1912,7 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                       } else {
                           var1635 = var1628 + var1629;
                           var1636 = var1635 >> 1;
-                          var1637 = 1 << var1636;
+                          var1637 = (1 << var1636);
                           var1639 = var1637;
                       }
                       var1647 = function (arg2, arg1, arg0) {
@@ -1927,7 +1927,7 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                       return arg4
                   }
         );
-        var1649 = PUSHNEGPOW2(x=255);
+        var1649 = -(1 << 255);
         var1650 = var1649 - var1648;
         var1651 = LSHIFTDIVR(y=var1650, x=arg9 | t=256);
         var1652 = -var1651;
@@ -1945,7 +1945,7 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                                                   var1655 = 0x6e1604;
                                                   var1656 = var1654 - var1655;
                                                   var1657 = var1654 * var1655;
-                                                  var1658 = PUSHPOW2(x=48);
+                                                  var1658 = 0x1000000000000;
                                                   var1659 = var1657 + var1658;
                                                   var1660 = LSHIFTDIVR(y=var1659, x=var1656 | t=88);
                                                   var1661 = 0xc01;
@@ -1963,7 +1963,7 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                                                   var1674 = 51;
                                                   var1675 = var1674 - var1668;
                                                   var1676 = var1675 * 5;
-                                                  var1677 = 1 << var1676;
+                                                  var1677 = (1 << var1676);
                                                   var1678 = 0;
                                                   var1683 = function (arg1, arg0) {
                                                       var1679 = arg0 << 5;
@@ -1999,9 +1999,9 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                                     var1704 = LSHIFTDIVR(y=var1703, x=var1701 | t=255);
                                     var1705 = 18;
                                     var1706 = MULRSHIFTR(y=var1704, x=var1704 | t=256);
-                                    var1707 = PUSHPOW2(x=254);
+                                    var1707 = (1 << 254);
                                     var1708 = DIVR(y=var1705, x=var1707);
-                                    var1709 = PUSHPOW2(x=255);
+                                    var1709 = (1 << 255);
                                     var1710 = var1708 + var1709;
                                     var1711 = var1705 - 1;
                                     var1717 = function (arg3, arg2, arg1, arg0) {
@@ -2046,10 +2046,10 @@ function (arg2, arg1, arg0) {
                   var1733 = abs(arg0) - (var1731 == 0);
                   REPEAT(c=function (arg1, arg0) {
                       var1739 = (arg0 * SGN(x=arg1) << 1) + 1;
-                      var1743 = PUSHNEGPOW2(x=255) - MULRSHIFTR(y=-arg1, x=arg1 | t=254);
+                      var1743 = -(1 << 255) - MULRSHIFTR(y=-arg1, x=arg1 | t=254);
                       return var1743, var1739
-                  }, n=PUSHPOW2DEC(x=8));
-                  var1746 = MODPOW2(x=abs(1) | t=255);
+                  }, n=255);
+                  var1746 = (abs(1)) & ((1 << 255) - 1);
                   CALLREF(
                       c=function () {
                                 var1747 = 0xc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22;
@@ -2076,7 +2076,7 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                       return var1753, var1754
                   }
         );
-        var1755 = PUSHNEGPOW2(x=255);
+        var1755 = -(1 << 255);
         var1756 = arg2 == var1755;
         var1757 = function (arg1, arg0) {
             return arg0
@@ -2085,10 +2085,10 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
             return
         }
         var1758 = arg3 >> 1;
-        var1759 = PUSHPOW2(x=255);
+        var1759 = (1 << 255);
         var1760 = MULRSHIFTR(y=arg4, x=arg4 | t=255);
         var1761 = var1759 - var1760;
-        var1762 = PUSHPOW2(x=255);
+        var1762 = (1 << 255);
         var1786 = CALLREF(
             c_arg0=var1762, c_arg1=var1761, c_arg2=var1758, c_arg3=arg4, c_arg4=arg5, c_arg5=arg6, c_arg6=arg7 |
             c=function (arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
@@ -2113,7 +2113,7 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                       var1776 = function (arg1, arg0) {
                           var1773 = arg1 + arg0;
                           var1774 = var1773 >> 1;
-                          var1775 = 1 << var1774;
+                          var1775 = (1 << var1774);
                           return var1775
                       };
                       if (var1768) {
@@ -2126,7 +2126,7 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                       } else {
                           var1773 = var1766 + var1767;
                           var1774 = var1773 >> 1;
-                          var1775 = 1 << var1774;
+                          var1775 = (1 << var1774);
                           var1777 = var1775;
                       }
                       var1785 = function (arg2, arg1, arg0) {
@@ -2141,7 +2141,7 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                       return arg4
                   }
         );
-        var1787 = PUSHNEGPOW2(x=255);
+        var1787 = -(1 << 255);
         var1788 = var1787 - var1786;
         var1789 = LSHIFTDIVR(y=var1788, x=arg9 | t=256);
         var1867 = CALLREF(
@@ -2158,7 +2158,7 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                                                   var1792 = 0x6e1604;
                                                   var1793 = var1791 - var1792;
                                                   var1794 = var1791 * var1792;
-                                                  var1795 = PUSHPOW2(x=48);
+                                                  var1795 = 0x1000000000000;
                                                   var1796 = var1794 + var1795;
                                                   var1797 = LSHIFTDIVR(y=var1796, x=var1793 | t=88);
                                                   var1798 = 0xc01;
@@ -2176,7 +2176,7 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                                                   var1811 = 51;
                                                   var1812 = var1811 - var1805;
                                                   var1813 = var1812 * 5;
-                                                  var1814 = 1 << var1813;
+                                                  var1814 = (1 << var1813);
                                                   var1815 = 0;
                                                   var1820 = function (arg1, arg0) {
                                                       var1816 = arg0 << 5;
@@ -2212,9 +2212,9 @@ function (arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
                                     var1841 = LSHIFTDIVR(y=var1840, x=var1838 | t=255);
                                     var1842 = 18;
                                     var1843 = MULRSHIFTR(y=var1841, x=var1841 | t=256);
-                                    var1844 = PUSHPOW2(x=254);
+                                    var1844 = (1 << 254);
                                     var1845 = DIVR(y=var1842, x=var1844);
-                                    var1846 = PUSHPOW2(x=255);
+                                    var1846 = (1 << 255);
                                     var1847 = var1845 + var1846;
                                     var1848 = var1842 - 1;
                                     var1854 = function (arg3, arg2, arg1, arg0) {
@@ -2261,10 +2261,10 @@ function (arg2, arg1, arg0) {
                   var1871 = arg0 - (arg0 == 0);
                   REPEAT(c=function (arg1, arg0) {
                       var1877 = (arg0 * SGN(x=arg1) << 1) + 1;
-                      var1881 = PUSHNEGPOW2(x=255) - MULRSHIFTR(y=-arg1, x=arg1 | t=254);
+                      var1881 = -(1 << 255) - MULRSHIFTR(y=-arg1, x=arg1 | t=254);
                       return var1881, var1877
-                  }, n=PUSHPOW2DEC(x=8));
-                  var1885 = abs(1) + PUSHNEGPOW2(x=256);
+                  }, n=255);
+                  var1885 = abs(1) + -(1 << 256);
                   CALLREF(
                       c=function () {
                                 var1886 = 0xc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22;
@@ -2287,7 +2287,7 @@ function (arg4, arg3, arg2, arg1, arg0) {
                   var1891 = arg0 ~>> 249;
                   if (var1891) {
                       var1892 = SGN(x=var1891);
-                      var1894 = LSHIFTDIVR(y=arg0, x=PUSHNEGPOW2(x=248) | t=256);
+                      var1894 = LSHIFTDIVR(y=arg0, x=-(1 << 248) | t=256);
                       var1898 = var1892;
                       var1899 = var1894;
                   } else {
@@ -2301,11 +2301,11 @@ function (arg4, arg3, arg2, arg1, arg0) {
                                 var1941, var1942, var1943 = CALLREF(
                                     c_arg0=arg0 ~>> 232 |
                                     c=function (arg0) {
-                                              var1915 = LSHIFTDIVR(y=var1907 * var1907 + (3 << 128), x=LSHIFTDIVR(y=var1901 * 0x6e1604 + PUSHPOW2(x=48), x=abs(arg0) - 0x6e1604 | t=88) * 0xc01 | t=59) + 13;
+                                              var1915 = LSHIFTDIVR(y=var1907 * var1907 + (3 << 128), x=LSHIFTDIVR(y=var1901 * 0x6e1604 + 0x1000000000000, x=abs(arg0) - 0x6e1604 | t=88) * 0xc01 | t=59) + 13;
                                               var1916 = 0x1fb00a0;
                                               var1917 = 0x4fd801;
                                               var1919, var1920 = divmod(var1915, 5);
-                                              var1924 = 1 << ((51 - var1915) * 5);
+                                              var1924 = (1 << ((51 - var1915) * 5));
                                               REPEAT(c=function (arg1, arg0) {
                                                   var1927 = SUBR(y=arg0 << 5, x=arg1);
                                                   var1929 = arg0 + (arg1 << 5);
@@ -2324,7 +2324,7 @@ function (arg4, arg3, arg2, arg1, arg0) {
                                 );
                                 var1951 = LSHIFTDIVR(y=var1941 + MULRSHIFTR(y=arg1, x=var1942 | t=256), x=(MULRSHIFTRMOD(y=arg0, x=var1942 | t=256) ~>> 250) + (var1943 - var1942 << 6) | t=255);
                                 var1953 = MULRSHIFTR(y=var1951, x=var1951 | t=256);
-                                var1957 = DIVR(y=18, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                                var1957 = DIVR(y=18, x=(1 << 254)) + (1 << 255);
                                 REPEAT(c=function (arg3, arg2, arg1, arg0) {
                                     var1960 = arg1 + LSHIFTDIVR(y=arg0, x=arg2 | t=242);
                                     var1961 = arg3 - 1;
@@ -2362,8 +2362,8 @@ function (arg4, arg3, arg2, arg1, arg0) {
     var2073 = CALLREF(
         c_arg0=arg0, c_arg1=arg1, c_arg2=arg2, c_arg3=arg3, c_arg4=arg4 |
         c=function (arg4, arg3, arg2, arg1, arg0) {
-                  if ((arg0 ~>> 249)) {
-                      var1984 = LSHIFTDIVR(y=arg0, x=PUSHNEGPOW2(x=248) | t=256);
+                  if (arg0 ~>> 249) {
+                      var1984 = LSHIFTDIVR(y=arg0, x=-(1 << 248) | t=256);
                       var1985 = 0;
                       var1990 = var1984;
                       var1991 = var1985;
@@ -2379,11 +2379,11 @@ function (arg4, arg3, arg2, arg1, arg0) {
                                 var2033, var2034, var2035 = CALLREF(
                                     c_arg0=arg0 ~>> 232 |
                                     c=function (arg0) {
-                                              var2007 = LSHIFTDIVR(y=var1999 * var1999 + (3 << 128), x=LSHIFTDIVR(y=var1993 * 0x6e1604 + PUSHPOW2(x=48), x=abs(arg0) - 0x6e1604 | t=88) * 0xc01 | t=59) + 13;
+                                              var2007 = LSHIFTDIVR(y=var1999 * var1999 + (3 << 128), x=LSHIFTDIVR(y=var1993 * 0x6e1604 + 0x1000000000000, x=abs(arg0) - 0x6e1604 | t=88) * 0xc01 | t=59) + 13;
                                               var2008 = 0x1fb00a0;
                                               var2009 = 0x4fd801;
                                               var2011, var2012 = divmod(var2007, 5);
-                                              var2016 = 1 << ((51 - var2007) * 5);
+                                              var2016 = (1 << ((51 - var2007) * 5));
                                               REPEAT(c=function (arg1, arg0) {
                                                   var2019 = SUBR(y=arg0 << 5, x=arg1);
                                                   var2021 = arg0 + (arg1 << 5);
@@ -2402,7 +2402,7 @@ function (arg4, arg3, arg2, arg1, arg0) {
                                 );
                                 var2043 = LSHIFTDIVR(y=var2033 + MULRSHIFTR(y=arg1, x=var2034 | t=256), x=(MULRSHIFTRMOD(y=arg0, x=var2034 | t=256) ~>> 250) + (var2035 - var2034 << 6) | t=255);
                                 var2045 = MULRSHIFTR(y=var2043, x=var2043 | t=256);
-                                var2049 = DIVR(y=18, x=PUSHPOW2(x=254)) + PUSHPOW2(x=255);
+                                var2049 = DIVR(y=18, x=(1 << 254)) + (1 << 255);
                                 REPEAT(c=function (arg3, arg2, arg1, arg0) {
                                     var2052 = arg1 + LSHIFTDIVR(y=arg0, x=arg2 | t=242);
                                     var2053 = arg3 - 1;
@@ -2460,7 +2460,7 @@ function () {
     var2085 = SETCONTCTR(c=var2084, x=var2074 | i=c1);
     var2089 = PUSHCTR(i=c1);
     var2090 = COMPOSALT(c2=var2089, c=function (arg0) {
-        if ((arg0 == 7)) {
+        if (arg0 == 7) {
             throw(44);
         }
         RETALT();
@@ -2490,7 +2490,7 @@ function () {
     var2102 = SETCONTCTR(c=var2101, x=var2091 | i=c1);
     var2125 = PUSHCTR(i=c1);
     var2126 = COMPOSALT(c2=var2125, c=function (arg19, arg18, arg17, arg16, arg15, arg14, arg13, arg12, arg11, arg10, arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
-        if ((arg19 == 7)) {
+        if (arg19 == 7) {
             throw(44);
         }
         var2123 = ((((((((((((((((((arg19 + arg18) + arg17) + arg16) + arg15) + arg14) + arg13) + arg12) + arg11) + arg10) + arg9) + arg8) + arg7) + arg6) + arg5) + arg4) + arg3) + arg2) + arg1) + arg0;
@@ -2506,10 +2506,10 @@ function () {
 function (arg1, arg0) {
     SAVE(i=c2);
     SAMEALTSAVE();
-    if ((arg0 == 1)) {
+    if (arg0 == 1) {
         return
     }
-    if ((arg1 == 2)) {
+    if (arg1 == 2) {
         RETALT();
         return
     }
@@ -2552,7 +2552,7 @@ function (arg3, arg2, arg1, arg0) {
         var2144 = SETCONTCTR(c=var2143, x=var2133 | i=c1);
         var2148 = PUSHCTR(i=c1);
         var2149 = COMPOSALT(c2=var2148, c=function (arg0) {
-            if ((arg0 == 7)) {
+            if (arg0 == 7) {
                 throw(44);
             }
             RETALT();
@@ -2589,7 +2589,7 @@ function (arg3, arg2, arg1, arg0) {
                       var2166 = SETCONTCTR(c=var2165, x=var2155 | i=c1);
                       var2170 = PUSHCTR(i=c1);
                       var2171 = COMPOSALT(c2=var2170, c=function (arg0) {
-                          if ((arg0 == 7)) {
+                          if (arg0 == 7) {
                               throw(44);
                           }
                           RETALT();
@@ -2644,7 +2644,7 @@ function (arg1, arg0) {
         var2207 = SETCONTCTR(c=var2206, x=var2196 | i=c1);
         var2230 = PUSHCTR(i=c1);
         var2231 = COMPOSALT(c2=var2230, c=function (arg19, arg18, arg17, arg16, arg15, arg14, arg13, arg12, arg11, arg10, arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
-            if ((arg19 == 7)) {
+            if (arg19 == 7) {
                 throw(44);
             }
             var2228 = ((((((((((((((((((arg19 + arg18) + arg17) + arg16) + arg15) + arg14) + arg13) + arg12) + arg11) + arg10) + arg9) + arg8) + arg7) + arg6) + arg5) + arg4) + arg3) + arg2) + arg1) + arg0;
@@ -2743,7 +2743,7 @@ function () {
 /* methodId: 107 */
 function () {
     var2275 = 10;
-    SETGLOB(x=10 | k=1);
+    global_1 = 10;
     var2276 = PUSHCTR(i=c1);
     var2277 = get_c3();
     var2278 = get_data();
@@ -2762,7 +2762,7 @@ function () {
     SETCONTVARARGS 
     PUSHCONT_SHORT s=function () {
         var2289 = 0x3e7;
-        SETGLOB(x=var2289 | k=1);
+        global_1 = var2289;
         var2290 = 0x3e7;
         var2291 = CALLDICT(n=6);
         return var2290, var2290, var2291
@@ -2785,7 +2785,7 @@ function recv_internal (arg0) {
     var2292 = 5;
     var2293 = arg0 < 0;
     var2300 = function (arg1, arg0) {
-        if ((var2294 == -10)) {
+        if (var2294 == -10) {
             var2297 = 111;
             var2298 = 0;
             RETALT();
@@ -2810,7 +2810,7 @@ function recv_internal (arg0) {
         SAMEALTSAVE();
         var2301 = arg0 < 0;
         var2306 = function (arg0) {
-            if ((var2302 == -10)) {
+            if (var2302 == -10) {
                 var2304 = 111;
                 RETALT();
                 return
@@ -2838,7 +2838,7 @@ function (arg0) {
     SAMEALTSAVE();
     REPEAT(c=function (arg0) {
         var2313 = arg0 + 10;
-        if ((var2313 > 99)) {
+        if (var2313 > 99) {
             RETALT();
             return
         }
@@ -2853,7 +2853,7 @@ function (arg1, arg0) {
     SAVE(i=c2);
     SAMEALTSAVE();
     WHILE(c=function (arg3, arg2, arg1, arg0) {
-        if ((var2321 > 99)) {
+        if (var2321 > 99) {
             RETALT();
             return
         }
@@ -2872,7 +2872,7 @@ function (arg4, arg3, arg2, arg1, arg0) {
     SAVE(i=c2);
     SAMEALTSAVE();
     UNTIL(c=function (arg3, arg2, arg1, arg0) {
-        if ((var2328 > 99)) {
+        if (var2328 > 99) {
             RETALT();
             return
         }
@@ -2900,7 +2900,7 @@ function (arg0) {
     SAMEALTSAVE();
     var2337 = arg0 < 0;
     var2342 = function (arg0) {
-        if ((var2338 == -10)) {
+        if (var2338 == -10) {
             var2340 = 111;
             RETALT();
             return
@@ -2919,7 +2919,7 @@ function (arg2, arg1, arg0) {
     var2343 = arg1 < 0;
     var2349 = function (arg2, arg1, arg0) {
         var2344 = CALLDICT(n=1);
-        if ((var2345 == -10)) {
+        if (var2345 == -10) {
             var2347 = 111;
             RETALT();
             return
@@ -2994,8 +2994,8 @@ function (arg1, arg0) {
 
 /* methodId: 9 */
 function (arg17, arg16, arg15, arg14, arg13, arg12, arg11, arg10, arg9, arg8, arg7, arg6, arg5, arg4, arg3, arg2, arg1, arg0) {
-    if ((arg3 == 242)) {
-        if ((MODPOW2(x=arg2 | t=1) == 0)) {
+    if (arg3 == 242) {
+        if (arg2 & 1 == 0) {
             var2371 = function () {
                 var2370 = CALLDICT(n=5);
             };
@@ -3010,8 +3010,8 @@ function (arg17, arg16, arg15, arg14, arg13, arg12, arg11, arg10, arg9, arg8, ar
         PUSHINT_4 i=0
         return
     }
-    if ((arg8 == 243)) {
-        if ((MODPOW2(x=arg7 | t=1) == 0)) {
+    if (arg8 == 243) {
+        if (arg7 & 1 == 0) {
             var2382 = function () {
                 var2381 = CALLDICT(n=7);
             };
@@ -3026,8 +3026,8 @@ function (arg17, arg16, arg15, arg14, arg13, arg12, arg11, arg10, arg9, arg8, ar
         PUSHINT_4 i=0
         return
     }
-    if ((arg13 == 244)) {
-        if ((MODPOW2(x=arg12 | t=1) == 0)) {
+    if (arg13 == 244) {
+        if (arg12 & 1 == 0) {
             var2393 = function () {
                 var2392 = CALLDICT(n=5);
             };
@@ -3106,7 +3106,7 @@ function () {
 
 /* methodId: 103 */
 function () {
-    var2423 = empty_tuple();
+    var2423 = ();
     var2424 = PUSHCTR(i=c1);
     var2425 = get_c3();
     var2426 = get_data();
@@ -3249,12 +3249,12 @@ function () {
     var2473 = SETCONTCTR(c=var2472, x=var2463 | i=c1);
     var2479 = PUSHCTR(i=c1);
     var2480 = COMPOSALT(c2=var2479, c=function () {
-        SETGLOB(x=function () {
-            var2474 = CALLDICT(n=10);
-            return var2474
-        } | k=1);
+        global_1 = function () {
+                var2474 = CALLDICT(n=10);
+                return var2474
+            }
         var2476 = 1;
-        var2477 = GETGLOB(k=1);
+        var2477 = global_1;
         return var2476, var2477
         // decompilation error: Error: continuation has no meta!
         CALLXARGS p=1, r=0
@@ -3275,7 +3275,7 @@ function recv_internal (arg1, arg0) {
     SAMEALTSAVE();
     var2481 = arg0 > 0;
     var2486 = function (arg1, arg0) {
-        if ((arg0 > 10)) {
+        if (arg0 > 10) {
             var2483 = arg0 << 1;
             var2484 = arg0 * 3;
             RETALT();
@@ -3334,7 +3334,7 @@ function recv_internal (arg2, arg1, arg0) {
     SAVE(i=c2);
     SAMEALTSAVE();
     UNTIL(c=function (arg1, arg0) {
-        if ((var2549 > 5)) {
+        if (var2549 > 5) {
             var2551 = 1;
             RETALT();
             return
@@ -3355,7 +3355,7 @@ function recv_internal () {
 
 /* methodId: 1 */
 function (arg0) {
-    if ((arg0 > 0)) {
+    if (arg0 > 0) {
         var2558 = 1;
         return
     }
@@ -3365,7 +3365,7 @@ function (arg0) {
 
 /* methodId: 2 */
 function (arg0) {
-    if ((arg0 > 0)) {
+    if (arg0 > 0) {
         var2562 = 1;
         return
     }

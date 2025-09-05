@@ -31,14 +31,40 @@ function registerSliceLoadStmt(
 
 export function registerPrinters() {
   // Arithmetic (FunC built-ins style)
-  registerInlinePrinter('ADD', (_st, ctx) => `${ctx.inP('x', 'left')} + ${ctx.inP('y', 'right')}`);
+  registerInlinePrinter('ADD', (_st, ctx) => {
+    // Normalize x + (-y) → x - y; x + (-10) → x - 10
+    const y = ctx.inRaw('y');
+    if (y && (y as any).kind === 'inline') {
+      const child = (y as any).op as IROpPrim;
+      if (child && child.mnemonic === 'NEGATE') {
+        const inner = child.inputs.find(i => i.name === 'x')?.value;
+        const rhs = inner ? ctx.formatInputArg(inner) : ctx.inP('y', 'right');
+        return `${ctx.inP('x', 'left')} - ${rhs}`;
+      }
+      if (child && child.mnemonic && child.mnemonic.startsWith('PUSHINT')) {
+        const v = (child.operands.find(o => o.name === 'x' || o.name === 'i')?.value as any);
+        const num = v && (v.kind === 'int' ? v.value : (v.kind === 'bigint' ? Number(v.value) : undefined));
+        if (typeof num === 'number' && num < 0) {
+          const abs = -num;
+          return `${ctx.inP('x', 'left')} - ${abs}`;
+        }
+      }
+    }
+    return `${ctx.inP('x', 'left')} + ${ctx.inP('y', 'right')}`;
+  });
   registerInlinePrinter('SUB', (_st, ctx) => `${ctx.inP('x', 'left')} - ${ctx.inP('y', 'right')}`);
   registerInlinePrinter('MUL', (_st, ctx) => `${ctx.inP('x', 'left')} * ${ctx.inP('y', 'right')}`);
   registerInlinePrinter('DIV', (_st, ctx) => `${ctx.inP('x', 'left')} / ${ctx.inP('y', 'right')}`);
   registerInlinePrinter('MOD', (_st, ctx) => `${ctx.inP('x', 'left')} % ${ctx.inP('y', 'right')}`);
   registerInlinePrinter('NEGATE', (_st, ctx) => `-${ctx.inP('x', 'right')}`);
   // Arithmetic with immediates
-  registerInlinePrinter('ADDCONST', (_st, ctx) => `${ctx.inP('x', 'left')} + ${ctx.op('c')}`);
+  registerInlinePrinter('ADDCONST', (_st, ctx) => {
+    const c = ctx.opNum('c');
+    if (typeof c === 'number' && c < 0) {
+      return `${ctx.inP('x', 'left')} - ${Math.abs(c)}`;
+    }
+    return `${ctx.inP('x', 'left')} + ${ctx.op('c')}`;
+  });
   registerInlinePrinter('MULCONST', (_st, ctx) => `${ctx.inP('x', 'left')} * ${ctx.op('c')}`);
 
   // Bitwise operations
@@ -340,12 +366,9 @@ export function registerPrinters() {
   registerInlinePrinter('TUPLE', (st: any, ctx) => {
     const n = ctx.opNum('n');
     const args = st.inputs.map((i: any) => ctx.formatInputArg(i.value));
-    if (n === 0) return `empty_tuple()`;
-    if (n === 1) return `single(${comma(args)})`;
-    if (n === 2) return `pair(${comma(args)})`;
-    if (n === 3) return `triple(${comma(args)})`;
-    if (n === 4) return `tuple4(${comma(args)})`;
-    return `tuple(${comma(args)})`;
+    if (n === 0) return `()`;
+    // show as (a, b, c)
+    return `(${comma(args)})`;
   });
   registerInlinePrinter('UNTUPLE', (_st, ctx) => {
     const n = ctx.opNum('n');
@@ -366,7 +389,50 @@ export function registerPrinters() {
   registerInlinePrinter('INDEXVAR', (_st, ctx) => `index(${ctx.in('t')}, ${ctx.in('k')})`);
 
   // Powers of two
-  registerInlinePrinter('POW2', (_st, ctx) => `1 << ${ctx.inP('y', 'right')}`);
+  registerInlinePrinter('POW2', (_st, ctx) => `(1 << ${ctx.inP('y', 'right')})`);
+  registerInlinePrinter('PUSHPOW2', (_st, ctx) => {
+    const x = (ctx.opNum('x') ?? 0) + 1; // display hint adds +1
+    if (x > 64) {
+      return `(1 << ${x})`;
+    } else if (x > 15) {
+      return '0x' + (BigInt(1) << BigInt(x)).toString(16);
+    } else {
+      return (1 << x).toString();
+    }
+  });
+  registerInlinePrinter('PUSHNEGPOW2', (_st, ctx) => {
+    const x = (ctx.opNum('x') ?? 0) + 1;
+    if (x > 64) {
+      return `-(1 << ${x})`;
+    } else if (x > 15) {
+      return '-0x' + (BigInt(1) << BigInt(x)).toString(16);
+    } else {
+      return (-(1 << x)).toString();
+    }
+  });
+  registerInlinePrinter('PUSHPOW2DEC', (_st, ctx) => {
+    const x = (ctx.opNum('x') ?? 0) + 1;
+    if (x > 64) {
+      return `((1 << ${x}) - 1)`;
+    } else if (x > 15) {
+      return '0x' + ((BigInt(1) << BigInt(x)) - 1n).toString(16);
+    } else {
+      return ((1 << x) - 1).toString();
+    }
+  });
+  registerInlinePrinter('MODPOW2', (_st, ctx) => {
+    const t = (ctx.opNum('t') ?? 0) + 1;
+    const mask = (1n << BigInt(t)) - 1n;
+    let result = `${ctx.inP('x', 'left')} & `;
+    if (t > 64) {
+      result += `((1 << ${t}) - 1)`;
+    } else if (t > 15) {
+      result += '0x' + mask.toString(16);
+    } else {
+      result += mask.toString();
+    }
+    return result;
+  });
 
   // Exceptions (throw/throw_if/etc.)
   registerInlinePrinter('THROW', (_st, ctx) => `throw(${ctx.op('n')})`);
@@ -519,53 +585,53 @@ export function registerPrinters() {
 
   // IFELSE: stack f,c,c2; REF variants handled below
   registerStmtPrinter('IFELSE', (st, ctx) => {
-    const f = ctx.inP('f', 'left');
+    const f = ctx.in('f');
     const c = getContinuationFromInputOrOperand(st, 'c');
     const c2 = getContinuationFromInputOrOperand(st, 'c2');
     return emitIfBlock(st, f, { label: 'c', fn: c }, { label: 'c2', fn: c2 });
   });
 
   registerStmtPrinter('IF', (st, ctx) => {
-    const f = ctx.inP('f', 'left');
+    const f = ctx.in('f');
     const c = getContinuationFromInputOrOperand(st, 'c');
     return emitIfBlock(st, f, { label: 'c', fn: c });
   });
 
   registerStmtPrinter('IFNOT', (st, ctx) => {
-    const f = ctx.inP('f', 'right');
+    const f = ctx.in('f');
     const c = getContinuationFromInputOrOperand(st, 'c');
     return emitIfBlock(st, `!(${f})`, { label: 'c', fn: c });
   });
 
   // Reference variants
   registerStmtPrinter('IFREF', (st, ctx) => {
-    const f = ctx.inP('f', 'left');
+    const f = ctx.in('f');
     const c = getContinuationFromInputOrOperand(st, 'c');
     return emitIfBlock(st, f, { label: 'c', fn: c });
   });
 
   registerStmtPrinter('IFNOTREF', (st, ctx) => {
-    const f = ctx.inP('f', 'right');
+    const f = ctx.in('f');
     const c = getContinuationFromInputOrOperand(st, 'c');
     return emitIfBlock(st, `!(${f})`, { label: 'c', fn: c });
   });
 
   registerStmtPrinter('IFELSEREF', (st, ctx) => {
-    const f = ctx.inP('f', 'left');
+    const f = ctx.in('f');
     const c = getContinuationFromInputOrOperand(st, 'c');
     const c2 = getContinuationFromInputOrOperand(st, 'c2');
     return emitIfBlock(st, f, { label: 'c', fn: c }, { label: 'c2', fn: c2 });
   });
 
   registerStmtPrinter('IFREFELSE', (st, ctx) => {
-    const f = ctx.inP('f', 'left');
+    const f = ctx.in('f');
     const c = getContinuationFromInputOrOperand(st, 'c');
     const c2 = getContinuationFromInputOrOperand(st, 'c2');
     return emitIfBlock(st, f, { label: 'c', fn: c }, { label: 'c2', fn: c2 });
   });
 
   registerStmtPrinter('IFREFELSEREF', (st, ctx) => {
-    const f = ctx.inP('f', 'left');
+    const f = ctx.in('f');
     const c1 = getContinuationFromInputOrOperand(st, 'c1');
     const c2 = getContinuationFromInputOrOperand(st, 'c2');
     return emitIfBlock(st, f, { label: 'c1', fn: c1 }, { label: 'c2', fn: c2 });
@@ -573,26 +639,40 @@ export function registerPrinters() {
 
   // Jump variants (no merge of results; only then-branch present)
   registerStmtPrinter('IFJMP', (st, ctx) => {
-    const f = ctx.inP('f', 'left');
+    const f = ctx.in('f');
     const c = getContinuationFromInputOrOperand(st, 'c');
     return emitIfBlock(st, f, { label: 'c', fn: c }, undefined, { terminate: true });
   });
 
   registerStmtPrinter('IFNOTJMP', (st, ctx) => {
-    const f = ctx.inP('f', 'right');
+    const f = ctx.in('f');
     const c = getContinuationFromInputOrOperand(st, 'c');
     return emitIfBlock(st, `!(${f})`, { label: 'c', fn: c }, undefined, { terminate: true });
   });
 
   registerStmtPrinter('IFJMPREF', (st, ctx) => {
-    const f = ctx.inP('f', 'left');
+    const f = ctx.in('f');
     const c = getContinuationFromInputOrOperand(st, 'c');
     return emitIfBlock(st, f, { label: 'c', fn: c }, undefined, { terminate: true });
   });
 
   registerStmtPrinter('IFNOTJMPREF', (st, ctx) => {
-    const f = ctx.inP('f', 'right');
+    const f = ctx.in('f');
     const c = getContinuationFromInputOrOperand(st, 'c');
     return emitIfBlock(st, `!(${f})`, { label: 'c', fn: c }, undefined, { terminate: true });
   });
+
+  // Globals aliases
+  registerInlinePrinter('GETGLOB', (_st, ctx) => {
+    const k = ctx.opNum('k');
+    if (typeof k === 'number') return `global_${k}`;
+    return undefined;
+  });
+  registerInlinePrinter('GETGLOBVAR', (_st, ctx) => `global_${ctx.in('k')}`);
+  registerStmtPrinter('SETGLOB', (_st, ctx) => {
+    const k = ctx.opNum('k');
+    if (typeof k === 'number') return [`global_${k} = ${ctx.in('x')}`];
+    return null;
+  });
+  registerStmtPrinter('SETGLOBVAR', (_st, ctx) => [`global_${ctx.in('k')} = ${ctx.in('x')}`]);
 }

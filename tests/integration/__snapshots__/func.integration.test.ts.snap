@@ -20,10 +20,10 @@ function recv_internal () {
 
 /* methodId: 83863 */
 function (arg1, arg0) {
-    var10 = arg1 + -10;
+    var10 = arg1 - 10;
     var11 = arg0 + 20;
     var12 = arg1 * arg0;
-    if ((arg1 > arg0)) {
+    if (arg1 > arg0) {
         var15 = var12 + arg1 / var11;
         var20 = var15;
     } else {

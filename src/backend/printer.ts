@@ -1,6 +1,7 @@
 import type { Program } from "../core/program";
 import { IRFunction, IRInlineExpr, IRInputArg, IRValueDef, IRValueRef, IROpPrim, IROperandValue } from "../core/ir";
 import { registerPrinters } from "./stdImpl";
+import { Builder } from "ton3-core";
 
 // Pretty printer for IR → textual pseudocode
 export function printIR(fn: IRFunction, opts?: { methodId?: number }): string {
@@ -201,10 +202,10 @@ function formatIR(fn: IRFunction, opts?: { methodId?: number }): string {
       }
       case 'bool': return String(v.value);
       case 'slice': {
-        try { return String(v.value); } catch { return '[slice]'; }
+        return (new Builder()).storeSlice(v.value).cell().print().trim();
       }
       case 'cell': {
-        try { return String(v.value); } catch { return '[cell]'; }
+        return v.value.print().trim();
       }
       case 'other': {
         try { return JSON.stringify(v.value); } catch { return String(v.value); }
